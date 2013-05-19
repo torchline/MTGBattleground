@@ -147,7 +147,8 @@ static ViewManager *sharedHelper = nil;
 	nextViewController = [[viewControllerClass alloc] initWithNibName:nil bundle:nil];
     nextViewController.viewOptions = options;
     nextViewController.transitionAnimationDelegate = self;
-    nextViewController.view.frame = rootView.bounds;
+    //nextViewController.view.frame = rootView.bounds;
+	NSLog(@"VM bounds = %@", NSStringFromCGRect(rootView.bounds));
 	
 	/*
     CGPoint viewStartPoint;
@@ -238,7 +239,7 @@ static ViewManager *sharedHelper = nil;
 	}
 	
 	nextViewController = [[previousViewControllerClass alloc] initWithNibName:nil bundle:nil];
-    nextViewController.view.frame = rootView.bounds;
+    //nextViewController.view.frame = rootView.bounds;
     nextViewController.transitionAnimationDelegate = self;
 	nextViewController.viewOptions = options;
 	

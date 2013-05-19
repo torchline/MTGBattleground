@@ -37,8 +37,6 @@
 
 #pragma mark - System
 
-#pragma mark - System
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
@@ -76,6 +74,9 @@
 }
 
 - (BOOL)viewDidLoadFromViewController:(ManagableViewController *)aViewController {
+	NSLog(@"frame: %@", NSStringFromCGRect(self.view.frame));
+	NSLog(@"bounds: %@", NSStringFromCGRect(self.view.bounds));
+
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	
 	self.match = [Database activeMatch];
@@ -249,8 +250,8 @@
 	CGContextRef context = CGBitmapContextCreate(NULL,
                                                  image.size.width,
                                                  image.size.height,
-                                                 CGImageGetBitsPerComponent(imageRef),
-                                                 0,
+												 CGImageGetBitsPerComponent(imageRef),
+                                                 kCGImageAlphaPremultipliedLast,
                                                  CGImageGetColorSpace(imageRef),
                                                  CGImageGetBitmapInfo(imageRef));
 		

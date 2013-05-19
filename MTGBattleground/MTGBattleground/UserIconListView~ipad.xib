@@ -32,7 +32,7 @@
 			</object>
 			<object class="IBUIView" id="191373211">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">274</int>
+				<int key="NSvFlags">292</int>
 				<string key="NSFrameSize">{300, 402}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>

@@ -36,7 +36,7 @@
 			</object>
 			<object class="IBUIView" id="766721923">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">292</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUILabel" id="643256110">
 						<reference key="NSNextResponder" ref="766721923"/>
@@ -430,7 +430,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{555, 554}, {422, 164}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>

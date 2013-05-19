@@ -105,7 +105,7 @@ static ViewManager *sharedHelper = nil;
         [rootView insertSubview:overlayButton aboveSubview:currentViewController.view];
     }
     
-    overlayButton.frame = rootView.bounds;
+    overlayButton.frame = [self rootViewBounds];
     
     overlayButton.hidden = NO;
 	overlayButton.enabled = NO;
@@ -143,12 +143,13 @@ static ViewManager *sharedHelper = nil;
 	
 	[mOptions setValue:[NSNumber numberWithBool:NO] forKey:ViewOptionWasResurrected];
 	
+	//CGRect rootViewBounds = [self rootViewBounds];
+	
     // create next view controller
 	nextViewController = [[viewControllerClass alloc] initWithNibName:nil bundle:nil];
     nextViewController.viewOptions = options;
     nextViewController.transitionAnimationDelegate = self;
-    //nextViewController.view.frame = rootView.bounds;
-	NSLog(@"VM bounds = %@", NSStringFromCGRect(rootView.bounds));
+    //nextViewController.view.frame = rootViewBounds;
 	
 	/*
     CGPoint viewStartPoint;
@@ -159,15 +160,15 @@ static ViewManager *sharedHelper = nil;
 			break;
 		case ManagableViewPresentationStyleSlideFromTop:
 		case ManagableViewPresentationStylePushFromTop:
-			viewStartPoint = CGPointMake(0, -CGRectGetHeight(rootView.bounds));
+			viewStartPoint = CGPointMake(0, -CGRectGetHeight(rootViewBounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromRight:
 		case ManagableViewPresentationStylePushFromRight:
-			viewStartPoint = CGPointMake(CGRectGetMaxX(rootView.bounds), 0);
+			viewStartPoint = CGPointMake(CGRectGetMaxX(rootViewBounds), 0);
 			break;
 		case ManagableViewPresentationStyleSlideFromBottom:
 		case ManagableViewPresentationStylePushFromBottom:
-			viewStartPoint = CGPointMake(0, CGRectGetMaxY(rootView.bounds));
+			viewStartPoint = CGPointMake(0, CGRectGetMaxY(rootViewBounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromLeft:
 		case ManagableViewPresentationStylePushFromLeft:
@@ -180,8 +181,8 @@ static ViewManager *sharedHelper = nil;
 	
 	nextViewController.view.frame = CGRectMake(viewStartPoint.x,
 											   viewStartPoint.y,
-											   rootView.bounds.size.width,
-											   rootView.bounds.size.height);
+											   rootViewBounds.size.width,
+											   rootViewBounds.size.height);
 	
 	currentViewController.view.userInteractionEnabled = NO;
 	nextViewController.view.userInteractionEnabled = NO;
@@ -239,7 +240,7 @@ static ViewManager *sharedHelper = nil;
 	}
 	
 	nextViewController = [[previousViewControllerClass alloc] initWithNibName:nil bundle:nil];
-    //nextViewController.view.frame = rootView.bounds;
+    //nextViewController.view.frame = [self rootViewBounds];
     nextViewController.transitionAnimationDelegate = self;
 	nextViewController.viewOptions = options;
 	
@@ -298,32 +299,34 @@ static ViewManager *sharedHelper = nil;
 		isFreshlyCreated = YES;
 	}
 	
+	CGRect rootViewBounds = [self rootViewBounds];
+	
 	CGPoint accessoryViewStartPoint;
 	switch (currentAccessoryViewController.presentationStyle) {
 		case ManagableViewPresentationStyleNone:
 		case ManagableViewPresentationStyleFadeIn:
-			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-												  CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+												  CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromTop:
 		case ManagableViewPresentationStylePushFromTop:
-			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-												  CGRectGetMinY(rootView.bounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
+			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+												  CGRectGetMinY(rootViewBounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromRight:
 		case ManagableViewPresentationStylePushFromRight:
-			accessoryViewStartPoint = CGPointMake(CGRectGetMaxX(rootView.bounds),
-												  CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+			accessoryViewStartPoint = CGPointMake(CGRectGetMaxX(rootViewBounds),
+												  CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromBottom:
 		case ManagableViewPresentationStylePushFromBottom:
-			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-												  CGRectGetMaxY(rootView.bounds));
+			accessoryViewStartPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+												  CGRectGetMaxY(rootViewBounds));
 			break;
 		case ManagableViewPresentationStyleSlideFromLeft:
 		case ManagableViewPresentationStylePushFromLeft:
-			accessoryViewStartPoint = CGPointMake(CGRectGetMinX(rootView.bounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
-												  CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+			accessoryViewStartPoint = CGPointMake(CGRectGetMinX(rootViewBounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
+												  CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 			break;
 			
 		default:
@@ -370,37 +373,37 @@ static ViewManager *sharedHelper = nil;
 					currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.bounds),
 													  CGRectGetMinY(currentViewController.view.bounds) + CGRectGetHeight(currentAccessoryViewController.view.bounds));
 					
-					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-														CGRectGetMinY(rootView.bounds));
+					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+														CGRectGetMinY(rootViewBounds));
 					break;
 				case ManagableViewPresentationStylePushFromRight:
 					currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.bounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
 													  CGRectGetMinY(currentViewController.view.bounds));
 					
-					accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootView.bounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
-														CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+					accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootViewBounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
+														CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 					break;
 				case ManagableViewPresentationStylePushFromBottom:
 					currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.bounds),
 													  CGRectGetMinY(currentViewController.view.bounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 					
-					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-														CGRectGetMaxY(rootView.bounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
+					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+														CGRectGetMaxY(rootViewBounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 					break;
 				case ManagableViewPresentationStylePushFromLeft:
 					currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.bounds) + CGRectGetWidth(currentAccessoryViewController.view.bounds),
 													  CGRectGetMinY(currentViewController.view.bounds));
 					
-					accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootView.bounds),
-														CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+					accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootViewBounds),
+														CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 					break;
 					
 				case ManagableViewPresentationStyleSlideFromTop:
 				case ManagableViewPresentationStyleSlideFromRight:
 				case ManagableViewPresentationStyleSlideFromBottom:
 				case ManagableViewPresentationStyleSlideFromLeft:
-					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-														CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+					accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+														CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 					break;
 					
 				default:
@@ -468,34 +471,36 @@ static ViewManager *sharedHelper = nil;
 	CGPoint accessoryViewEndPoint = currentAccessoryViewController.view.frame.origin;
 	CGFloat alpha = currentAccessoryViewController.view.alpha;
 	
+	CGRect rootViewBounds = [self rootViewBounds];
+	
 	switch (currentAccessoryViewController.presentationStyle) {
 		case ManagableViewPresentationStylePushFromTop:
 			currentViewEndPoint = CGPointMake(currentViewController.view.frame.origin.x,
 											  CGRectGetMinY(currentViewController.view.frame) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 			
-			accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-												CGRectGetMinY(rootView.bounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
+			accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+												CGRectGetMinY(rootViewBounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 			break;
 		case ManagableViewPresentationStylePushFromRight:
 			currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.frame) + CGRectGetWidth(currentAccessoryViewController.view.bounds),
 											  currentViewController.view.frame.origin.y);
 
-			accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootView.bounds),
-												CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+			accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootViewBounds),
+												CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 			break;
 		case ManagableViewPresentationStylePushFromBottom:
 			currentViewEndPoint = CGPointMake(currentViewController.view.frame.origin.x,
 											  CGRectGetMinY(currentViewController.view.frame) + CGRectGetHeight(currentViewController.view.bounds));
 			
-			accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-												CGRectGetMaxY(rootView.bounds));
+			accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+												CGRectGetMaxY(rootViewBounds));
 			break;
 		case ManagableViewPresentationStylePushFromLeft:
 			currentViewEndPoint = CGPointMake(CGRectGetMinX(currentViewController.view.frame) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
 											  currentViewController.view.frame.origin.y);
 			
-			accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootView.bounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
-												CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+			accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootViewBounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
+												CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 			break;
 		default: {
 			switch (currentAccessoryViewController.dismissionStyle) {
@@ -512,20 +517,20 @@ static ViewManager *sharedHelper = nil;
 							break;
 							
 						case ManagableViewDismissionStyleSlideToTop:
-							accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-																CGRectGetMinY(rootView.bounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
+							accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+																CGRectGetMinY(rootViewBounds) - CGRectGetHeight(currentAccessoryViewController.view.bounds));
 							break;
 						case ManagableViewDismissionStyleSlideToRight:
-							accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootView.bounds),
-																CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+							accessoryViewEndPoint = CGPointMake(CGRectGetMaxX(rootViewBounds),
+																CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 							break;
 						case ManagableViewDismissionStyleSlideToBottom:
-							accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootView.bounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
-																CGRectGetMaxY(rootView.bounds));
+							accessoryViewEndPoint = CGPointMake(CGRectGetMidX(rootViewBounds) - CGRectGetMidX(currentAccessoryViewController.view.bounds),
+																CGRectGetMaxY(rootViewBounds));
 							break;
 						case ManagableViewDismissionStyleSlideToLeft:
-							accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootView.bounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
-																CGRectGetMidY(rootView.bounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
+							accessoryViewEndPoint = CGPointMake(CGRectGetMinX(rootViewBounds) - CGRectGetWidth(currentAccessoryViewController.view.bounds),
+																CGRectGetMidY(rootViewBounds) - CGRectGetMidY(currentAccessoryViewController.view.bounds));
 							break;
 							
 						default:
@@ -611,6 +616,21 @@ static ViewManager *sharedHelper = nil;
 	if (!isAnimatingAccessoryView) {
 		[self closeAccessoryView];
 	}
+}
+
+
+#pragma mark - Helper
+
+// doesn't seem to work
+// mainstream view controller re-framings were commented out
+- (CGRect)rootViewBounds {
+	if ([rootView isKindOfClass:[UIWindow class]]) {
+		if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+			return CGRectMake(0, 0, rootView.bounds.size.height, rootView.bounds.size.width);
+		}
+	}
+	
+	return rootView.bounds;
 }
 
 

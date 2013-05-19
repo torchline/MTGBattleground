@@ -74,9 +74,6 @@
 }
 
 - (BOOL)viewDidLoadFromViewController:(ManagableViewController *)aViewController {
-	NSLog(@"frame: %@", NSStringFromCGRect(self.view.frame));
-	NSLog(@"bounds: %@", NSStringFromCGRect(self.view.bounds));
-
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	
 	self.match = [Database activeMatch];
@@ -251,9 +248,9 @@
                                                  image.size.width,
                                                  image.size.height,
 												 CGImageGetBitsPerComponent(imageRef),
-                                                 kCGImageAlphaPremultipliedLast,
+                                                 0,
                                                  CGImageGetColorSpace(imageRef),
-                                                 CGImageGetBitmapInfo(imageRef));
+                                                 kCGImageAlphaPremultipliedLast);
 		
 	CGContextSetFillColorWithColor(context, colorRef);
 

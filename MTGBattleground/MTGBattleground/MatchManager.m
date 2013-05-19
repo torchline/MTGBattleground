@@ -36,8 +36,12 @@
 	
 	// initialize users
 	for (LocalUser *localUser in localUsers) {
-		localUser.life = startingLife;
-		localUser.poison = 0;
+		if (!localUser.state) {
+			localUser.state = [[UserState alloc] init];
+		}
+		
+		localUser.state.life = startingLife;
+		localUser.state.poison = 0;
 	}
 	
 	[Database createLocalUserActiveStates:localUsers forMatch:match];

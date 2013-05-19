@@ -172,6 +172,8 @@
 		A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
 		A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
 		A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
+		A2AAF9871749749D00CFFFDA /* UserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* UserState.m */; };
+		A2AAF9881749749D00CFFFDA /* UserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* UserState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,6 +320,8 @@
 		A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterSegment.png; sourceTree = "<group>"; };
 		A2AAF9811749533B00CFFFDA /* Arts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Arts; path = ../../Arts; sourceTree = "<group>"; };
 		A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LocalUserListView~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF9851749749D00CFFFDA /* UserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserState.h; sourceTree = "<group>"; };
+		A2AAF9861749749D00CFFFDA /* UserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +554,8 @@
 				A2AAF8F517494F5700CFFFDA /* MatchTurn.m */,
 				A2AAF8E417494F5700CFFFDA /* LocalUser.h */,
 				A2AAF8E517494F5700CFFFDA /* LocalUser.m */,
+				A2AAF9851749749D00CFFFDA /* UserState.h */,
+				A2AAF9861749749D00CFFFDA /* UserState.m */,
 				A2AAF90B17494F5700CFFFDA /* UserIcon.h */,
 				A2AAF90C17494F5700CFFFDA /* UserIcon.m */,
 			);
@@ -906,6 +912,7 @@
 				A2AAF95917494F5700CFFFDA /* ViewManager.m in Sources */,
 				A2AAF96017494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96217494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
+				A2AAF9871749749D00CFFFDA /* UserState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,6 +952,7 @@
 				A2AAF95A17494F5700CFFFDA /* ViewManager.m in Sources */,
 				A2AAF96117494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96317494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
+				A2AAF9881749749D00CFFFDA /* UserState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

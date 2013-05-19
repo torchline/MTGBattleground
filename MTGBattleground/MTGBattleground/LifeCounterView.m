@@ -31,7 +31,7 @@
 #pragma mark - System
 
 - (void)dealloc {
-	[self.localUser removeObserver:self forKeyPath:@"life"];
+	[self.localUser removeObserver:self forKeyPath:@"state.life"];
 }
 
 
@@ -132,11 +132,11 @@
 #pragma mark - User Interaction
 
 - (void)plusButtonPressed {
-	self.localUser.life++;
+	self.localUser.state.life++;
 }
 
 - (void)minusButtonPressed {
-	self.localUser.life--;
+	self.localUser.state.life--;
 }
 
 
@@ -152,11 +152,11 @@
 		return;
 	}
 		
-	self.lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", self.localUser.life];
+	self.lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", self.localUser.state.life];
 	
 	NSUInteger i = 0;
 	for (UIImageView *segmentImageView in self.segmentImageViews) {
-		segmentImageView.hidden = i >= self.localUser.life || self.localUser.life <= 0;
+		segmentImageView.hidden = i >= self.localUser.state.life || self.localUser.state.life <= 0;
 		i++;
 	}
 }
@@ -168,9 +168,9 @@
 						change:(NSDictionary *)change
 					   context:(void *)context {
 	
-	if ([object isEqual:self.localUser] && [keyPath isEqual:@"life"]) {
+	if ([object isEqual:self.localUser] && [keyPath isEqual:@"state.life"]) {
 		[self updateLifeVisuals];
-		[Database updateLocalUserActiveState:self.localUser];
+		[Database updateLocalUserUserState:self.localUser];
 	}
 }
 
@@ -178,8 +178,8 @@
 #pragma mark - Getter / Setter
 
 - (void)setLocalUser:(LocalUser *)localUser {
-	[_localUser removeObserver:self forKeyPath:@"life"];
-	[localUser addObserver:self forKeyPath:@"life" options:0 context:NULL];
+	[_localUser removeObserver:self forKeyPath:@"state.life"];
+	[localUser addObserver:self forKeyPath:@"state.life" options:0 context:NULL];
 	
 	_localUser = localUser;
 		

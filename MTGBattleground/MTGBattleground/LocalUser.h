@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "IdentifiableDatabaseObject.h"
+#import "UserState.h"
+#import "UserIcon.h"
 
 typedef enum : NSUInteger {
 	UserSlotSouth = 1,
@@ -17,6 +19,7 @@ typedef enum : NSUInteger {
 } UserSlot;
 
 @class UserIcon;
+@class UserState;
 
 @interface LocalUser : NSObject <IdentifiableDatabaseObject>
 
@@ -28,9 +31,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) NSDate *lastDateUsed;
 
 // active only
-@property (nonatomic) NSInteger life;
-@property (nonatomic) NSInteger poison;
 @property (nonatomic) UserSlot userSlot;
+@property (nonatomic) UserState *state;
 
 // runtime
 @property (nonatomic) UserIcon *userIcon;

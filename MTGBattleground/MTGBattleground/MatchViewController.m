@@ -376,7 +376,6 @@
 #pragma mark - Delegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	
 	switch (self.alertReason) {
 		case AlertReasonUndo:
 			switch (buttonIndex) {
@@ -410,7 +409,7 @@
 	if (shouldAnimatePassButton) {
 		[UIView animateWithDuration:0.20f
 						 animations:^{
-							 self.passButton.center = self.view.center;
+							 self.passButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 						 }
 						 completion:^(BOOL finished) {
 							 [UIView animateWithDuration:0.20f

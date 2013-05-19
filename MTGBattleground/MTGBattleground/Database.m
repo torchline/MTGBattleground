@@ -95,7 +95,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 			[db executeUpdate:@"INSERT INTO Match_LocalUser_participant(MatchID, LocalUserID, StartingLife, Ordinal) VALUES(?, ?, ?, ?)" withArgumentsInArray:@[
 			 [match.ID dataUsingEncoding:NSUTF8StringEncoding],
 			 @(localUser.ID),
-			 @(localUser.life),
+			 @(localUser.state.life),
 			 @(i)
 			 ]];
 			
@@ -128,8 +128,8 @@ static NSMutableDictionary *_matchTurnCache = nil;
 			[db executeUpdate:@"INSERT INTO MatchTurn_LocalUser_state(MatchTurnID, LocalUserID, Life, Poison) VALUES(?, ?, ?, ?)" withArgumentsInArray:@[
 			 [matchTurn.ID dataUsingEncoding:NSUTF8StringEncoding],
 			 @(localUser.ID),
-			 @(localUser.life),
-			 @(localUser.poison)
+			 @(localUser.state.life),
+			 @(localUser.state.poison)
 			 ]];
 		}
 	}];
@@ -144,8 +144,8 @@ static NSMutableDictionary *_matchTurnCache = nil;
 			[db executeUpdate:@"INSERT INTO LocalUser_active (LocalUserID, MatchID, Life, Poison, UserSlot) VALUES (?, ?, ?, ?, ?)" withArgumentsInArray:@[
 			 @(localUser.ID),
 			 [match.ID dataUsingEncoding:NSUTF8StringEncoding],
-			 @(localUser.life),
-			 @(localUser.poison),
+			 @(localUser.state.life),
+			 @(localUser.state.poison),
 			 @(localUser.userSlot)
 			 ]];			
 		}
@@ -384,11 +384,11 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	}];
 }
 
-+ (void)updateLocalUserActiveState:(LocalUser *)localUser {
++ (void)updateLocalUserUserState:(LocalUser *)localUser {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		[db executeUpdate:@"UPDATE LocalUser_active SET Life = ?, Poison = ? WHERE LocalUserID = ?" withArgumentsInArray:@[
-		 @(localUser.life),
-		 @(localUser.poison),
+		 @(localUser.state.life),
+		 @(localUser.state.poison),
 		 @(localUser.ID)
 		 ]];
 	}];
@@ -451,10 +451,14 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	localUser.userIconID = [resultSet intForColumn:@"UserIconID"];
 	localUser.numTimesUsed = [resultSet intForColumn:@"NumTimesUsed"];
 	localUser.lastDateUsed = [[NSDate alloc] initWithTimeIntervalSince1970:[resultSet intForColumn:@"LastDateUsed"]];
-	localUser.life = [resultSet intForColumn:@"Life"];
-	localUser.poison = [resultSet intForColumn:@"Poison"];
 	localUser.userSlot = [resultSet intForColumn:@"UserSlot"];
 	
+	UserState *userState = [[UserState alloc] init];
+	userState.life = [resultSet intForColumn:@"Life"];
+	userState.poison = [resultSet intForColumn:@"Poison"];
+	
+	localUser.state = userState;
+
 	return localUser;
 }
 

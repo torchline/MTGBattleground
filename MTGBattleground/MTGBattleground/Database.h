@@ -40,7 +40,7 @@
 
 // UPDATE
 + (void)updateLocalUser:(LocalUser *)localUser;
-+ (void)updateLocalUserActiveState:(LocalUser *)user;
++ (void)updateLocalUserUserState:(LocalUser *)user;
 
 
 // DELETE

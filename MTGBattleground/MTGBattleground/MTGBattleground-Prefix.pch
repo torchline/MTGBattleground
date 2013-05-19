@@ -1,0 +1,18 @@
+//
+// Prefix header for all source files of the 'MTGBattleground' target in the 'MTGBattleground' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+	#import <UIKit/UIKit.h>
+	#import <Foundation/Foundation.h>
+#endif
+
+
+#define GLOBAL_FONT_NAME		@"Thonburi"
+#define GLOBAL_FONT_NAME_BOLD	@"Thonburi-Bold"

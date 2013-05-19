@@ -1,0 +1,1128 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A2AAF82717494D5800CFFFDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82617494D5800CFFFDA /* UIKit.framework */; };
+		A2AAF82917494D5800CFFFDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82817494D5800CFFFDA /* Foundation.framework */; };
+		A2AAF82B17494D5800CFFFDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82A17494D5800CFFFDA /* CoreGraphics.framework */; };
+		A2AAF83117494D5800CFFFDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF82F17494D5800CFFFDA /* InfoPlist.strings */; };
+		A2AAF83317494D5800CFFFDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF83217494D5800CFFFDA /* main.m */; };
+		A2AAF83717494D5900CFFFDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF83617494D5900CFFFDA /* AppDelegate.m */; };
+		A2AAF83917494D5900CFFFDA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF83817494D5900CFFFDA /* Default.png */; };
+		A2AAF83B17494D5900CFFFDA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF83A17494D5900CFFFDA /* Default@2x.png */; };
+		A2AAF83D17494D5900CFFFDA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF83C17494D5900CFFFDA /* Default-568h@2x.png */; };
+		A2AAF84E17494D5900CFFFDA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF84D17494D5900CFFFDA /* SenTestingKit.framework */; };
+		A2AAF84F17494D5900CFFFDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82617494D5800CFFFDA /* UIKit.framework */; };
+		A2AAF85017494D5900CFFFDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82817494D5800CFFFDA /* Foundation.framework */; };
+		A2AAF85817494D5900CFFFDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF85617494D5900CFFFDA /* InfoPlist.strings */; };
+		A2AAF85B17494D5900CFFFDA /* MTGBattlegroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF85A17494D5900CFFFDA /* MTGBattlegroundTests.m */; };
+		A2AAF88717494EC300CFFFDA /* RayGlow2.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86617494EC300CFFFDA /* RayGlow2.png */; };
+		A2AAF88817494EC300CFFFDA /* RayGlow2.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86617494EC300CFFFDA /* RayGlow2.png */; };
+		A2AAF88917494EC300CFFFDA /* RayGlow2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86717494EC300CFFFDA /* RayGlow2@2x.png */; };
+		A2AAF88A17494EC300CFFFDA /* RayGlow2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86717494EC300CFFFDA /* RayGlow2@2x.png */; };
+		A2AAF88B17494EC300CFFFDA /* RayGlow1.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86817494EC300CFFFDA /* RayGlow1.png */; };
+		A2AAF88C17494EC300CFFFDA /* RayGlow1.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86817494EC300CFFFDA /* RayGlow1.png */; };
+		A2AAF88D17494EC300CFFFDA /* RayGlow1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86917494EC300CFFFDA /* RayGlow1@2x.png */; };
+		A2AAF88E17494EC300CFFFDA /* RayGlow1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86917494EC300CFFFDA /* RayGlow1@2x.png */; };
+		A2AAF88F17494EC300CFFFDA /* GuildSymbol_Gruul.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86A17494EC300CFFFDA /* GuildSymbol_Gruul.png */; };
+		A2AAF89017494EC300CFFFDA /* GuildSymbol_Gruul.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86A17494EC300CFFFDA /* GuildSymbol_Gruul.png */; };
+		A2AAF89117494EC300CFFFDA /* GuildSymbol_Gruul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86B17494EC300CFFFDA /* GuildSymbol_Gruul@2x.png */; };
+		A2AAF89217494EC300CFFFDA /* GuildSymbol_Gruul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86B17494EC300CFFFDA /* GuildSymbol_Gruul@2x.png */; };
+		A2AAF89317494EC300CFFFDA /* GuildSymbol_Selesnya.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86C17494EC300CFFFDA /* GuildSymbol_Selesnya.png */; };
+		A2AAF89417494EC300CFFFDA /* GuildSymbol_Selesnya.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86C17494EC300CFFFDA /* GuildSymbol_Selesnya.png */; };
+		A2AAF89517494EC300CFFFDA /* GuildSymbol_Simic.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86D17494EC300CFFFDA /* GuildSymbol_Simic.png */; };
+		A2AAF89617494EC300CFFFDA /* GuildSymbol_Simic.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86D17494EC300CFFFDA /* GuildSymbol_Simic.png */; };
+		A2AAF89717494EC300CFFFDA /* GuildSymbol_Izzet.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86E17494EC300CFFFDA /* GuildSymbol_Izzet.png */; };
+		A2AAF89817494EC300CFFFDA /* GuildSymbol_Izzet.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86E17494EC300CFFFDA /* GuildSymbol_Izzet.png */; };
+		A2AAF89917494EC300CFFFDA /* GuildSymbol_Orzhov.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86F17494EC300CFFFDA /* GuildSymbol_Orzhov.png */; };
+		A2AAF89A17494EC300CFFFDA /* GuildSymbol_Orzhov.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF86F17494EC300CFFFDA /* GuildSymbol_Orzhov.png */; };
+		A2AAF89B17494EC300CFFFDA /* GuildSymbol_Rakdos.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87017494EC300CFFFDA /* GuildSymbol_Rakdos.png */; };
+		A2AAF89C17494EC300CFFFDA /* GuildSymbol_Rakdos.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87017494EC300CFFFDA /* GuildSymbol_Rakdos.png */; };
+		A2AAF89D17494EC300CFFFDA /* GuildSymbol_Dimir.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87117494EC300CFFFDA /* GuildSymbol_Dimir.png */; };
+		A2AAF89E17494EC300CFFFDA /* GuildSymbol_Dimir.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87117494EC300CFFFDA /* GuildSymbol_Dimir.png */; };
+		A2AAF89F17494EC300CFFFDA /* GuildSymbol_Golgari.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87217494EC300CFFFDA /* GuildSymbol_Golgari.png */; };
+		A2AAF8A017494EC300CFFFDA /* GuildSymbol_Golgari.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87217494EC300CFFFDA /* GuildSymbol_Golgari.png */; };
+		A2AAF8A117494EC300CFFFDA /* GuildSymbol_Azorius.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87317494EC300CFFFDA /* GuildSymbol_Azorius.png */; };
+		A2AAF8A217494EC300CFFFDA /* GuildSymbol_Azorius.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87317494EC300CFFFDA /* GuildSymbol_Azorius.png */; };
+		A2AAF8A317494EC300CFFFDA /* GuildSymbol_Boros.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87417494EC300CFFFDA /* GuildSymbol_Boros.png */; };
+		A2AAF8A417494EC300CFFFDA /* GuildSymbol_Boros.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87417494EC300CFFFDA /* GuildSymbol_Boros.png */; };
+		A2AAF8A517494EC300CFFFDA /* GuildSymbol_Simic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87517494EC300CFFFDA /* GuildSymbol_Simic@2x.png */; };
+		A2AAF8A617494EC300CFFFDA /* GuildSymbol_Simic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87517494EC300CFFFDA /* GuildSymbol_Simic@2x.png */; };
+		A2AAF8A717494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87617494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png */; };
+		A2AAF8A817494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87617494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png */; };
+		A2AAF8A917494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87717494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png */; };
+		A2AAF8AA17494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87717494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png */; };
+		A2AAF8AB17494EC300CFFFDA /* GuildSymbol_Izzet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87817494EC300CFFFDA /* GuildSymbol_Izzet@2x.png */; };
+		A2AAF8AC17494EC300CFFFDA /* GuildSymbol_Izzet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87817494EC300CFFFDA /* GuildSymbol_Izzet@2x.png */; };
+		A2AAF8AD17494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87917494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png */; };
+		A2AAF8AE17494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87917494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png */; };
+		A2AAF8AF17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87A17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png */; };
+		A2AAF8B017494EC300CFFFDA /* GuildSymbol_Golgari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87A17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png */; };
+		A2AAF8B117494EC300CFFFDA /* GuildSymbol_Azorius@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87B17494EC300CFFFDA /* GuildSymbol_Azorius@2x.png */; };
+		A2AAF8B217494EC300CFFFDA /* GuildSymbol_Azorius@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87B17494EC300CFFFDA /* GuildSymbol_Azorius@2x.png */; };
+		A2AAF8B317494EC300CFFFDA /* GuildSymbol_Boros@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87C17494EC300CFFFDA /* GuildSymbol_Boros@2x.png */; };
+		A2AAF8B417494EC300CFFFDA /* GuildSymbol_Boros@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87C17494EC300CFFFDA /* GuildSymbol_Boros@2x.png */; };
+		A2AAF8B517494EC300CFFFDA /* GuildSymbol_Dimir@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87D17494EC300CFFFDA /* GuildSymbol_Dimir@2x.png */; };
+		A2AAF8B617494EC300CFFFDA /* GuildSymbol_Dimir@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87D17494EC300CFFFDA /* GuildSymbol_Dimir@2x.png */; };
+		A2AAF8B717494EC300CFFFDA /* ParticleFire2.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87E17494EC300CFFFDA /* ParticleFire2.png */; };
+		A2AAF8B817494EC300CFFFDA /* ParticleFire2.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87E17494EC300CFFFDA /* ParticleFire2.png */; };
+		A2AAF8B917494EC300CFFFDA /* ParticleFire.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87F17494EC300CFFFDA /* ParticleFire.png */; };
+		A2AAF8BA17494EC300CFFFDA /* ParticleFire.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF87F17494EC300CFFFDA /* ParticleFire.png */; };
+		A2AAF8BB17494EC300CFFFDA /* JaceBeleren.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88017494EC300CFFFDA /* JaceBeleren.png */; };
+		A2AAF8BC17494EC300CFFFDA /* JaceBeleren.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88017494EC300CFFFDA /* JaceBeleren.png */; };
+		A2AAF8BD17494EC300CFFFDA /* GolgariGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88117494EC300CFFFDA /* GolgariGuy.png */; };
+		A2AAF8BE17494EC300CFFFDA /* GolgariGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88117494EC300CFFFDA /* GolgariGuy.png */; };
+		A2AAF8BF17494EC300CFFFDA /* GruulGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88217494EC300CFFFDA /* GruulGuy.png */; };
+		A2AAF8C017494EC300CFFFDA /* GruulGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88217494EC300CFFFDA /* GruulGuy.png */; };
+		A2AAF8C117494EC300CFFFDA /* IzzetGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88317494EC300CFFFDA /* IzzetGuy.png */; };
+		A2AAF8C217494EC300CFFFDA /* IzzetGuy.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88317494EC300CFFFDA /* IzzetGuy.png */; };
+		A2AAF8C417494EC300CFFFDA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88417494EC300CFFFDA /* Default-568h@2x.png */; };
+		A2AAF8C617494EC300CFFFDA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88517494EC300CFFFDA /* Default.png */; };
+		A2AAF8C817494EC300CFFFDA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF88617494EC300CFFFDA /* Default@2x.png */; };
+		A2AAF8CC17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8C917494EFC00CFFFDA /* LifeCounterDownButton.png */; };
+		A2AAF8CD17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8C917494EFC00CFFFDA /* LifeCounterDownButton.png */; };
+		A2AAF8CE17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8CA17494EFC00CFFFDA /* LifeCounterUpButton.png */; };
+		A2AAF8CF17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8CA17494EFC00CFFFDA /* LifeCounterUpButton.png */; };
+		A2AAF8D017494EFC00CFFFDA /* PassButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8CB17494EFC00CFFFDA /* PassButton.png */; };
+		A2AAF8D117494EFC00CFFFDA /* PassButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8CB17494EFC00CFFFDA /* PassButton.png */; };
+		A2AAF91517494F5700CFFFDA /* AccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */; };
+		A2AAF91617494F5700CFFFDA /* AccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */; };
+		A2AAF91717494F5700CFFFDA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D617494F5700CFFFDA /* Database.m */; };
+		A2AAF91817494F5700CFFFDA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D617494F5700CFFFDA /* Database.m */; };
+		A2AAF91917494F5700CFFFDA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D817494F5700CFFFDA /* FMDatabase.m */; };
+		A2AAF91A17494F5700CFFFDA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D817494F5700CFFFDA /* FMDatabase.m */; };
+		A2AAF91B17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DA17494F5700CFFFDA /* FMDatabaseAdditions.m */; };
+		A2AAF91C17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DA17494F5700CFFFDA /* FMDatabaseAdditions.m */; };
+		A2AAF91D17494F5700CFFFDA /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DC17494F5700CFFFDA /* FMDatabasePool.m */; };
+		A2AAF91E17494F5700CFFFDA /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DC17494F5700CFFFDA /* FMDatabasePool.m */; };
+		A2AAF91F17494F5700CFFFDA /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DE17494F5700CFFFDA /* FMDatabaseQueue.m */; };
+		A2AAF92017494F5700CFFFDA /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DE17494F5700CFFFDA /* FMDatabaseQueue.m */; };
+		A2AAF92117494F5700CFFFDA /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E017494F5700CFFFDA /* FMResultSet.m */; };
+		A2AAF92217494F5700CFFFDA /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E017494F5700CFFFDA /* FMResultSet.m */; };
+		A2AAF92317494F5700CFFFDA /* LifeCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */; };
+		A2AAF92417494F5700CFFFDA /* LifeCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */; };
+		A2AAF92517494F5700CFFFDA /* LocalUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* LocalUser.m */; };
+		A2AAF92617494F5700CFFFDA /* LocalUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* LocalUser.m */; };
+		A2AAF92717494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
+		A2AAF92817494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
+		A2AAF92917494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */; };
+		A2AAF92A17494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */; };
+		A2AAF92B17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
+		A2AAF92C17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
+		A2AAF92D17494F5700CFFFDA /* ManagableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */; };
+		A2AAF92E17494F5700CFFFDA /* ManagableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */; };
+		A2AAF92F17494F5700CFFFDA /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EE17494F5700CFFFDA /* Match.m */; };
+		A2AAF93017494F5700CFFFDA /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EE17494F5700CFFFDA /* Match.m */; };
+		A2AAF93117494F5700CFFFDA /* MatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F017494F5700CFFFDA /* MatchManager.m */; };
+		A2AAF93217494F5700CFFFDA /* MatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F017494F5700CFFFDA /* MatchManager.m */; };
+		A2AAF93317494F5700CFFFDA /* MatchSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F217494F5700CFFFDA /* MatchSetupViewController.m */; };
+		A2AAF93417494F5700CFFFDA /* MatchSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F217494F5700CFFFDA /* MatchSetupViewController.m */; };
+		A2AAF93517494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F317494F5700CFFFDA /* MatchSetupViewController~ipad.xib */; };
+		A2AAF93617494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F317494F5700CFFFDA /* MatchSetupViewController~ipad.xib */; };
+		A2AAF93717494F5700CFFFDA /* MatchTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F517494F5700CFFFDA /* MatchTurn.m */; };
+		A2AAF93817494F5700CFFFDA /* MatchTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F517494F5700CFFFDA /* MatchTurn.m */; };
+		A2AAF93917494F5700CFFFDA /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F717494F5700CFFFDA /* MatchViewController.m */; };
+		A2AAF93A17494F5700CFFFDA /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F717494F5700CFFFDA /* MatchViewController.m */; };
+		A2AAF93B17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */; };
+		A2AAF93C17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */; };
+		A2AAF93D17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */; };
+		A2AAF93E17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */; };
+		A2AAF93F17494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */; };
+		A2AAF94017494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */; };
+		A2AAF94117494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FE17494F5700CFFFDA /* NSMutableDictionary+Random.m */; };
+		A2AAF94217494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FE17494F5700CFFFDA /* NSMutableDictionary+Random.m */; };
+		A2AAF94317494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8FF17494F5700CFFFDA /* PaperTexture@2x~ipad.jpg */; };
+		A2AAF94417494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8FF17494F5700CFFFDA /* PaperTexture@2x~ipad.jpg */; };
+		A2AAF94517494F5700CFFFDA /* PaperTexture~ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF90017494F5700CFFFDA /* PaperTexture~ipad.jpg */; };
+		A2AAF94617494F5700CFFFDA /* PaperTexture~ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF90017494F5700CFFFDA /* PaperTexture~ipad.jpg */; };
+		A2AAF94717494F5700CFFFDA /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90217494F5700CFFFDA /* ResourceManager.m */; };
+		A2AAF94817494F5700CFFFDA /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90217494F5700CFFFDA /* ResourceManager.m */; };
+		A2AAF94917494F5700CFFFDA /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90417494F5700CFFFDA /* RootViewController.m */; };
+		A2AAF94A17494F5700CFFFDA /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90417494F5700CFFFDA /* RootViewController.m */; };
+		A2AAF94B17494F5700CFFFDA /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90617494F5700CFFFDA /* Settings.m */; };
+		A2AAF94C17494F5700CFFFDA /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90617494F5700CFFFDA /* Settings.m */; };
+		A2AAF94D17494F5700CFFFDA /* UIView+BasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90817494F5700CFFFDA /* UIView+BasicAnimation.m */; };
+		A2AAF94E17494F5700CFFFDA /* UIView+BasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90817494F5700CFFFDA /* UIView+BasicAnimation.m */; };
+		A2AAF94F17494F5700CFFFDA /* UIView+CoreAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90A17494F5700CFFFDA /* UIView+CoreAnimation.m */; };
+		A2AAF95017494F5700CFFFDA /* UIView+CoreAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90A17494F5700CFFFDA /* UIView+CoreAnimation.m */; };
+		A2AAF95117494F5700CFFFDA /* UserIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90C17494F5700CFFFDA /* UserIcon.m */; };
+		A2AAF95217494F5700CFFFDA /* UserIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90C17494F5700CFFFDA /* UserIcon.m */; };
+		A2AAF95317494F5700CFFFDA /* UserIconListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */; };
+		A2AAF95417494F5700CFFFDA /* UserIconListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */; };
+		A2AAF95517494F5700CFFFDA /* UserIconListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90F17494F5700CFFFDA /* UserIconListViewController.m */; };
+		A2AAF95617494F5700CFFFDA /* UserIconListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF90F17494F5700CFFFDA /* UserIconListViewController.m */; };
+		A2AAF95717494F5700CFFFDA /* UserIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF91117494F5700CFFFDA /* UserIconView.m */; };
+		A2AAF95817494F5700CFFFDA /* UserIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF91117494F5700CFFFDA /* UserIconView.m */; };
+		A2AAF95917494F5700CFFFDA /* ViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF91317494F5700CFFFDA /* ViewManager.m */; };
+		A2AAF95A17494F5700CFFFDA /* ViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF91317494F5700CFFFDA /* ViewManager.m */; };
+		A2AAF96017494F7000CFFFDA /* KJGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF95D17494F7000CFFFDA /* KJGridLayout.m */; };
+		A2AAF96117494F7000CFFFDA /* KJGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF95D17494F7000CFFFDA /* KJGridLayout.m */; };
+		A2AAF96217494F7000CFFFDA /* KJGridLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF95F17494F7000CFFFDA /* KJGridLayoutView.m */; };
+		A2AAF96317494F7000CFFFDA /* KJGridLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF95F17494F7000CFFFDA /* KJGridLayoutView.m */; };
+		A2AAF9751749516100CFFFDA /* MatchViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF9741749516100CFFFDA /* MatchViewController~ipad.xib */; };
+		A2AAF9761749516100CFFFDA /* MatchViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF9741749516100CFFFDA /* MatchViewController~ipad.xib */; };
+		A2AAF9781749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF9771749516E00CFFFDA /* MatchViewController~iphone.xib */; };
+		A2AAF9791749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF9771749516E00CFFFDA /* MatchViewController~iphone.xib */; };
+		A2AAF97B1749522200CFFFDA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF97A1749522200CFFFDA /* QuartzCore.framework */; };
+		A2AAF97D1749522D00CFFFDA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */; };
+		A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
+		A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A2AAF85117494D5900CFFFDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2AAF81B17494D5800CFFFDA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2AAF82217494D5800CFFFDA;
+			remoteInfo = MTGBattleground;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A2AAF82317494D5800CFFFDA /* MTGBattleground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTGBattleground.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2AAF82617494D5800CFFFDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A2AAF82817494D5800CFFFDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A2AAF82A17494D5800CFFFDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A2AAF82E17494D5800CFFFDA /* MTGBattleground-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTGBattleground-Info.plist"; sourceTree = "<group>"; };
+		A2AAF83017494D5800CFFFDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2AAF83217494D5800CFFFDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A2AAF83417494D5800CFFFDA /* MTGBattleground-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MTGBattleground-Prefix.pch"; sourceTree = "<group>"; };
+		A2AAF83517494D5900CFFFDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A2AAF83617494D5900CFFFDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A2AAF83817494D5900CFFFDA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A2AAF83A17494D5900CFFFDA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A2AAF83C17494D5900CFFFDA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A2AAF84C17494D5900CFFFDA /* MTGBattlegroundTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTGBattlegroundTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2AAF84D17494D5900CFFFDA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A2AAF85517494D5900CFFFDA /* MTGBattlegroundTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTGBattlegroundTests-Info.plist"; sourceTree = "<group>"; };
+		A2AAF85717494D5900CFFFDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2AAF85917494D5900CFFFDA /* MTGBattlegroundTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTGBattlegroundTests.h; sourceTree = "<group>"; };
+		A2AAF85A17494D5900CFFFDA /* MTGBattlegroundTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTGBattlegroundTests.m; sourceTree = "<group>"; };
+		A2AAF86617494EC300CFFFDA /* RayGlow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RayGlow2.png; sourceTree = "<group>"; };
+		A2AAF86717494EC300CFFFDA /* RayGlow2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RayGlow2@2x.png"; sourceTree = "<group>"; };
+		A2AAF86817494EC300CFFFDA /* RayGlow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RayGlow1.png; sourceTree = "<group>"; };
+		A2AAF86917494EC300CFFFDA /* RayGlow1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RayGlow1@2x.png"; sourceTree = "<group>"; };
+		A2AAF86A17494EC300CFFFDA /* GuildSymbol_Gruul.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Gruul.png; sourceTree = "<group>"; };
+		A2AAF86B17494EC300CFFFDA /* GuildSymbol_Gruul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Gruul@2x.png"; sourceTree = "<group>"; };
+		A2AAF86C17494EC300CFFFDA /* GuildSymbol_Selesnya.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Selesnya.png; sourceTree = "<group>"; };
+		A2AAF86D17494EC300CFFFDA /* GuildSymbol_Simic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Simic.png; sourceTree = "<group>"; };
+		A2AAF86E17494EC300CFFFDA /* GuildSymbol_Izzet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Izzet.png; sourceTree = "<group>"; };
+		A2AAF86F17494EC300CFFFDA /* GuildSymbol_Orzhov.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Orzhov.png; sourceTree = "<group>"; };
+		A2AAF87017494EC300CFFFDA /* GuildSymbol_Rakdos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Rakdos.png; sourceTree = "<group>"; };
+		A2AAF87117494EC300CFFFDA /* GuildSymbol_Dimir.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Dimir.png; sourceTree = "<group>"; };
+		A2AAF87217494EC300CFFFDA /* GuildSymbol_Golgari.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Golgari.png; sourceTree = "<group>"; };
+		A2AAF87317494EC300CFFFDA /* GuildSymbol_Azorius.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Azorius.png; sourceTree = "<group>"; };
+		A2AAF87417494EC300CFFFDA /* GuildSymbol_Boros.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GuildSymbol_Boros.png; sourceTree = "<group>"; };
+		A2AAF87517494EC300CFFFDA /* GuildSymbol_Simic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Simic@2x.png"; sourceTree = "<group>"; };
+		A2AAF87617494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Rakdos@2x.png"; sourceTree = "<group>"; };
+		A2AAF87717494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Selesnya@2x.png"; sourceTree = "<group>"; };
+		A2AAF87817494EC300CFFFDA /* GuildSymbol_Izzet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Izzet@2x.png"; sourceTree = "<group>"; };
+		A2AAF87917494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Orzhov@2x.png"; sourceTree = "<group>"; };
+		A2AAF87A17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Golgari@2x.png"; sourceTree = "<group>"; };
+		A2AAF87B17494EC300CFFFDA /* GuildSymbol_Azorius@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Azorius@2x.png"; sourceTree = "<group>"; };
+		A2AAF87C17494EC300CFFFDA /* GuildSymbol_Boros@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Boros@2x.png"; sourceTree = "<group>"; };
+		A2AAF87D17494EC300CFFFDA /* GuildSymbol_Dimir@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GuildSymbol_Dimir@2x.png"; sourceTree = "<group>"; };
+		A2AAF87E17494EC300CFFFDA /* ParticleFire2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ParticleFire2.png; sourceTree = "<group>"; };
+		A2AAF87F17494EC300CFFFDA /* ParticleFire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ParticleFire.png; sourceTree = "<group>"; };
+		A2AAF88017494EC300CFFFDA /* JaceBeleren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JaceBeleren.png; sourceTree = "<group>"; };
+		A2AAF88117494EC300CFFFDA /* GolgariGuy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GolgariGuy.png; sourceTree = "<group>"; };
+		A2AAF88217494EC300CFFFDA /* GruulGuy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GruulGuy.png; sourceTree = "<group>"; };
+		A2AAF88317494EC300CFFFDA /* IzzetGuy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IzzetGuy.png; sourceTree = "<group>"; };
+		A2AAF88417494EC300CFFFDA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A2AAF88517494EC300CFFFDA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A2AAF88617494EC300CFFFDA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A2AAF8C917494EFC00CFFFDA /* LifeCounterDownButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterDownButton.png; sourceTree = "<group>"; };
+		A2AAF8CA17494EFC00CFFFDA /* LifeCounterUpButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterUpButton.png; sourceTree = "<group>"; };
+		A2AAF8CB17494EFC00CFFFDA /* PassButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PassButton.png; sourceTree = "<group>"; };
+		A2AAF8D217494F5700CFFFDA /* AccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessoryViewController.h; sourceTree = "<group>"; };
+		A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessoryViewController.m; sourceTree = "<group>"; };
+		A2AAF8D417494F5700CFFFDA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A2AAF8D517494F5700CFFFDA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		A2AAF8D617494F5700CFFFDA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		A2AAF8D717494F5700CFFFDA /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		A2AAF8D817494F5700CFFFDA /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		A2AAF8D917494F5700CFFFDA /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		A2AAF8DA17494F5700CFFFDA /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		A2AAF8DB17494F5700CFFFDA /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		A2AAF8DC17494F5700CFFFDA /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		A2AAF8DD17494F5700CFFFDA /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		A2AAF8DE17494F5700CFFFDA /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		A2AAF8DF17494F5700CFFFDA /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		A2AAF8E017494F5700CFFFDA /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		A2AAF8E117494F5700CFFFDA /* IdentifiableDatabaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentifiableDatabaseObject.h; sourceTree = "<group>"; };
+		A2AAF8E217494F5700CFFFDA /* LifeCounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeCounterView.h; sourceTree = "<group>"; };
+		A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeCounterView.m; sourceTree = "<group>"; };
+		A2AAF8E417494F5700CFFFDA /* LocalUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUser.h; sourceTree = "<group>"; };
+		A2AAF8E517494F5700CFFFDA /* LocalUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUser.m; sourceTree = "<group>"; };
+		A2AAF8E617494F5700CFFFDA /* LocalUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserListViewController.h; sourceTree = "<group>"; };
+		A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserListViewController.m; sourceTree = "<group>"; };
+		A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LocalUserListViewController~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF8E917494F5700CFFFDA /* LocalUserSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserSelectionView.h; sourceTree = "<group>"; };
+		A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserSelectionView.m; sourceTree = "<group>"; };
+		A2AAF8EB17494F5700CFFFDA /* ManagableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagableViewController.h; sourceTree = "<group>"; };
+		A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagableViewController.m; sourceTree = "<group>"; };
+		A2AAF8ED17494F5700CFFFDA /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
+		A2AAF8EE17494F5700CFFFDA /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		A2AAF8EF17494F5700CFFFDA /* MatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchManager.h; sourceTree = "<group>"; };
+		A2AAF8F017494F5700CFFFDA /* MatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchManager.m; sourceTree = "<group>"; };
+		A2AAF8F117494F5700CFFFDA /* MatchSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchSetupViewController.h; sourceTree = "<group>"; };
+		A2AAF8F217494F5700CFFFDA /* MatchSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchSetupViewController.m; sourceTree = "<group>"; };
+		A2AAF8F317494F5700CFFFDA /* MatchSetupViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MatchSetupViewController~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF8F417494F5700CFFFDA /* MatchTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchTurn.h; sourceTree = "<group>"; };
+		A2AAF8F517494F5700CFFFDA /* MatchTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchTurn.m; sourceTree = "<group>"; };
+		A2AAF8F617494F5700CFFFDA /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
+		A2AAF8F717494F5700CFFFDA /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
+		A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MTGBattleground.sqlite; sourceTree = "<group>"; };
+		A2AAF8F917494F5700CFFFDA /* NSMutableArray+Queueing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queueing.h"; sourceTree = "<group>"; };
+		A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queueing.m"; sourceTree = "<group>"; };
+		A2AAF8FB17494F5700CFFFDA /* NSMutableArray+Shifting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shifting.h"; sourceTree = "<group>"; };
+		A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shifting.m"; sourceTree = "<group>"; };
+		A2AAF8FD17494F5700CFFFDA /* NSMutableDictionary+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Random.h"; sourceTree = "<group>"; };
+		A2AAF8FE17494F5700CFFFDA /* NSMutableDictionary+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Random.m"; sourceTree = "<group>"; };
+		A2AAF8FF17494F5700CFFFDA /* PaperTexture@2x~ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "PaperTexture@2x~ipad.jpg"; sourceTree = "<group>"; };
+		A2AAF90017494F5700CFFFDA /* PaperTexture~ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "PaperTexture~ipad.jpg"; sourceTree = "<group>"; };
+		A2AAF90117494F5700CFFFDA /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
+		A2AAF90217494F5700CFFFDA /* ResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManager.m; sourceTree = "<group>"; };
+		A2AAF90317494F5700CFFFDA /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		A2AAF90417494F5700CFFFDA /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		A2AAF90517494F5700CFFFDA /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		A2AAF90617494F5700CFFFDA /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
+		A2AAF90717494F5700CFFFDA /* UIView+BasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BasicAnimation.h"; sourceTree = "<group>"; };
+		A2AAF90817494F5700CFFFDA /* UIView+BasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BasicAnimation.m"; sourceTree = "<group>"; };
+		A2AAF90917494F5700CFFFDA /* UIView+CoreAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CoreAnimation.h"; sourceTree = "<group>"; };
+		A2AAF90A17494F5700CFFFDA /* UIView+CoreAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CoreAnimation.m"; sourceTree = "<group>"; };
+		A2AAF90B17494F5700CFFFDA /* UserIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserIcon.h; sourceTree = "<group>"; };
+		A2AAF90C17494F5700CFFFDA /* UserIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserIcon.m; sourceTree = "<group>"; };
+		A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "UserIconListView~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF90E17494F5700CFFFDA /* UserIconListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserIconListViewController.h; sourceTree = "<group>"; };
+		A2AAF90F17494F5700CFFFDA /* UserIconListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserIconListViewController.m; sourceTree = "<group>"; };
+		A2AAF91017494F5700CFFFDA /* UserIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserIconView.h; sourceTree = "<group>"; };
+		A2AAF91117494F5700CFFFDA /* UserIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserIconView.m; sourceTree = "<group>"; };
+		A2AAF91217494F5700CFFFDA /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
+		A2AAF91317494F5700CFFFDA /* ViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewManager.m; sourceTree = "<group>"; };
+		A2AAF91417494F5700CFFFDA /* ViewManagerAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManagerAccess.h; sourceTree = "<group>"; };
+		A2AAF95B17494F7000CFFFDA /* KJGridLayout-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KJGridLayout-Prefix.pch"; sourceTree = "<group>"; };
+		A2AAF95C17494F7000CFFFDA /* KJGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJGridLayout.h; sourceTree = "<group>"; };
+		A2AAF95D17494F7000CFFFDA /* KJGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJGridLayout.m; sourceTree = "<group>"; };
+		A2AAF95E17494F7000CFFFDA /* KJGridLayoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJGridLayoutView.h; sourceTree = "<group>"; };
+		A2AAF95F17494F7000CFFFDA /* KJGridLayoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJGridLayoutView.m; sourceTree = "<group>"; };
+		A2AAF9741749516100CFFFDA /* MatchViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MatchViewController~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF9771749516E00CFFFDA /* MatchViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MatchViewController~iphone.xib"; sourceTree = "<group>"; };
+		A2AAF97A1749522200CFFFDA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterSegment.png; sourceTree = "<group>"; };
+		A2AAF9811749533B00CFFFDA /* Arts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Arts; path = ../../Arts; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A2AAF82017494D5800CFFFDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF97D1749522D00CFFFDA /* libsqlite3.dylib in Frameworks */,
+				A2AAF97B1749522200CFFFDA /* QuartzCore.framework in Frameworks */,
+				A2AAF82717494D5800CFFFDA /* UIKit.framework in Frameworks */,
+				A2AAF82917494D5800CFFFDA /* Foundation.framework in Frameworks */,
+				A2AAF82B17494D5800CFFFDA /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2AAF84817494D5900CFFFDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF84E17494D5900CFFFDA /* SenTestingKit.framework in Frameworks */,
+				A2AAF84F17494D5900CFFFDA /* UIKit.framework in Frameworks */,
+				A2AAF85017494D5900CFFFDA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A2AAF81A17494D5800CFFFDA = {
+			isa = PBXGroup;
+			children = (
+				A2AAF82C17494D5800CFFFDA /* MTGBattleground */,
+				A2AAF85317494D5900CFFFDA /* MTGBattlegroundTests */,
+				A2AAF82517494D5800CFFFDA /* Frameworks */,
+				A2AAF82417494D5800CFFFDA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A2AAF82417494D5800CFFFDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF82317494D5800CFFFDA /* MTGBattleground.app */,
+				A2AAF84C17494D5900CFFFDA /* MTGBattlegroundTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A2AAF82517494D5800CFFFDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */,
+				A2AAF97A1749522200CFFFDA /* QuartzCore.framework */,
+				A2AAF82617494D5800CFFFDA /* UIKit.framework */,
+				A2AAF82817494D5800CFFFDA /* Foundation.framework */,
+				A2AAF82A17494D5800CFFFDA /* CoreGraphics.framework */,
+				A2AAF84D17494D5900CFFFDA /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2AAF82C17494D5800CFFFDA /* MTGBattleground */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8D417494F5700CFFFDA /* Constants.h */,
+				A2AAF83517494D5900CFFFDA /* AppDelegate.h */,
+				A2AAF83617494D5900CFFFDA /* AppDelegate.m */,
+				A2AAF96517494F7C00CFFFDA /* View Controller */,
+				A2AAF96B17494FDB00CFFFDA /* View */,
+				A2AAF96617494F8700CFFFDA /* ViewManager */,
+				A2AAF96717494FB700CFFFDA /* Database */,
+				A2AAF96C17494FE800CFFFDA /* Manager */,
+				A2AAF96917494FC400CFFFDA /* Third Party */,
+				A2AAF96E1749507500CFFFDA /* Category */,
+				A2AAF86417494D9500CFFFDA /* Resource */,
+				A2AAF82D17494D5800CFFFDA /* Supporting Files */,
+			);
+			path = MTGBattleground;
+			sourceTree = "<group>";
+		};
+		A2AAF82D17494D5800CFFFDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF82E17494D5800CFFFDA /* MTGBattleground-Info.plist */,
+				A2AAF82F17494D5800CFFFDA /* InfoPlist.strings */,
+				A2AAF83217494D5800CFFFDA /* main.m */,
+				A2AAF83417494D5800CFFFDA /* MTGBattleground-Prefix.pch */,
+				A2AAF83817494D5900CFFFDA /* Default.png */,
+				A2AAF83A17494D5900CFFFDA /* Default@2x.png */,
+				A2AAF83C17494D5900CFFFDA /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A2AAF85317494D5900CFFFDA /* MTGBattlegroundTests */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF85917494D5900CFFFDA /* MTGBattlegroundTests.h */,
+				A2AAF85A17494D5900CFFFDA /* MTGBattlegroundTests.m */,
+				A2AAF85417494D5900CFFFDA /* Supporting Files */,
+			);
+			path = MTGBattlegroundTests;
+			sourceTree = "<group>";
+		};
+		A2AAF85417494D5900CFFFDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF85517494D5900CFFFDA /* MTGBattlegroundTests-Info.plist */,
+				A2AAF85617494D5900CFFFDA /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A2AAF86417494D9500CFFFDA /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */,
+				A2AAF86517494D9C00CFFFDA /* Image */,
+				A2AAF96F174950C900CFFFDA /* Interface */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		A2AAF86517494D9C00CFFFDA /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF9811749533B00CFFFDA /* Arts */,
+				A2AAF88417494EC300CFFFDA /* Default-568h@2x.png */,
+				A2AAF88517494EC300CFFFDA /* Default.png */,
+				A2AAF88617494EC300CFFFDA /* Default@2x.png */,
+				A2AAF970174950F800CFFFDA /* Guild */,
+				A2AAF9721749513000CFFFDA /* Button */,
+				A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */,
+				A2AAF8FF17494F5700CFFFDA /* PaperTexture@2x~ipad.jpg */,
+				A2AAF90017494F5700CFFFDA /* PaperTexture~ipad.jpg */,
+				A2AAF86617494EC300CFFFDA /* RayGlow2.png */,
+				A2AAF86717494EC300CFFFDA /* RayGlow2@2x.png */,
+				A2AAF86817494EC300CFFFDA /* RayGlow1.png */,
+				A2AAF86917494EC300CFFFDA /* RayGlow1@2x.png */,
+				A2AAF87E17494EC300CFFFDA /* ParticleFire2.png */,
+				A2AAF87F17494EC300CFFFDA /* ParticleFire.png */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
+		A2AAF96417494F7300CFFFDA /* KJGridLayout */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF95B17494F7000CFFFDA /* KJGridLayout-Prefix.pch */,
+				A2AAF95C17494F7000CFFFDA /* KJGridLayout.h */,
+				A2AAF95D17494F7000CFFFDA /* KJGridLayout.m */,
+				A2AAF95E17494F7000CFFFDA /* KJGridLayoutView.h */,
+				A2AAF95F17494F7000CFFFDA /* KJGridLayoutView.m */,
+			);
+			name = KJGridLayout;
+			sourceTree = "<group>";
+		};
+		A2AAF96517494F7C00CFFFDA /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8F117494F5700CFFFDA /* MatchSetupViewController.h */,
+				A2AAF8F217494F5700CFFFDA /* MatchSetupViewController.m */,
+				A2AAF8F617494F5700CFFFDA /* MatchViewController.h */,
+				A2AAF8F717494F5700CFFFDA /* MatchViewController.m */,
+				A2AAF96D1749503B00CFFFDA /* Accessory */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		A2AAF96617494F8700CFFFDA /* ViewManager */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF91417494F5700CFFFDA /* ViewManagerAccess.h */,
+				A2AAF91217494F5700CFFFDA /* ViewManager.h */,
+				A2AAF91317494F5700CFFFDA /* ViewManager.m */,
+				A2AAF90317494F5700CFFFDA /* RootViewController.h */,
+				A2AAF90417494F5700CFFFDA /* RootViewController.m */,
+				A2AAF8D217494F5700CFFFDA /* AccessoryViewController.h */,
+				A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */,
+				A2AAF8EB17494F5700CFFFDA /* ManagableViewController.h */,
+				A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */,
+			);
+			name = ViewManager;
+			sourceTree = "<group>";
+		};
+		A2AAF96717494FB700CFFFDA /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF90517494F5700CFFFDA /* Settings.h */,
+				A2AAF90617494F5700CFFFDA /* Settings.m */,
+				A2AAF8D517494F5700CFFFDA /* Database.h */,
+				A2AAF8D617494F5700CFFFDA /* Database.m */,
+				A2AAF96A17494FD400CFFFDA /* Object */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		A2AAF96817494FBF00CFFFDA /* FMDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8D717494F5700CFFFDA /* FMDatabase.h */,
+				A2AAF8D817494F5700CFFFDA /* FMDatabase.m */,
+				A2AAF8D917494F5700CFFFDA /* FMDatabaseAdditions.h */,
+				A2AAF8DA17494F5700CFFFDA /* FMDatabaseAdditions.m */,
+				A2AAF8DB17494F5700CFFFDA /* FMDatabasePool.h */,
+				A2AAF8DC17494F5700CFFFDA /* FMDatabasePool.m */,
+				A2AAF8DD17494F5700CFFFDA /* FMDatabaseQueue.h */,
+				A2AAF8DE17494F5700CFFFDA /* FMDatabaseQueue.m */,
+				A2AAF8DF17494F5700CFFFDA /* FMResultSet.h */,
+				A2AAF8E017494F5700CFFFDA /* FMResultSet.m */,
+			);
+			name = FMDatabase;
+			sourceTree = "<group>";
+		};
+		A2AAF96917494FC400CFFFDA /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF96417494F7300CFFFDA /* KJGridLayout */,
+				A2AAF96817494FBF00CFFFDA /* FMDatabase */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		A2AAF96A17494FD400CFFFDA /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8E117494F5700CFFFDA /* IdentifiableDatabaseObject.h */,
+				A2AAF8ED17494F5700CFFFDA /* Match.h */,
+				A2AAF8EE17494F5700CFFFDA /* Match.m */,
+				A2AAF8F417494F5700CFFFDA /* MatchTurn.h */,
+				A2AAF8F517494F5700CFFFDA /* MatchTurn.m */,
+				A2AAF8E417494F5700CFFFDA /* LocalUser.h */,
+				A2AAF8E517494F5700CFFFDA /* LocalUser.m */,
+				A2AAF90B17494F5700CFFFDA /* UserIcon.h */,
+				A2AAF90C17494F5700CFFFDA /* UserIcon.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
+		A2AAF96B17494FDB00CFFFDA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8E217494F5700CFFFDA /* LifeCounterView.h */,
+				A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */,
+				A2AAF8E917494F5700CFFFDA /* LocalUserSelectionView.h */,
+				A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */,
+				A2AAF91017494F5700CFFFDA /* UserIconView.h */,
+				A2AAF91117494F5700CFFFDA /* UserIconView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		A2AAF96C17494FE800CFFFDA /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF90117494F5700CFFFDA /* ResourceManager.h */,
+				A2AAF90217494F5700CFFFDA /* ResourceManager.m */,
+				A2AAF8EF17494F5700CFFFDA /* MatchManager.h */,
+				A2AAF8F017494F5700CFFFDA /* MatchManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		A2AAF96D1749503B00CFFFDA /* Accessory */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8E617494F5700CFFFDA /* LocalUserListViewController.h */,
+				A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */,
+				A2AAF90E17494F5700CFFFDA /* UserIconListViewController.h */,
+				A2AAF90F17494F5700CFFFDA /* UserIconListViewController.m */,
+			);
+			name = Accessory;
+			sourceTree = "<group>";
+		};
+		A2AAF96E1749507500CFFFDA /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8F917494F5700CFFFDA /* NSMutableArray+Queueing.h */,
+				A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */,
+				A2AAF8FB17494F5700CFFFDA /* NSMutableArray+Shifting.h */,
+				A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */,
+				A2AAF8FD17494F5700CFFFDA /* NSMutableDictionary+Random.h */,
+				A2AAF8FE17494F5700CFFFDA /* NSMutableDictionary+Random.m */,
+				A2AAF90717494F5700CFFFDA /* UIView+BasicAnimation.h */,
+				A2AAF90817494F5700CFFFDA /* UIView+BasicAnimation.m */,
+				A2AAF90917494F5700CFFFDA /* UIView+CoreAnimation.h */,
+				A2AAF90A17494F5700CFFFDA /* UIView+CoreAnimation.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		A2AAF96F174950C900CFFFDA /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8F317494F5700CFFFDA /* MatchSetupViewController~ipad.xib */,
+				A2AAF9771749516E00CFFFDA /* MatchViewController~iphone.xib */,
+				A2AAF9741749516100CFFFDA /* MatchViewController~ipad.xib */,
+				A2AAF9731749514500CFFFDA /* Accessory */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		A2AAF970174950F800CFFFDA /* Guild */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF9711749511000CFFFDA /* Guild Symbol */,
+				A2AAF88017494EC300CFFFDA /* JaceBeleren.png */,
+				A2AAF88117494EC300CFFFDA /* GolgariGuy.png */,
+				A2AAF88217494EC300CFFFDA /* GruulGuy.png */,
+				A2AAF88317494EC300CFFFDA /* IzzetGuy.png */,
+			);
+			name = Guild;
+			sourceTree = "<group>";
+		};
+		A2AAF9711749511000CFFFDA /* Guild Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF86A17494EC300CFFFDA /* GuildSymbol_Gruul.png */,
+				A2AAF86B17494EC300CFFFDA /* GuildSymbol_Gruul@2x.png */,
+				A2AAF86C17494EC300CFFFDA /* GuildSymbol_Selesnya.png */,
+				A2AAF86D17494EC300CFFFDA /* GuildSymbol_Simic.png */,
+				A2AAF86E17494EC300CFFFDA /* GuildSymbol_Izzet.png */,
+				A2AAF86F17494EC300CFFFDA /* GuildSymbol_Orzhov.png */,
+				A2AAF87017494EC300CFFFDA /* GuildSymbol_Rakdos.png */,
+				A2AAF87117494EC300CFFFDA /* GuildSymbol_Dimir.png */,
+				A2AAF87217494EC300CFFFDA /* GuildSymbol_Golgari.png */,
+				A2AAF87317494EC300CFFFDA /* GuildSymbol_Azorius.png */,
+				A2AAF87417494EC300CFFFDA /* GuildSymbol_Boros.png */,
+				A2AAF87517494EC300CFFFDA /* GuildSymbol_Simic@2x.png */,
+				A2AAF87617494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png */,
+				A2AAF87717494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png */,
+				A2AAF87817494EC300CFFFDA /* GuildSymbol_Izzet@2x.png */,
+				A2AAF87917494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png */,
+				A2AAF87A17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png */,
+				A2AAF87B17494EC300CFFFDA /* GuildSymbol_Azorius@2x.png */,
+				A2AAF87C17494EC300CFFFDA /* GuildSymbol_Boros@2x.png */,
+				A2AAF87D17494EC300CFFFDA /* GuildSymbol_Dimir@2x.png */,
+			);
+			name = "Guild Symbol";
+			sourceTree = "<group>";
+		};
+		A2AAF9721749513000CFFFDA /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8C917494EFC00CFFFDA /* LifeCounterDownButton.png */,
+				A2AAF8CA17494EFC00CFFFDA /* LifeCounterUpButton.png */,
+				A2AAF8CB17494EFC00CFFFDA /* PassButton.png */,
+			);
+			name = Button;
+			sourceTree = "<group>";
+		};
+		A2AAF9731749514500CFFFDA /* Accessory */ = {
+			isa = PBXGroup;
+			children = (
+				A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */,
+				A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */,
+			);
+			name = Accessory;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A2AAF82217494D5800CFFFDA /* MTGBattleground */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2AAF85E17494D5900CFFFDA /* Build configuration list for PBXNativeTarget "MTGBattleground" */;
+			buildPhases = (
+				A2AAF81F17494D5800CFFFDA /* Sources */,
+				A2AAF82017494D5800CFFFDA /* Frameworks */,
+				A2AAF82117494D5800CFFFDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MTGBattleground;
+			productName = MTGBattleground;
+			productReference = A2AAF82317494D5800CFFFDA /* MTGBattleground.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A2AAF84B17494D5900CFFFDA /* MTGBattlegroundTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2AAF86117494D5900CFFFDA /* Build configuration list for PBXNativeTarget "MTGBattlegroundTests" */;
+			buildPhases = (
+				A2AAF84717494D5900CFFFDA /* Sources */,
+				A2AAF84817494D5900CFFFDA /* Frameworks */,
+				A2AAF84917494D5900CFFFDA /* Resources */,
+				A2AAF84A17494D5900CFFFDA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A2AAF85217494D5900CFFFDA /* PBXTargetDependency */,
+			);
+			name = MTGBattlegroundTests;
+			productName = MTGBattlegroundTests;
+			productReference = A2AAF84C17494D5900CFFFDA /* MTGBattlegroundTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A2AAF81B17494D5800CFFFDA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Torchline Technology";
+			};
+			buildConfigurationList = A2AAF81E17494D5800CFFFDA /* Build configuration list for PBXProject "MTGBattleground" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A2AAF81A17494D5800CFFFDA;
+			productRefGroup = A2AAF82417494D5800CFFFDA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A2AAF82217494D5800CFFFDA /* MTGBattleground */,
+				A2AAF84B17494D5900CFFFDA /* MTGBattlegroundTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A2AAF82117494D5800CFFFDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF83117494D5800CFFFDA /* InfoPlist.strings in Resources */,
+				A2AAF83917494D5900CFFFDA /* Default.png in Resources */,
+				A2AAF83B17494D5900CFFFDA /* Default@2x.png in Resources */,
+				A2AAF83D17494D5900CFFFDA /* Default-568h@2x.png in Resources */,
+				A2AAF88717494EC300CFFFDA /* RayGlow2.png in Resources */,
+				A2AAF88917494EC300CFFFDA /* RayGlow2@2x.png in Resources */,
+				A2AAF88B17494EC300CFFFDA /* RayGlow1.png in Resources */,
+				A2AAF88D17494EC300CFFFDA /* RayGlow1@2x.png in Resources */,
+				A2AAF88F17494EC300CFFFDA /* GuildSymbol_Gruul.png in Resources */,
+				A2AAF89117494EC300CFFFDA /* GuildSymbol_Gruul@2x.png in Resources */,
+				A2AAF89317494EC300CFFFDA /* GuildSymbol_Selesnya.png in Resources */,
+				A2AAF89517494EC300CFFFDA /* GuildSymbol_Simic.png in Resources */,
+				A2AAF89717494EC300CFFFDA /* GuildSymbol_Izzet.png in Resources */,
+				A2AAF89917494EC300CFFFDA /* GuildSymbol_Orzhov.png in Resources */,
+				A2AAF89B17494EC300CFFFDA /* GuildSymbol_Rakdos.png in Resources */,
+				A2AAF89D17494EC300CFFFDA /* GuildSymbol_Dimir.png in Resources */,
+				A2AAF89F17494EC300CFFFDA /* GuildSymbol_Golgari.png in Resources */,
+				A2AAF8A117494EC300CFFFDA /* GuildSymbol_Azorius.png in Resources */,
+				A2AAF8A317494EC300CFFFDA /* GuildSymbol_Boros.png in Resources */,
+				A2AAF8A517494EC300CFFFDA /* GuildSymbol_Simic@2x.png in Resources */,
+				A2AAF8A717494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png in Resources */,
+				A2AAF8A917494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png in Resources */,
+				A2AAF8AB17494EC300CFFFDA /* GuildSymbol_Izzet@2x.png in Resources */,
+				A2AAF8AD17494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png in Resources */,
+				A2AAF8AF17494EC300CFFFDA /* GuildSymbol_Golgari@2x.png in Resources */,
+				A2AAF8B117494EC300CFFFDA /* GuildSymbol_Azorius@2x.png in Resources */,
+				A2AAF8B317494EC300CFFFDA /* GuildSymbol_Boros@2x.png in Resources */,
+				A2AAF8B517494EC300CFFFDA /* GuildSymbol_Dimir@2x.png in Resources */,
+				A2AAF8B717494EC300CFFFDA /* ParticleFire2.png in Resources */,
+				A2AAF8B917494EC300CFFFDA /* ParticleFire.png in Resources */,
+				A2AAF8BB17494EC300CFFFDA /* JaceBeleren.png in Resources */,
+				A2AAF8BD17494EC300CFFFDA /* GolgariGuy.png in Resources */,
+				A2AAF8BF17494EC300CFFFDA /* GruulGuy.png in Resources */,
+				A2AAF8C117494EC300CFFFDA /* IzzetGuy.png in Resources */,
+				A2AAF8CC17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */,
+				A2AAF8CE17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */,
+				A2AAF8D017494EFC00CFFFDA /* PassButton.png in Resources */,
+				A2AAF92917494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */,
+				A2AAF93517494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */,
+				A2AAF93B17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */,
+				A2AAF94317494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */,
+				A2AAF94517494F5700CFFFDA /* PaperTexture~ipad.jpg in Resources */,
+				A2AAF95317494F5700CFFFDA /* UserIconListView~ipad.xib in Resources */,
+				A2AAF9751749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
+				A2AAF9781749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
+				A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2AAF84917494D5900CFFFDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF85817494D5900CFFFDA /* InfoPlist.strings in Resources */,
+				A2AAF88817494EC300CFFFDA /* RayGlow2.png in Resources */,
+				A2AAF88A17494EC300CFFFDA /* RayGlow2@2x.png in Resources */,
+				A2AAF88C17494EC300CFFFDA /* RayGlow1.png in Resources */,
+				A2AAF88E17494EC300CFFFDA /* RayGlow1@2x.png in Resources */,
+				A2AAF89017494EC300CFFFDA /* GuildSymbol_Gruul.png in Resources */,
+				A2AAF89217494EC300CFFFDA /* GuildSymbol_Gruul@2x.png in Resources */,
+				A2AAF89417494EC300CFFFDA /* GuildSymbol_Selesnya.png in Resources */,
+				A2AAF89617494EC300CFFFDA /* GuildSymbol_Simic.png in Resources */,
+				A2AAF89817494EC300CFFFDA /* GuildSymbol_Izzet.png in Resources */,
+				A2AAF89A17494EC300CFFFDA /* GuildSymbol_Orzhov.png in Resources */,
+				A2AAF89C17494EC300CFFFDA /* GuildSymbol_Rakdos.png in Resources */,
+				A2AAF89E17494EC300CFFFDA /* GuildSymbol_Dimir.png in Resources */,
+				A2AAF8A017494EC300CFFFDA /* GuildSymbol_Golgari.png in Resources */,
+				A2AAF8A217494EC300CFFFDA /* GuildSymbol_Azorius.png in Resources */,
+				A2AAF8A417494EC300CFFFDA /* GuildSymbol_Boros.png in Resources */,
+				A2AAF8A617494EC300CFFFDA /* GuildSymbol_Simic@2x.png in Resources */,
+				A2AAF8A817494EC300CFFFDA /* GuildSymbol_Rakdos@2x.png in Resources */,
+				A2AAF8AA17494EC300CFFFDA /* GuildSymbol_Selesnya@2x.png in Resources */,
+				A2AAF8AC17494EC300CFFFDA /* GuildSymbol_Izzet@2x.png in Resources */,
+				A2AAF8AE17494EC300CFFFDA /* GuildSymbol_Orzhov@2x.png in Resources */,
+				A2AAF8B017494EC300CFFFDA /* GuildSymbol_Golgari@2x.png in Resources */,
+				A2AAF8B217494EC300CFFFDA /* GuildSymbol_Azorius@2x.png in Resources */,
+				A2AAF8B417494EC300CFFFDA /* GuildSymbol_Boros@2x.png in Resources */,
+				A2AAF8B617494EC300CFFFDA /* GuildSymbol_Dimir@2x.png in Resources */,
+				A2AAF8B817494EC300CFFFDA /* ParticleFire2.png in Resources */,
+				A2AAF8BA17494EC300CFFFDA /* ParticleFire.png in Resources */,
+				A2AAF8BC17494EC300CFFFDA /* JaceBeleren.png in Resources */,
+				A2AAF8BE17494EC300CFFFDA /* GolgariGuy.png in Resources */,
+				A2AAF8C017494EC300CFFFDA /* GruulGuy.png in Resources */,
+				A2AAF8C217494EC300CFFFDA /* IzzetGuy.png in Resources */,
+				A2AAF8C417494EC300CFFFDA /* Default-568h@2x.png in Resources */,
+				A2AAF8C617494EC300CFFFDA /* Default.png in Resources */,
+				A2AAF8C817494EC300CFFFDA /* Default@2x.png in Resources */,
+				A2AAF8CD17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */,
+				A2AAF8CF17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */,
+				A2AAF8D117494EFC00CFFFDA /* PassButton.png in Resources */,
+				A2AAF92A17494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */,
+				A2AAF93617494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */,
+				A2AAF93C17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */,
+				A2AAF94417494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */,
+				A2AAF94617494F5700CFFFDA /* PaperTexture~ipad.jpg in Resources */,
+				A2AAF95417494F5700CFFFDA /* UserIconListView~ipad.xib in Resources */,
+				A2AAF9761749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
+				A2AAF9791749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
+				A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A2AAF84A17494D5900CFFFDA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A2AAF81F17494D5800CFFFDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF83317494D5800CFFFDA /* main.m in Sources */,
+				A2AAF83717494D5900CFFFDA /* AppDelegate.m in Sources */,
+				A2AAF91517494F5700CFFFDA /* AccessoryViewController.m in Sources */,
+				A2AAF91717494F5700CFFFDA /* Database.m in Sources */,
+				A2AAF91917494F5700CFFFDA /* FMDatabase.m in Sources */,
+				A2AAF91B17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */,
+				A2AAF91D17494F5700CFFFDA /* FMDatabasePool.m in Sources */,
+				A2AAF91F17494F5700CFFFDA /* FMDatabaseQueue.m in Sources */,
+				A2AAF92117494F5700CFFFDA /* FMResultSet.m in Sources */,
+				A2AAF92317494F5700CFFFDA /* LifeCounterView.m in Sources */,
+				A2AAF92517494F5700CFFFDA /* LocalUser.m in Sources */,
+				A2AAF92717494F5700CFFFDA /* LocalUserListViewController.m in Sources */,
+				A2AAF92B17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */,
+				A2AAF92D17494F5700CFFFDA /* ManagableViewController.m in Sources */,
+				A2AAF92F17494F5700CFFFDA /* Match.m in Sources */,
+				A2AAF93117494F5700CFFFDA /* MatchManager.m in Sources */,
+				A2AAF93317494F5700CFFFDA /* MatchSetupViewController.m in Sources */,
+				A2AAF93717494F5700CFFFDA /* MatchTurn.m in Sources */,
+				A2AAF93917494F5700CFFFDA /* MatchViewController.m in Sources */,
+				A2AAF93D17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */,
+				A2AAF93F17494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */,
+				A2AAF94117494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */,
+				A2AAF94717494F5700CFFFDA /* ResourceManager.m in Sources */,
+				A2AAF94917494F5700CFFFDA /* RootViewController.m in Sources */,
+				A2AAF94B17494F5700CFFFDA /* Settings.m in Sources */,
+				A2AAF94D17494F5700CFFFDA /* UIView+BasicAnimation.m in Sources */,
+				A2AAF94F17494F5700CFFFDA /* UIView+CoreAnimation.m in Sources */,
+				A2AAF95117494F5700CFFFDA /* UserIcon.m in Sources */,
+				A2AAF95517494F5700CFFFDA /* UserIconListViewController.m in Sources */,
+				A2AAF95717494F5700CFFFDA /* UserIconView.m in Sources */,
+				A2AAF95917494F5700CFFFDA /* ViewManager.m in Sources */,
+				A2AAF96017494F7000CFFFDA /* KJGridLayout.m in Sources */,
+				A2AAF96217494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2AAF84717494D5900CFFFDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2AAF85B17494D5900CFFFDA /* MTGBattlegroundTests.m in Sources */,
+				A2AAF91617494F5700CFFFDA /* AccessoryViewController.m in Sources */,
+				A2AAF91817494F5700CFFFDA /* Database.m in Sources */,
+				A2AAF91A17494F5700CFFFDA /* FMDatabase.m in Sources */,
+				A2AAF91C17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */,
+				A2AAF91E17494F5700CFFFDA /* FMDatabasePool.m in Sources */,
+				A2AAF92017494F5700CFFFDA /* FMDatabaseQueue.m in Sources */,
+				A2AAF92217494F5700CFFFDA /* FMResultSet.m in Sources */,
+				A2AAF92417494F5700CFFFDA /* LifeCounterView.m in Sources */,
+				A2AAF92617494F5700CFFFDA /* LocalUser.m in Sources */,
+				A2AAF92817494F5700CFFFDA /* LocalUserListViewController.m in Sources */,
+				A2AAF92C17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */,
+				A2AAF92E17494F5700CFFFDA /* ManagableViewController.m in Sources */,
+				A2AAF93017494F5700CFFFDA /* Match.m in Sources */,
+				A2AAF93217494F5700CFFFDA /* MatchManager.m in Sources */,
+				A2AAF93417494F5700CFFFDA /* MatchSetupViewController.m in Sources */,
+				A2AAF93817494F5700CFFFDA /* MatchTurn.m in Sources */,
+				A2AAF93A17494F5700CFFFDA /* MatchViewController.m in Sources */,
+				A2AAF93E17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */,
+				A2AAF94017494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */,
+				A2AAF94217494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */,
+				A2AAF94817494F5700CFFFDA /* ResourceManager.m in Sources */,
+				A2AAF94A17494F5700CFFFDA /* RootViewController.m in Sources */,
+				A2AAF94C17494F5700CFFFDA /* Settings.m in Sources */,
+				A2AAF94E17494F5700CFFFDA /* UIView+BasicAnimation.m in Sources */,
+				A2AAF95017494F5700CFFFDA /* UIView+CoreAnimation.m in Sources */,
+				A2AAF95217494F5700CFFFDA /* UserIcon.m in Sources */,
+				A2AAF95617494F5700CFFFDA /* UserIconListViewController.m in Sources */,
+				A2AAF95817494F5700CFFFDA /* UserIconView.m in Sources */,
+				A2AAF95A17494F5700CFFFDA /* ViewManager.m in Sources */,
+				A2AAF96117494F7000CFFFDA /* KJGridLayout.m in Sources */,
+				A2AAF96317494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A2AAF85217494D5900CFFFDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2AAF82217494D5800CFFFDA /* MTGBattleground */;
+			targetProxy = A2AAF85117494D5900CFFFDA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A2AAF82F17494D5800CFFFDA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2AAF83017494D5800CFFFDA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A2AAF85617494D5900CFFFDA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2AAF85717494D5900CFFFDA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A2AAF85C17494D5900CFFFDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A2AAF85D17494D5900CFFFDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A2AAF85F17494D5900CFFFDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MTGBattleground/MTGBattleground-Prefix.pch";
+				INFOPLIST_FILE = "MTGBattleground/MTGBattleground-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A2AAF86017494D5900CFFFDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MTGBattleground/MTGBattleground-Prefix.pch";
+				INFOPLIST_FILE = "MTGBattleground/MTGBattleground-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A2AAF86217494D5900CFFFDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MTGBattleground.app/MTGBattleground";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MTGBattleground/MTGBattleground-Prefix.pch";
+				INFOPLIST_FILE = "MTGBattlegroundTests/MTGBattlegroundTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A2AAF86317494D5900CFFFDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MTGBattleground.app/MTGBattleground";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MTGBattleground/MTGBattleground-Prefix.pch";
+				INFOPLIST_FILE = "MTGBattlegroundTests/MTGBattlegroundTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A2AAF81E17494D5800CFFFDA /* Build configuration list for PBXProject "MTGBattleground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2AAF85C17494D5900CFFFDA /* Debug */,
+				A2AAF85D17494D5900CFFFDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2AAF85E17494D5900CFFFDA /* Build configuration list for PBXNativeTarget "MTGBattleground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2AAF85F17494D5900CFFFDA /* Debug */,
+				A2AAF86017494D5900CFFFDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A2AAF86117494D5900CFFFDA /* Build configuration list for PBXNativeTarget "MTGBattlegroundTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2AAF86217494D5900CFFFDA /* Debug */,
+				A2AAF86317494D5900CFFFDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A2AAF81B17494D5800CFFFDA /* Project object */;
+}

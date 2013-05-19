@@ -110,8 +110,6 @@
 		A2AAF92617494F5700CFFFDA /* LocalUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* LocalUser.m */; };
 		A2AAF92717494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
 		A2AAF92817494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
-		A2AAF92917494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */; };
-		A2AAF92A17494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */; };
 		A2AAF92B17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
 		A2AAF92C17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
 		A2AAF92D17494F5700CFFFDA /* ManagableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */; };
@@ -172,6 +170,8 @@
 		A2AAF97D1749522D00CFFFDA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */; };
 		A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
 		A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
+		A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
+		A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,7 +262,6 @@
 		A2AAF8E517494F5700CFFFDA /* LocalUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUser.m; sourceTree = "<group>"; };
 		A2AAF8E617494F5700CFFFDA /* LocalUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserListViewController.h; sourceTree = "<group>"; };
 		A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserListViewController.m; sourceTree = "<group>"; };
-		A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LocalUserListViewController~ipad.xib"; sourceTree = "<group>"; };
 		A2AAF8E917494F5700CFFFDA /* LocalUserSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserSelectionView.h; sourceTree = "<group>"; };
 		A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserSelectionView.m; sourceTree = "<group>"; };
 		A2AAF8EB17494F5700CFFFDA /* ManagableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagableViewController.h; sourceTree = "<group>"; };
@@ -318,6 +317,7 @@
 		A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterSegment.png; sourceTree = "<group>"; };
 		A2AAF9811749533B00CFFFDA /* Arts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Arts; path = ../../Arts; sourceTree = "<group>"; };
+		A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LocalUserListView~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -671,7 +671,7 @@
 		A2AAF9731749514500CFFFDA /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
-				A2AAF8E817494F5700CFFFDA /* LocalUserListViewController~ipad.xib */,
+				A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */,
 				A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */,
 			);
 			name = Accessory;
@@ -785,7 +785,6 @@
 				A2AAF8CC17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */,
 				A2AAF8CE17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */,
 				A2AAF8D017494EFC00CFFFDA /* PassButton.png in Resources */,
-				A2AAF92917494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */,
 				A2AAF93517494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */,
 				A2AAF93B17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */,
 				A2AAF94317494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */,
@@ -794,6 +793,7 @@
 				A2AAF9751749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
 				A2AAF9781749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
 				A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */,
+				A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,7 +838,6 @@
 				A2AAF8CD17494EFC00CFFFDA /* LifeCounterDownButton.png in Resources */,
 				A2AAF8CF17494EFC00CFFFDA /* LifeCounterUpButton.png in Resources */,
 				A2AAF8D117494EFC00CFFFDA /* PassButton.png in Resources */,
-				A2AAF92A17494F5700CFFFDA /* LocalUserListViewController~ipad.xib in Resources */,
 				A2AAF93617494F5700CFFFDA /* MatchSetupViewController~ipad.xib in Resources */,
 				A2AAF93C17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */,
 				A2AAF94417494F5700CFFFDA /* PaperTexture@2x~ipad.jpg in Resources */,
@@ -847,6 +846,7 @@
 				A2AAF9761749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
 				A2AAF9791749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
 				A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */,
+				A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,7 @@
 @protocol LocalUserListViewControllerDelegate;
 
 
-@interface LocalUserListViewController : UITableViewController
+@interface LocalUserListViewController : UIViewController
 
 @property (nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet id <LocalUserListViewControllerDelegate> delegate;

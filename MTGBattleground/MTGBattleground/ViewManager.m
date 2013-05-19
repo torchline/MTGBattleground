@@ -66,7 +66,7 @@ static ViewManager *sharedHelper = nil;
 + (ViewManager *)sharedInstance {
 	if (sharedHelper == nil) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-		sharedHelper = [[self alloc] initWithRootView:appDelegate.rootViewController.view];
+		sharedHelper = [[self alloc] initWithRootView:appDelegate.window];
 	}
 	return sharedHelper;
 }
@@ -653,7 +653,13 @@ static ViewManager *sharedHelper = nil;
 	
 	if (aViewController != nil) {		
 		currentViewController = aViewController;
-		[rootView insertSubview:currentViewController.view atIndex:0];
+		
+		if ([rootView isKindOfClass:[UIWindow class]]) {
+			[(UIWindow *)rootView setRootViewController:currentViewController];
+		}
+		else {
+			[rootView insertSubview:currentViewController.view atIndex:0];
+		}
 	}
 }
 

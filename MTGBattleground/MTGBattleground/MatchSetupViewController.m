@@ -160,7 +160,7 @@
 	self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.userIconListViewController];
 	self.myPopoverController.delegate = self;
 	self.myPopoverController.popoverContentSize = self.userIconListViewController.view.frame.size;
-	
+
 	[self.myPopoverController presentPopoverFromRect:[self.view convertRect:localUserSelectionView.iconButton.frame fromView:localUserSelectionView.iconButton.superview]
 											  inView:self.view
 							permittedArrowDirections:UIPopoverArrowDirectionLeft

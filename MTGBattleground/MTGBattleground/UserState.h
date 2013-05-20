@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MatchAccess.h"
+#import "IdentifiableDatabaseObject.h"
 
-@interface UserState : NSObject
+@interface UserState : NSObject <IdentifiableDatabaseObject>
 
+@property (nonatomic) NSUInteger localUserID;
+@property (nonatomic) UserSlot userSlot;
 @property (nonatomic) NSInteger life;
 @property (nonatomic) NSUInteger poison;
 

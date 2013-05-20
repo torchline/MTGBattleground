@@ -10,13 +10,7 @@
 #import "IdentifiableDatabaseObject.h"
 #import "UserState.h"
 #import "UserIcon.h"
-
-typedef enum : NSUInteger {
-	UserSlotSouth = 1,
-	UserSlotWest,
-	UserSlotNorth,
-	UserSlotEast
-} UserSlot;
+#import "MatchAccess.h"
 
 @class UserIcon;
 @class UserState;
@@ -30,8 +24,6 @@ typedef enum : NSUInteger {
 @property (nonatomic) NSUInteger numTimesUsed;
 @property (nonatomic) NSDate *lastDateUsed;
 
-// active only
-@property (nonatomic) UserSlot userSlot;
 @property (nonatomic) UserState *state;
 
 // runtime

@@ -24,6 +24,6 @@
 
 + (void)deleteActiveMatch:(Match *)match;
 
-+ (void)resetMatchToPreviousTurnState:(Match *)match localUsers:(NSArray *)localUsers;
++ (void)restorePreviousUserStatesForMatch:(Match *)match localUsers:(NSArray *)localUsers activeLocalUser:(LocalUser *__autoreleasing*)activeLocalUser;
 
 @end

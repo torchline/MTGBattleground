@@ -167,10 +167,11 @@
 					  ofObject:(id)object
 						change:(NSDictionary *)change
 					   context:(void *)context {
-	
+		
 	if ([object isEqual:self.localUser] && [keyPath isEqual:@"state.life"]) {
 		[self updateLifeVisuals];
-		[Database updateLocalUserUserState:self.localUser];
+		
+		[Database updateUserStateForActiveMatch:self.localUser.state];
 	}
 }
 

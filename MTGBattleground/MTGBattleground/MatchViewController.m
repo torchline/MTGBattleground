@@ -79,6 +79,12 @@
 	self.match = [Database activeMatch];
 	NSAssert(self.match, @"No active Match found");
 	
+	// disable undo button if this is first turn
+	MatchTurn *previousMatchTurn = [Database lastMatchTurnForMatch:self.match];
+	if (!previousMatchTurn) {
+		self.undoButton.enabled = NO;
+	}
+	
 	LocalUser *activeLocalUser;
 	self.localUsers = [Database localUsersParticipatingInMatch:self.match activeLocalUser:&activeLocalUser];
 	NSAssert([self.localUsers count], @"Could not find any LocalUser participants for the active Match");
@@ -86,7 +92,7 @@
 	
 	self.localUserSlotDictionary = [[NSMutableDictionary alloc] initWithCapacity:[self.localUsers count]];
 	for (LocalUser *localUser in self.localUsers) {
-		[self.localUserSlotDictionary setObject:localUser forKey:@(localUser.userSlot)];
+		[self.localUserSlotDictionary setObject:localUser forKey:@(localUser.state.userSlot)];
 	}
 
 	// create pass button
@@ -128,37 +134,37 @@
 	// create user controls
 	for (LocalUser *localUser in self.localUsers) {
 		// create life counter
-		LifeCounterView *lifeCounterView = [[LifeCounterView alloc] initWithFrame:[self defaultFrameForLifeCounterAtUserSlot:localUser.userSlot]];
+		LifeCounterView *lifeCounterView = [[LifeCounterView alloc] initWithFrame:[self defaultFrameForLifeCounterAtUserSlot:localUser.state.userSlot]];
 		lifeCounterView.localUser = localUser;
-		lifeCounterView.transform = CGAffineTransformRotate(lifeCounterView.transform, [self rotationAngleForUserSlot:localUser.userSlot]);
+		lifeCounterView.transform = CGAffineTransformRotate(lifeCounterView.transform, [self rotationAngleForUserSlot:localUser.state.userSlot]);
 		[self.lifeCounterViews addObject:lifeCounterView];
 		[self.view addSubview:lifeCounterView];
 		
 		// create glow images
 		UIImage *coloredGlow1Image = [self recolorImage:glow1Image color:[UIColor colorWithRed:(arc4random() % 100) / 100. green:(arc4random() % 100) / 100. blue:(arc4random() % 100) / 100. alpha:1]];
 		UIImageView *glow1ImageView = [[UIImageView alloc] initWithImage:coloredGlow1Image];
-		glow1ImageView.frame = [self frameForUserSlot:localUser.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow1ImageView.frame.size];
-		glow1ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.userSlot]);
+		glow1ImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow1ImageView.frame.size];
+		glow1ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
 		glow1ImageView.alpha = 0.60f;
 		[self.glow1ImageViews addObject:glow1ImageView];
 		[self.view insertSubview:glow1ImageView belowSubview:lifeCounterView];
 		
 		UIImage *coloredGlow2Image = [self recolorImage:glow2Image color:[UIColor colorWithRed:(arc4random() % 100) / 100. green:(arc4random() % 100) / 100. blue:(arc4random() % 100) / 100. alpha:1]];
 		UIImageView *glow2ImageView = [[UIImageView alloc] initWithImage:coloredGlow2Image];
-		glow2ImageView.frame = [self frameForUserSlot:localUser.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow2ImageView.frame.size];
-		glow2ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.userSlot]);
+		glow2ImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow2ImageView.frame.size];
+		glow2ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
 		glow2ImageView.alpha = 0.60f;
 		[self.glow2ImageViews addObject:glow2ImageView];
 		[self.view insertSubview:glow2ImageView belowSubview:lifeCounterView];
 		
 		// create icon image views
-		UserIcon *userIcon = [userIconIDDictionary objectForKey:@(localUser.userIconID)];
+		UserIcon *userIcon = [userIconIDDictionary objectForKey:[localUser identifiableID]];
 		if (userIcon) {
 			UIImageView *userIconImageView = [[UIImageView alloc] initWithImage:userIcon.image];
-			userIconImageView.frame = [self frameForUserSlot:localUser.userSlot
+			userIconImageView.frame = [self frameForUserSlot:localUser.state.userSlot
 								 offsetFromLifeCounter:CGPointMake(130, 80)
 													size:CGSizeMake(75, 75)];
-			userIconImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.userSlot]);
+			userIconImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
 			[self.userIconImageViews addObject:userIconImageView];
 			[self.view addSubview:userIconImageView];
 		}
@@ -168,10 +174,10 @@
 		
 		// create username label
 		UILabel *usernameLabel = [[UILabel alloc] init];
-		usernameLabel.frame = [self frameForUserSlot:localUser.userSlot
+		usernameLabel.frame = [self frameForUserSlot:localUser.state.userSlot
 						 offsetFromLifeCounter:CGPointMake(-200, 80)
 											size:CGSizeMake(200, 30)];
-		usernameLabel.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.userSlot]);
+		usernameLabel.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
 		usernameLabel.backgroundColor = [UIColor clearColor];
 		usernameLabel.textAlignment = NSTextAlignmentRight;
 		usernameLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME size:26];
@@ -192,6 +198,8 @@
 
 - (void)passButtonPressed {
 	[MatchManager createMatchTurnWithMatch:self.match activeLocalUser:self.activeLocalUser allLocalUsers:self.localUsers];
+	
+	self.undoButton.enabled = YES;
 	
 	// switch to next User
 	self.activeLocalUser = [self.localUsers objectAfterObject:self.activeLocalUser];
@@ -231,8 +239,17 @@
 	[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 }
 
-- (void)revertMatchToPreviousState {
-	NSLog(@"revert");
+- (void)restorePreviousUserStates {
+	LocalUser *newActiveLocalUser;
+	[MatchManager restorePreviousUserStatesForMatch:self.match localUsers:self.localUsers activeLocalUser:&newActiveLocalUser];
+	
+	self.activeLocalUser = newActiveLocalUser;
+	
+	// disable undo button if we don't have another previous MatchTurn
+	MatchTurn *previousMatchTurn = [Database lastMatchTurnForMatch:self.match];
+	if (!previousMatchTurn) {
+		self.undoButton.enabled = NO;
+	}
 }
 
 
@@ -380,7 +397,7 @@
 		case AlertReasonUndo:
 			switch (buttonIndex) {
 				case 1:
-					[self revertMatchToPreviousState];
+					[self restorePreviousUserStates];
 					break;
 			}
 			break;
@@ -402,7 +419,7 @@
 #pragma mark - Getter / Setter
 
 - (void)setActiveLocalUser:(LocalUser *)activeLocalUser {
-	BOOL shouldAnimatePassButton = (BOOL)_activeLocalUser;
+	BOOL shouldAnimatePassButton = _activeLocalUser != nil;
 	
 	_activeLocalUser = activeLocalUser;
 	
@@ -414,27 +431,27 @@
 						 completion:^(BOOL finished) {
 							 [UIView animateWithDuration:0.20f
 											  animations:^{
-												  self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.userSlot]);
+												  self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
 											  }
 											  completion:^(BOOL finished) {
 												  [UIView animateWithDuration:0.20f
 																   animations:^{
-																	  self.passButton.frame = [self frameForUserSlot:activeLocalUser.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size]; 
+																	  self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size]; 
 																   }];
 											  }];
 						 }];
 	}
 	else {
-		self.passButton.frame = [self frameForUserSlot:activeLocalUser.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
-		self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.userSlot]);
+		self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
+		self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
 	}
 	
 	/*
 	[self.passButton hideByShrinkingForDuration:0.30f
 									 completion:^(BOOL finished) {
 										 // move turn button to this user
-										 self.passButton.frame = [self frameForUserSlot:activeLocalUser.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
-										 self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.userSlot]);
+										 self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
+										 self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
 										 
 										 [self.passButton showByExpandingForDuration:0.30f completion:nil];
 									 }];

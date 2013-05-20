@@ -108,7 +108,8 @@
 	NSUInteger i = 0;
 	for (LocalUserSelectionView *selectionView in self.localUserSelectionViews) {
 		if (selectionView.localUser) {
-			selectionView.localUser.userSlot = i + 1;
+			selectionView.localUser.state = [[UserState alloc] init];
+			selectionView.localUser.state.userSlot = i + 1;
 			
 			[localUsers addObject:selectionView.localUser];
 		}
@@ -179,7 +180,7 @@
 
 - (void)localUserListViewControllerDidPickUser:(LocalUser *)localUser {
 	if (localUser.userIconID > 0) {
-		localUser.userIcon = [self.userIconIDDictionary objectForKey:@(localUser.userIconID)];
+		localUser.userIcon = [self.userIconIDDictionary objectForKey:[localUser identifiableID]];
 	}
 	else {
 		UserIcon *randomUserIcon = [self.userIconIDDictionary randomObject];

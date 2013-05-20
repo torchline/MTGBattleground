@@ -12,7 +12,7 @@
 @interface Match : NSObject <IdentifiableDatabaseObject>
 
 @property (nonatomic) NSString *ID;
-@property (nonatomic) NSInteger defaultStartingLife;
+@property (nonatomic) NSInteger startingLife;
 @property (nonatomic) BOOL enablePoisonCounter;
 @property (nonatomic) BOOL enableDynamicCounters;
 @property (nonatomic) BOOL enableTurnTracking;

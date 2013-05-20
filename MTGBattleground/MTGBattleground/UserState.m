@@ -10,4 +10,8 @@
 
 @implementation UserState
 
+- (id <NSCopying>)identifiableID {
+	return @(self.localUserID);
+}
+
 @end

@@ -112,6 +112,9 @@
 			selectionView.localUser.state.userSlot = i + 1;
 			
 			[localUsers addObject:selectionView.localUser];
+			
+			selectionView.localUser.lastDateUsed = [NSDate date];
+			[Database updateLocalUser:selectionView.localUser];
 		}
 		
 		i++;
@@ -124,7 +127,7 @@
 										   dynamicCounters:self.dynamicCounterSwitch.isOn
 												turnTracking:self.turnTrackingSwitch.isOn];
 	
-	[Settings setStringAsData:match.ID forKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+	[Settings setString:match.ID forKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
 	
 	[[ViewManager sharedInstance] switchToView:[MatchViewController class]];
 }

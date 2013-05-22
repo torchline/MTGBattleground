@@ -21,9 +21,8 @@
 						  turnTracking:(BOOL)turnTracking;
 
 + (MatchTurn *)createMatchTurnWithMatch:(Match *)match activeLocalUser:(LocalUser *)activeLocalUser allLocalUsers:(NSArray *)allLocalUsers;
-
 + (void)deleteActiveMatch:(Match *)match;
-
 + (void)restorePreviousUserStatesForMatch:(Match *)match localUsers:(NSArray *)localUsers activeLocalUser:(LocalUser *__autoreleasing*)activeLocalUser;
++ (void)matchCompleted:(Match *)match localUsers:(NSArray *)localUsers;
 
 @end

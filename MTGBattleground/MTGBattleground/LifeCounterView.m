@@ -171,7 +171,7 @@
 	if ([object isEqual:self.localUser] && [keyPath isEqual:@"state.life"]) {
 		[self updateLifeVisuals];
 		
-		[Database updateUserStateForActiveMatch:self.localUser.state];
+		[Database updateCurrentUserStateForActiveMatch:self.localUser.state];
 	}
 }
 

@@ -18,11 +18,7 @@
 @interface Settings : NSObject
 
 + (NSString *)stringForKey:(NSString *)key;
-+ (NSString *)dataAsStringForKey:(NSString *)key;
-
 + (void)setString:(NSString *)string forKey:(NSString *)key;
-+ (void)setStringAsData:(NSString *)string forKey:(NSString *)key;
-
 + (void)setNullValueForKey:(NSString *)key;
 
 @end

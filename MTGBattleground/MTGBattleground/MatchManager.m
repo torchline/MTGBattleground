@@ -11,6 +11,9 @@
 #import "Database.h"
 #import "MatchTurn.h"
 #import "LocalUser.h"
+#import "FMDatabaseQueue.h"
+#import "FMDatabase.h"
+#import "Settings.h"
 
 @implementation MatchManager
 
@@ -41,7 +44,8 @@
 		
 		localUser.state.localUserID = localUser.ID;
 		localUser.state.life = startingLife;
-		localUser.state.poison = 0;		
+		localUser.state.poison = 0;
+		localUser.state.isDead = NO;
 	}
 	
 	NSArray *userStates = [self userStatesFromLocalUsers:localUsers];
@@ -116,6 +120,7 @@
 			initialUserState.userSlot = localUser.state.userSlot;
 			initialUserState.life = match.startingLife;
 			initialUserState.poison = 0;
+			initialUserState.isDead = NO;
 						
 			localUser.state = initialUserState;
 			
@@ -127,11 +132,38 @@
 		NSAssert(!activeLocalUser || *activeLocalUser, @"Could not find initial active LocalUser");
 	}
 	
-	
-	
 	[Database deleteMatchTurn:matchTurnToDelete];
 }
 
++ (void)matchCompleted:(Match *)match localUsers:(NSArray *)localUsers {
+	// create final UserStates
+	[Database createFinalUserStates:[self userStatesFromLocalUsers:localUsers] forMatch:match];
+	// delete current UserStates
+	[Database deleteCurrentUserStatesForMatch:match];
+	
+	// find winner (if any)
+	LocalUser *winnerLocalUser;	
+	for (LocalUser *localUser in localUsers) {
+		if (!localUser.state.isDead) {
+			winnerLocalUser = localUser;
+			break;
+		}
+	}
+	
+	// update Match end data
+	[[Database fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
+		BOOL success = [db executeUpdate:@"UPDATE Match SET WinnerLocalUserID = ?, IsComplete = 1, EndDate = ? WHERE ID = ?" withArgumentsInArray:@[
+						winnerLocalUser ? @(winnerLocalUser.ID) : [NSNull null],
+						@((unsigned long)[[NSDate date] timeIntervalSince1970]),
+						match.ID
+						]];
+		
+		NSAssert(success, @"failed updating Match end data: %@", [db lastErrorMessage]);
+	}];
+	
+	// deactivate the Match
+	[Settings setNullValueForKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+}
 
 #pragma mark - Helper
 

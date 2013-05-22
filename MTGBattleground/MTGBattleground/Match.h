@@ -12,10 +12,14 @@
 @interface Match : NSObject <IdentifiableDatabaseObject>
 
 @property (nonatomic) NSString *ID;
+@property (nonatomic) NSUInteger winnerLocalUserID;
 @property (nonatomic) NSInteger startingLife;
+@property (nonatomic) NSUInteger poisonToDie;
 @property (nonatomic) BOOL enablePoisonCounter;
 @property (nonatomic) BOOL enableDynamicCounters;
 @property (nonatomic) BOOL enableTurnTracking;
+@property (nonatomic) BOOL enableAutoDeath;
+@property (nonatomic) BOOL isComplete;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSDate *endDate;
 

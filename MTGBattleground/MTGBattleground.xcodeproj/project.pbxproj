@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A261BA98174BDE3900FB11A0 /* MatchStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */; };
+		A261BA99174BDE3900FB11A0 /* MatchStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */; };
+		A26A2489174C9667002C1A47 /* MatchHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */; };
+		A26A248A174C9667002C1A47 /* MatchHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */; };
+		A26A248B174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */; };
+		A26A248C174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */; };
 		A2AAF82717494D5800CFFFDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82617494D5800CFFFDA /* UIKit.framework */; };
 		A2AAF82917494D5800CFFFDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82817494D5800CFFFDA /* Foundation.framework */; };
 		A2AAF82B17494D5800CFFFDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82A17494D5800CFFFDA /* CoreGraphics.framework */; };
@@ -189,6 +195,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A261BA96174BDE3900FB11A0 /* MatchStatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchStatsManager.h; sourceTree = "<group>"; };
+		A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchStatsManager.m; sourceTree = "<group>"; };
+		A26A2486174C9667002C1A47 /* MatchHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchHistoryViewController.h; sourceTree = "<group>"; };
+		A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchHistoryViewController.m; sourceTree = "<group>"; };
+		A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MatchHistoryViewController~ipad.xib"; sourceTree = "<group>"; };
 		A2AAF82317494D5800CFFFDA /* MTGBattleground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTGBattleground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2AAF82617494D5800CFFFDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A2AAF82817494D5800CFFFDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -488,6 +499,8 @@
 		A2AAF96517494F7C00CFFFDA /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A26A2486174C9667002C1A47 /* MatchHistoryViewController.h */,
+				A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */,
 				A2AAF8F117494F5700CFFFDA /* MatchSetupViewController.h */,
 				A2AAF8F217494F5700CFFFDA /* MatchSetupViewController.m */,
 				A2AAF8F617494F5700CFFFDA /* MatchViewController.h */,
@@ -590,6 +603,8 @@
 				A2AAF90217494F5700CFFFDA /* ResourceManager.m */,
 				A2AAF8EF17494F5700CFFFDA /* MatchManager.h */,
 				A2AAF8F017494F5700CFFFDA /* MatchManager.m */,
+				A261BA96174BDE3900FB11A0 /* MatchStatsManager.h */,
+				A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -625,6 +640,7 @@
 		A2AAF96F174950C900CFFFDA /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */,
 				A2AAF8F317494F5700CFFFDA /* MatchSetupViewController~ipad.xib */,
 				A2AAF9771749516E00CFFFDA /* MatchViewController~iphone.xib */,
 				A2AAF9741749516100CFFFDA /* MatchViewController~ipad.xib */,
@@ -810,6 +826,7 @@
 				A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
 				A2AAF98A17497B6100CFFFDA /* Icon_144.png in Resources */,
 				A2AAF98C17497B6400CFFFDA /* Icon_72.png in Resources */,
+				A26A248B174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +880,7 @@
 				A2AAF9791749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
 				A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */,
 				A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
+				A26A248C174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +941,8 @@
 				A2AAF96017494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96217494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
 				A2AAF9871749749D00CFFFDA /* UserState.m in Sources */,
+				A261BA98174BDE3900FB11A0 /* MatchStatsManager.m in Sources */,
+				A26A2489174C9667002C1A47 /* MatchHistoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,6 +983,8 @@
 				A2AAF96117494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96317494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
 				A2AAF9881749749D00CFFFDA /* UserState.m in Sources */,
+				A261BA99174BDE3900FB11A0 /* MatchStatsManager.m in Sources */,
+				A26A248A174C9667002C1A47 /* MatchHistoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,6 +1153,7 @@
 				A2AAF86017494D5900CFFFDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A2AAF86117494D5900CFFFDA /* Build configuration list for PBXNativeTarget "MTGBattlegroundTests" */ = {
 			isa = XCConfigurationList;
@@ -1139,6 +1162,7 @@
 				A2AAF86317494D5900CFFFDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

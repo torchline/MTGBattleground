@@ -7,14 +7,14 @@
 //
 
 #import "Database.h"
-#import "FMDatabase.h"
-#import "FMDatabaseQueue.h"
 #import "Match.h"
 #import "MatchTurn.h"
 #import "ResourceManager.h"
 #import "Settings.h"
 #import "LocalUser.h"
 #import "UserIcon.h"
+#import "FMDatabaseQueue.h"
+#import "FMDatabase.h"
 
 @implementation Database
 
@@ -75,11 +75,18 @@ static NSMutableDictionary *_matchTurnCache = nil;
 
 + (void)createMatch:(Match *)match {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		BOOL success = [db executeUpdate:@"INSERT INTO Match(ID, StartingLife, StartDate, EndDate) VALUES(?, ?, ?, ?)" withArgumentsInArray:@[
-						[match.ID dataUsingEncoding:NSUTF8StringEncoding],
+		BOOL success = [db executeUpdate:@"INSERT INTO Match (ID, WinnerLocalUserID, StartingLife, PoisonToDie, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, EnableAutoDeath, IsComplete, StartDate, EndDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
+						match.ID,
+						match.winnerLocalUserID > 0 ? @(match.winnerLocalUserID) : [NSNull null],
 						@(match.startingLife),
-						@([match.startDate timeIntervalSince1970]),
-						@([match.endDate timeIntervalSince1970])
+						@(match.poisonToDie),
+						@(match.enablePoisonCounter),
+						@(match.enableDynamicCounters),
+						@(match.enableTurnTracking),
+						@(match.enableAutoDeath),
+						@(match.isComplete),
+						@((unsigned long)[match.startDate timeIntervalSince1970]),
+						match.endDate ? @((unsigned long)[match.endDate timeIntervalSince1970]) : [NSNull null]
 						]];
 		
 		NSAssert(success, @"failed creating Match: %@", [db lastErrorMessage]);
@@ -92,14 +99,15 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		NSUInteger i = 0;
 		for (UserState *userState in userStates) {
-			BOOL success = [db executeUpdate:@"INSERT INTO Match_LocalUser_initialUserStates (MatchID, LocalUserID, UserSlot, Life, Poison, Ordinal) VALUES(?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
-			 [match.ID dataUsingEncoding:NSUTF8StringEncoding],
-			 @(userState.localUserID),
-			 @(userState.userSlot),
-			 @(userState.life),
-			 @(userState.poison),
-			 @(i)
-			 ]];
+			BOOL success = [db executeUpdate:@"INSERT INTO Match_LocalUser_initialUserState (MatchID, LocalUserID, Ordinal, UserSlot, Life, Poison, IsDead) VALUES (?, ?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
+							match.ID,
+							@(userState.localUserID),
+							@(i),
+							@(userState.userSlot),
+							@(userState.life),
+							@(userState.poison),
+							@(userState.isDead),
+							]];
 			
 			NSAssert(success, @"failed creating initial UserStates for Match: %@", [db lastErrorMessage]);
 			
@@ -111,15 +119,33 @@ static NSMutableDictionary *_matchTurnCache = nil;
 + (void)createCurrentUserStates:(NSArray *)userStates forMatch:(Match *)match {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		for (UserState *userState in userStates) {
-			BOOL success = [db executeUpdate:@"INSERT INTO Match_LocalUser_currentUserStates (MatchID, LocalUserID, UserSlot, Life, Poison) VALUES (?, ?, ?, ?, ?)" withArgumentsInArray:@[
-			 [match.ID dataUsingEncoding:NSUTF8StringEncoding],
-			 @(userState.localUserID),
-			 @(userState.userSlot),
-			 @(userState.life),
-			 @(userState.poison)
-			 ]];
+			BOOL success = [db executeUpdate:@"INSERT INTO Match_LocalUser_currentUserState (MatchID, LocalUserID, UserSlot, Life, Poison, IsDead) VALUES (?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
+							match.ID,
+							@(userState.localUserID),
+							@(userState.userSlot),
+							@(userState.life),
+							@(userState.poison),
+							@(userState.isDead),
+							]];
 			
 			NSAssert(success, @"failed creating current UserStates for Match: %@", [db lastErrorMessage]);
+		}
+	}];
+}
+
++ (void)createFinalUserStates:(NSArray *)userStates forMatch:(Match *)match {
+	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
+		for (UserState *userState in userStates) {
+			BOOL success = [db executeUpdate:@"INSERT INTO Match_LocalUser_finalUserState (MatchID, LocalUserID, UserSlot, Life, Poison, IsDead) VALUES (?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
+							match.ID,
+							@(userState.localUserID),
+							@(userState.userSlot),
+							@(userState.life),
+							@(userState.poison),
+							@(userState.isDead),
+							]];
+			
+			NSAssert(success, @"failed creating final UserStates for Match: %@", [db lastErrorMessage]);
 		}
 	}];
 }
@@ -130,10 +156,10 @@ static NSMutableDictionary *_matchTurnCache = nil;
 + (void)createMatchTurn:(MatchTurn *)matchTurn {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		BOOL success = [db executeUpdate:@"INSERT INTO MatchTurn(ID, MatchID, LocalUserID, EndDate) VALUES(?, ?, ?, ?)" withArgumentsInArray:@[
-						[matchTurn.ID dataUsingEncoding:NSUTF8StringEncoding],
-						[matchTurn.matchID dataUsingEncoding:NSUTF8StringEncoding],
+						matchTurn.ID,
+						matchTurn.matchID,
 						@(matchTurn.localUserID),
-						@([matchTurn.endDate timeIntervalSince1970])
+						@((unsigned long)[matchTurn.endDate timeIntervalSince1970])
 						]];
 		
 		NSAssert(success, @"failed creating MatchTurn: %@", [db lastErrorMessage]);
@@ -145,13 +171,14 @@ static NSMutableDictionary *_matchTurnCache = nil;
 + (void)createUserStates:(NSArray *)userStates forMatchTurn:(MatchTurn *)matchTurn {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		for (UserState *userState in userStates) {
-			BOOL success = [db executeUpdate:@"INSERT INTO MatchTurn_LocalUser_state(MatchTurnID, LocalUserID, UserSlot, Life, Poison) VALUES(?, ?, ?, ?, ?)" withArgumentsInArray:@[
-			 [matchTurn.ID dataUsingEncoding:NSUTF8StringEncoding],
-			 @(userState.localUserID),
-			 @(userState.userSlot),
-			 @(userState.life),
-			 @(userState.poison)
-			 ]];
+			BOOL success = [db executeUpdate:@"INSERT INTO MatchTurn_LocalUser_userState(MatchTurnID, LocalUserID, UserSlot, Life, Poison, IsDead) VALUES(?, ?, ?, ?, ?, ?)" withArgumentsInArray:@[
+							matchTurn.ID,
+							@(userState.localUserID),
+							@(userState.userSlot),
+							@(userState.life),
+							@(userState.poison),
+							@(userState.isDead),
+							]];
 			
 			NSAssert(success, @"failed creating UserStates for MatchTurn: %@", [db lastErrorMessage]);
 		}
@@ -163,34 +190,12 @@ static NSMutableDictionary *_matchTurnCache = nil;
 
 #pragma mark Match
 
-+ (NSMutableArray *)matches {
-	NSMutableArray __block *matches;
-	
-	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, StartingLife, StartingPoison, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, StartDate, EndDate FROM Match"];
-		
-		while ([resultSet next]) {
-			if (!matches) {
-				matches = [[NSMutableArray alloc] initWithCapacity:4];
-			}
-			
-			Match *match = [self matchFromResultSet:resultSet];
-
-			[matches addObject:match];
-		}
-		
-		[resultSet close];
-	}];
-	
-	return matches;
-}
-
 + (Match *)matchWithID:(NSString *)ID {
 	Match __block *match;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, StartingLife, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, StartDate, EndDate FROM Match WHERE ID = ?" withArgumentsInArray:@[
-								  [ID dataUsingEncoding:NSUTF8StringEncoding]
+		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, WinnerLocalUserID, StartingLife, PoisonToDie, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, EnableAutoDeath, IsComplete, StartDate, EndDate FROM Match WHERE ID = ?" withArgumentsInArray:@[
+								  ID
 								  ]];
 		
 		if ([resultSet next]) {
@@ -207,7 +212,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	Match __block *match;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		NSString *query = [[NSString alloc] initWithFormat:@"SELECT ID, StartingLife, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, StartDate, EndDate FROM Match WHERE ID = (SELECT Value FROM Settings WHERE Key='%@')", SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+		NSString *query = [[NSString alloc] initWithFormat:@"SELECT ID, WinnerLocalUserID, StartingLife, PoisonToDie, EnablePoisonCounter, EnableDynamicCounters, EnableTurnTracking, EnableAutoDeath, IsComplete, StartDate, EndDate FROM Match WHERE ID = (SELECT Value FROM Settings WHERE Key='%@')", SETTINGS_CURRENT_ACTIVE_MATCH_ID];
 		FMResultSet *resultSet = [db executeQuery:query];
 		
 		if ([resultSet next]) {
@@ -224,9 +229,9 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	NSMutableArray __block *userStates;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		NSString *query = @"SELECT LocalUserID, UserSlot, Life, Poison FROM Match_LocalUser_initialUserStates WHERE MatchID = ? ORDER BY Ordinal";
+		NSString *query = @"SELECT LocalUserID, UserSlot, Life, Poison, IsDead FROM Match_LocalUser_initialUserState WHERE MatchID = ? ORDER BY Ordinal";
 		FMResultSet *resultSet = [db executeQuery:query withArgumentsInArray:@[
-								  [match.ID dataUsingEncoding:NSUTF8StringEncoding]
+								  match.ID
 								  ]];
 		
 		while ([resultSet next]) {
@@ -253,7 +258,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, MatchID, LocalUserID, EndDate FROM MatchTurn WHERE MatchID = ?" withArgumentsInArray:@[
-								  [match.ID dataUsingEncoding:NSUTF8StringEncoding]
+								  match.ID
 								  ]];
 		
 		while ([resultSet next]) {
@@ -278,7 +283,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, MatchID, LocalUserID, EndDate FROM MatchTurn WHERE MatchID = ? ORDER BY EndDate DESC LIMIT 1" withArgumentsInArray:@[
-								  [match.ID dataUsingEncoding:NSUTF8StringEncoding]
+								  match.ID
 								  ]];
 		
 		if ([resultSet next]) {
@@ -297,7 +302,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		FMResultSet *resultSet = [db executeQuery:@"SELECT ID, MatchID, LocalUserID, EndDate FROM MatchTurn WHERE MatchID = ? ORDER BY EndDate DESC LIMIT 1 OFFSET 1" withArgumentsInArray:@[
-								  [match.ID dataUsingEncoding:NSUTF8StringEncoding]
+								  match.ID
 								  ]];
 		
 		if ([resultSet next]) {
@@ -318,10 +323,9 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	NSMutableArray __block *localUsers;
 		
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		NSData *matchIDData = [match.ID dataUsingEncoding:NSUTF8StringEncoding];
-		FMResultSet *localUserResultSet = [db executeQuery:@"SELECT lu.ID, lu.Name, lu.UserIconID, lu.NumTimesUsed, lu.LastDateUsed, mlucs.LocalUserID, mlucs.UserSlot, mlucs.Life, mlucs.Poison FROM LocalUser lu INNER JOIN Match_LocalUser_currentUserStates mlucs ON lu.ID = mlucs.LocalUserID INNER JOIN Match_LocalUser_initialUserStates mluis ON lu.ID = mluis.LocalUserID WHERE mluis.MatchID = ? AND mlucs.MatchID = ? ORDER BY mluis.Ordinal" withArgumentsInArray:@[
-										   matchIDData,
-										   matchIDData
+		FMResultSet *localUserResultSet = [db executeQuery:@"SELECT lu.ID, lu.Name, lu.UserIconID, lu.NumTimesUsed, lu.LastDateUsed, mlucs.LocalUserID, mlucs.UserSlot, mlucs.Life, mlucs.Poison, mlucs.isDead FROM LocalUser lu INNER JOIN Match_LocalUser_currentUserState mlucs ON lu.ID = mlucs.LocalUserID INNER JOIN Match_LocalUser_initialUserState mluis ON lu.ID = mluis.LocalUserID WHERE mluis.MatchID = ? AND mlucs.MatchID = ? ORDER BY mluis.Ordinal" withArgumentsInArray:@[
+										   match.ID,
+										   match.ID
 										   ]];
 		
 		while ([localUserResultSet next]) {
@@ -329,7 +333,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 				localUsers = [[NSMutableArray alloc] initWithCapacity:4];
 			}
 			
-			LocalUser *localUser = [self localUserWithActiveStateFromResultSet:localUserResultSet];
+			LocalUser *localUser = [self localUserWithUserStateFromResultSet:localUserResultSet];
 			
 			[localUsers addObject:localUser];
 		}
@@ -398,8 +402,8 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	NSMutableArray __block *userStates;
 	
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		FMResultSet *resultSet = [db executeQuery:@"SELECT LocalUserID, UserSlot, Life, Poison FROM MatchTurn_LocalUser_state WHERE MatchTurnID = ?" withArgumentsInArray:@[
-								  [matchTurn.ID dataUsingEncoding:NSUTF8StringEncoding]
+		FMResultSet *resultSet = [db executeQuery:@"SELECT LocalUserID, UserSlot, Life, Poison, IsDead FROM MatchTurn_LocalUser_userState WHERE MatchTurnID = ?" withArgumentsInArray:@[
+								  matchTurn.ID
 								  ]];
 		
 		while ([resultSet next]) {
@@ -446,35 +450,40 @@ static NSMutableDictionary *_matchTurnCache = nil;
 
 #pragma mark - UPDATE
 
+#pragma mark Match
+
++ (void)updateCurrentUserStateForActiveMatch:(UserState *)userState {
+	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
+		NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Match_LocalUser_currentUserState SET UserSlot = ?, Life = ?, Poison = ?, IsDead = ? WHERE LocalUserID = ? AND MatchID = (SELECT Value FROM Settings WHERE Key='%@')", SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+		BOOL success = [db executeUpdate:query withArgumentsInArray:@[
+						@(userState.userSlot),
+						@(userState.life),
+						@(userState.poison),
+						@(userState.isDead),
+						@(userState.localUserID)
+						]];
+		
+		NSAssert(success, @"failed updating LocalUser UserState: %@", [db lastErrorMessage]);
+	}];
+}
+
+
 #pragma mark LocalUser
 
 + (void)updateLocalUser:(LocalUser *)localUser {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
 		BOOL success = [db executeUpdate:@"UPDATE LocalUser SET Name = ?, UserIconID = ?, NumTimesUsed = ?, LastDateUsed = ? WHERE ID = ?" withArgumentsInArray:@[
-		 localUser.name,
-		 @(localUser.userIconID),
-		 @(localUser.numTimesUsed),
-		 @([localUser.lastDateUsed timeIntervalSince1970]),
-		 @(localUser.ID)
-		 ]];
+						localUser.name,
+						localUser.userIconID > 0 ? @(localUser.userIconID) : [NSNull null],
+						@(localUser.numTimesUsed),
+						@((unsigned long)[localUser.lastDateUsed timeIntervalSince1970]),
+						@(localUser.ID)
+						]];
 		
 		NSAssert(success, @"failed updating LocalUser: %@", [db lastErrorMessage]);
 	}];
 }
 
-+ (void)updateUserStateForActiveMatch:(UserState *)userState {
-	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Match_LocalUser_currentUserStates SET UserSlot = ?, Life = ?, Poison = ? WHERE LocalUserID = ? AND MatchID = (SELECT Value FROM Settings WHERE Key='%@')", SETTINGS_CURRENT_ACTIVE_MATCH_ID];
-		BOOL success = [db executeUpdate:query withArgumentsInArray:@[
-		 @(userState.userSlot),
-		 @(userState.life),
-		 @(userState.poison),
-		 @(userState.localUserID)
-		 ]];
-		
-		NSAssert(success, @"failed updating LocalUser UserState: %@", [db lastErrorMessage]);
-	}];
-}
 
 #pragma mark - DELETE
 
@@ -482,9 +491,21 @@ static NSMutableDictionary *_matchTurnCache = nil;
 
 + (void)deleteMatch:(Match *)match {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		[db executeUpdate:@"DELETE FROM Match WHERE ID = ?" withArgumentsInArray:@[
-		 [match.ID dataUsingEncoding:NSUTF8StringEncoding]
-		 ]];
+		BOOL success = [db executeUpdate:@"DELETE FROM Match WHERE ID = ?" withArgumentsInArray:@[
+						match.ID
+						]];
+		
+		NSAssert(success, @"failed deleting Match: %@", [db lastErrorMessage]);
+	}];
+}
+
++ (void)deleteCurrentUserStatesForMatch:(Match *)match {
+	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
+		BOOL success = [db executeUpdate:@"DELETE FROM Match_LocalUser_currentUserState WHERE MatchID = ?" withArgumentsInArray:@[
+						match.ID
+						]];
+		
+		NSAssert(success, @"failed deleting current UserStates for Match: %@", [db lastErrorMessage]);
 	}];
 }
 
@@ -493,9 +514,11 @@ static NSMutableDictionary *_matchTurnCache = nil;
 
 + (void)deleteMatchTurn:(MatchTurn *)matchTurn {
 	[[self fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		[db executeUpdate:@"DELETE FROM MatchTurn WHERE ID = ?" withArgumentsInArray:@[
-		 [matchTurn.ID dataUsingEncoding:NSUTF8StringEncoding]
-		 ]];
+		BOOL success = [db executeUpdate:@"DELETE FROM MatchTurn WHERE ID = ?" withArgumentsInArray:@[
+						matchTurn.ID
+						]];
+		
+		NSAssert(success, @"failed deleting MatchTurn: %@", [db lastErrorMessage]);
 	}];
 }
 
@@ -514,7 +537,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	return localUser;
 }
 
-+ (LocalUser *)localUserWithActiveStateFromResultSet:(FMResultSet *)resultSet {
++ (LocalUser *)localUserWithUserStateFromResultSet:(FMResultSet *)resultSet {
 	LocalUser *localUser = [[LocalUser alloc] init];
 	
 	localUser.ID = [resultSet intForColumn:@"ID"];
@@ -535,7 +558,8 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	userState.userSlot = [resultSet intForColumn:@"UserSlot"];
 	userState.life = [resultSet intForColumn:@"Life"];
 	userState.poison = [resultSet intForColumn:@"Poison"];
-	
+	userState.isDead = [resultSet boolForColumn:@"IsDead"];
+
 	return userState;
 }
 
@@ -549,7 +573,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 }
 
 + (Match *)matchFromResultSet:(FMResultSet *)resultSet {
-	NSString *matchID = [[NSString alloc] initWithData:[resultSet dataForColumn:@"ID"] encoding:NSUTF8StringEncoding];
+	NSString *matchID = [resultSet stringForColumn:@"ID"];
 	
 	Match *cachedMatch = [_matchCache objectForKey:matchID];
 	if (cachedMatch) {
@@ -559,10 +583,14 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	Match *match = [[Match alloc] init];
 	
 	match.ID = matchID;
+	match.winnerLocalUserID = [resultSet intForColumn:@"WinnerLocalUserID"];
 	match.startingLife = [resultSet intForColumn:@"StartingLife"];
+	match.poisonToDie = [resultSet intForColumn:@"PoisonToDie"];
 	match.enablePoisonCounter = [resultSet boolForColumn:@"EnablePoisonCounter"];
 	match.enableDynamicCounters = [resultSet boolForColumn:@"EnableDynamicCounters"];
 	match.enableTurnTracking = [resultSet boolForColumn:@"EnableTurnTracking"];
+	match.enableAutoDeath = [resultSet boolForColumn:@"EnableAutoDeath"];
+	match.isComplete = [resultSet boolForColumn:@"IsComplete"];
 	match.startDate = [resultSet dateForColumn:@"StartDate"];
 	match.endDate = [resultSet dateForColumn:@"EndDate"];
 	
@@ -572,7 +600,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 }
 
 + (MatchTurn *)matchTurnFromResultSet:(FMResultSet *)resultSet {
-	NSString *matchTurnID = [[NSString alloc] initWithData:[resultSet dataForColumn:@"ID"] encoding:NSUTF8StringEncoding];
+	NSString *matchTurnID = [resultSet stringForColumn:@"ID"];
 	
 	MatchTurn *cachedMatchTurn = [_matchCache objectForKey:matchTurnID];
 	if (cachedMatchTurn) {
@@ -582,7 +610,7 @@ static NSMutableDictionary *_matchTurnCache = nil;
 	MatchTurn *matchTurn = [[MatchTurn alloc] init];
 	
 	matchTurn.ID = matchTurnID;
-	matchTurn.matchID = [[NSString alloc] initWithData:[resultSet dataForColumn:@"MatchID"] encoding:NSUTF8StringEncoding];
+	matchTurn.matchID = [resultSet stringForColumn:@"MatchID"];
 	matchTurn.localUserID = [resultSet intForColumn:@"LocalUserID"];
 	matchTurn.endDate = [resultSet dateForColumn:@"EndDate"];
 	

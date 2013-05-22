@@ -16,5 +16,6 @@
 @property (nonatomic) UserSlot userSlot;
 @property (nonatomic) NSInteger life;
 @property (nonatomic) NSUInteger poison;
+@property (nonatomic) BOOL isDead;
 
 @end

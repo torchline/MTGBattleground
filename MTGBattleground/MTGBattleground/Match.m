@@ -10,6 +10,20 @@
 
 @implementation Match
 
+- (id)init {
+	self = [super init];
+	if (self) {
+		_startingLife = 20;
+		_poisonToDie = 10;
+		_enablePoisonCounter = YES;
+		_enableDynamicCounters = YES;
+		_enableTurnTracking = YES;
+		_enableAutoDeath = YES;
+		_isComplete = NO;
+	}
+	return self;
+}
+
 - (id)identifiableID {
 	return self.ID;
 }

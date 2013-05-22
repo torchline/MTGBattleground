@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class Match;
 @class MatchTurn;
 @class LocalUser;
@@ -20,12 +21,14 @@
 // CREATE
 + (void)createMatch:(Match *)match;
 + (void)createInitialUserStates:(NSArray *)users forMatch:(Match *)match;
++ (void)createCurrentUserStates:(NSArray *)userStates forMatch:(Match *)match;
++ (void)createFinalUserStates:(NSArray *)userStates forMatch:(Match *)match;
+
 + (void)createMatchTurn:(MatchTurn *)matchTurn;
 + (void)createUserStates:(NSArray *)users forMatchTurn:(MatchTurn *)matchTurn;
-+ (void)createCurrentUserStates:(NSArray *)userStates forMatch:(Match *)match;
+
 
 // READ
-+ (NSMutableArray *)matches;
 + (Match *)matchWithID:(NSString *)ID;
 + (Match *)activeMatch;
 + (NSMutableArray *)initialUserStatesForMatch:(Match *)match;
@@ -44,12 +47,15 @@
 
 
 // UPDATE
++ (void)updateCurrentUserStateForActiveMatch:(UserState *)userState;
+
 + (void)updateLocalUser:(LocalUser *)localUser;
-+ (void)updateUserStateForActiveMatch:(UserState *)userState;
 
 
 // DELETE
 + (void)deleteMatch:(Match *)match;
++ (void)deleteCurrentUserStatesForMatch:(Match *)match;
+
 + (void)deleteMatchTurn:(MatchTurn *)matchTurn;
 
 

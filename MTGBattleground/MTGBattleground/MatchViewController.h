@@ -10,7 +10,8 @@
 
 typedef enum : NSUInteger {
 	AlertReasonUndo = 1,
-	AlertReasonQuit
+	AlertReasonQuit,
+	AlertReasonVerifyMatchDraw
 } AlertReason;
 
 
@@ -23,7 +24,7 @@ typedef enum : NSUInteger {
 @property (nonatomic) UIButton *passButton;
 @property (nonatomic) UIButton *undoButton;
 
-@property (nonatomic) NSMutableArray *usernameLabels;
+@property (nonatomic) NSMutableArray *nameLabels;
 @property (nonatomic) NSMutableArray *lifeCounterViews;
 @property (nonatomic) NSMutableArray *userIconImageViews;
 @property (nonatomic) NSMutableArray *glow1ImageViews;

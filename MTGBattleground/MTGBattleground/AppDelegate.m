@@ -12,6 +12,9 @@
 #import "ViewManagerAccess.h"
 #import "Database.h"
 #import "sqlite3.h"
+#import "FMDatabaseQueue.h"
+#import "FMDatabase.h"
+#import "FMResultSet.h"
 
 @implementation AppDelegate
 

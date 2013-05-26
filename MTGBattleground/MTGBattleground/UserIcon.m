@@ -12,24 +12,29 @@
 
 @synthesize image = _image;
 
+#pragma mark - Init
+
+- (UserIcon *)initWithID:(NSUInteger)ID
+			   imagePath:(NSString *)imagePath {
+	
+	self = [super init];
+	if (self) {
+		_ID = ID;
+		_imagePath = imagePath;
+	}
+	return self;
+}
+
+
 #pragma mark - Getter / Setter
 
 - (UIImage *)image {
-	if (_image) {
-		return _image;
+	if (!_image) {
+		_image = [UIImage imageNamed:self.imagePath];
 	}
-	
-	_image = [UIImage imageNamed:self.imagePath];
 	
 	return _image;
 }
 
-
-#pragma mark - Protocol
-#pragma mark Identifiable
-
-- (id)identifiableID {
-	return @(self.ID);
-}
 
 @end

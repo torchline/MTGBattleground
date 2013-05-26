@@ -6,21 +6,9 @@
 //  Copyright (c) 2013 Torchline Technology. All rights reserved.
 //
 
-#import "NSMutableArray+Queueing.h"
+#import "NSArray+More.h"
 
-@implementation NSMutableArray (Queueing)
-
-- (id)popRandomObject {
-	if ([self count] == 0) {
-		return nil;
-	}
-	
-	NSUInteger index = arc4random() % [self count];
-	
-	id object = [self objectAtIndex:index];
-	[self removeObjectAtIndex:index];
-	return object;
-}
+@implementation NSArray (More)
 
 - (id)objectAfterObject:(id)object {
 	NSUInteger index = [self indexOfObject:object];

@@ -7,30 +7,29 @@
 //
 
 #import "MatchViewController.h"
-#import "LifeCounterView.h"
+
 #import <QuartzCore/CALayer.h>
-#import "LocalUser.h"
-#import "Match.h"
-#import "MatchTurn.h"
-#import "Database.h"
 #import <dispatch/dispatch.h>
+#import "UIView+BasicAnimation.h"
+#import "ViewManagerAccess.h"
 #import "Settings.h"
 #import "MatchManager.h"
-#import "ViewManagerAccess.h"
-#import "UserIcon.h"
-#import "NSMutableArray+Queueing.h"
-#import "UIView+BasicAnimation.h"
+#import "UserService.h"
+#import "MatchService.h"
 
+#import "LifeCounterView.h"
+
+#import "User+Runtime.h"
+#import "Match+Runtime.h"
+#import "MatchTurn+Runtime.h"
+#import "UserIcon.h"
 
 @interface MatchViewController () <UIAlertViewDelegate>
 
 @property (nonatomic) BOOL isInitialized;
 @property (nonatomic) AlertReason alertReason;
 @property (nonatomic) Match *match;
-@property (nonatomic) NSMutableArray *localUsers;
-@property (nonatomic) NSMutableArray *pendingLocalUsersToKill;
-@property (nonatomic) NSMutableDictionary *localUserSlotDictionary;
-@property (nonatomic, weak) LocalUser *activeLocalUser;
+@property (nonatomic) NSMutableDictionary *userPositionDictionary;
 
 @end
 
@@ -57,8 +56,10 @@
 }
 
 - (void)dealloc {	
-	for (LocalUser *localUser in self.localUsers) {
-		[localUser removeObserver:self forKeyPath:@"state.isDead"];
+	for (User *user in self.match.users) {
+		[user removeObserver:self forKeyPath:@"state.poison"];
+		[user removeObserver:self forKeyPath:@"state.life"];
+		[user removeObserver:self forKeyPath:@"state.isDead"];
 	}
 }
 
@@ -86,25 +87,21 @@
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	
 	// fetch Match
-	self.match = [Database activeMatch];
+	self.match = [self.viewOptions objectForKey:VIEW_OPTION_MATCH];
 	NSAssert(self.match, @"No active Match found");
 	
+	self.match.startTime = [NSDate date];
+	[MatchService updateMatch:self.match];
+	
 	// disable undo button if this is first turn
-	MatchTurn *previousMatchTurn = [Database lastMatchTurnForMatch:self.match];
-	if (!previousMatchTurn) {
+	if (self.match.currentTurn.turnNumber == 1) {
 		self.undoButton.enabled = NO;
 	}
-	
-	// fetch users for the Match
-	LocalUser *activeLocalUser;
-	self.localUsers = [Database localUsersParticipatingInMatch:self.match activeLocalUser:&activeLocalUser];
-	NSAssert([self.localUsers count], @"Could not find any LocalUser participants for the active Match");
-	NSAssert(activeLocalUser, @"Could not find active user for Match");
-	
-	// organize LocalUsers for faster access
-	self.localUserSlotDictionary = [[NSMutableDictionary alloc] initWithCapacity:[self.localUsers count]];
-	for (LocalUser *localUser in self.localUsers) {
-		[self.localUserSlotDictionary setObject:localUser forKey:@(localUser.state.userSlot)];
+		
+	// organize Users for faster access
+	self.userPositionDictionary = [[NSMutableDictionary alloc] initWithCapacity:[self.match.users count]];
+	for (User *user in self.match.users) {
+		[self.userPositionDictionary setObject:user forKey:@(user.meta.userPosition)];
 	}
 
 	// create pass button
@@ -130,80 +127,87 @@
 	[self.view addSubview:self.quitButton];
 	
 	// create undo button
-	//UIImage *undoButtonImage = [UIImage imageNamed:@"UndoButton.png"];
 	self.undoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[self.undoButton setTitle:@"Undo" forState:UIControlStateNormal];
-	//[self.undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
+	[self.undoButton setTitle:@"Back" forState:UIControlStateNormal];
 	[self.undoButton addTarget:self action:@selector(undoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 	self.undoButton.frame = CGRectMake(CGRectGetMaxX(self.view.bounds) - 60 - 20, CGRectGetMaxY(self.view.bounds) - 60 - 20, 60, 60);
 	[self.view addSubview:self.undoButton];
 	
-	NSMutableDictionary *userIconIDDictionary = [Database idDictionaryForDatabaseObjects:[Database userIcons]];
+	// create reset turn button
+	self.resetTurnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[self.resetTurnButton setTitle:@"Reset" forState:UIControlStateNormal];
+	[self.resetTurnButton addTarget:self action:@selector(resetTurnButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	self.resetTurnButton.frame = CGRectOffset(self.undoButton.frame, 0, -80);
+	[self.view addSubview:self.resetTurnButton];
+	
+	NSMutableDictionary *userIconDictionary = [UserService userIconDictionary];
 	
 	UIImage *glow1Image = [UIImage imageNamed:@"RayGlow1.png"];
 	UIImage *glow2Image = [UIImage imageNamed:@"RayGlow2.png"];
 	
 	// create user controls
-	for (LocalUser *localUser in self.localUsers) {
+	for (User *user in self.match.users) {
 		// create life counter
-		LifeCounterView *lifeCounterView = [[LifeCounterView alloc] initWithFrame:[self defaultFrameForLifeCounterAtUserSlot:localUser.state.userSlot]];
-		lifeCounterView.localUser = localUser;
-		lifeCounterView.transform = CGAffineTransformRotate(lifeCounterView.transform, [self rotationAngleForUserSlot:localUser.state.userSlot]);
+		LifeCounterView *lifeCounterView = [[LifeCounterView alloc] initWithFrame:[self defaultFrameForLifeCounterAtUserPosition:user.meta.userPosition]];
+		lifeCounterView.user = user;
+		lifeCounterView.transform = CGAffineTransformRotate(lifeCounterView.transform, [self rotationAngleForUserPosition:user.meta.userPosition]);
 		[self.lifeCounterViews addObject:lifeCounterView];
 		[self.view addSubview:lifeCounterView];
 		
 		// create glow images
 		UIImage *coloredGlow1Image = [self recolorImage:glow1Image color:[UIColor colorWithRed:(arc4random() % 100) / 100. green:(arc4random() % 100) / 100. blue:(arc4random() % 100) / 100. alpha:1]];
 		UIImageView *glow1ImageView = [[UIImageView alloc] initWithImage:coloredGlow1Image];
-		glow1ImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow1ImageView.frame.size];
-		glow1ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
+		glow1ImageView.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(0, 60) size:glow1ImageView.frame.size];
+		glow1ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:user.meta.userPosition]);
 		glow1ImageView.alpha = 0.60f;
 		[self.glow1ImageViews addObject:glow1ImageView];
 		[self.view insertSubview:glow1ImageView belowSubview:lifeCounterView];
 		
 		UIImage *coloredGlow2Image = [self recolorImage:glow2Image color:[UIColor colorWithRed:(arc4random() % 100) / 100. green:(arc4random() % 100) / 100. blue:(arc4random() % 100) / 100. alpha:1]];
 		UIImageView *glow2ImageView = [[UIImageView alloc] initWithImage:coloredGlow2Image];
-		glow2ImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, 60) size:glow2ImageView.frame.size];
-		glow2ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
+		glow2ImageView.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(0, 60) size:glow2ImageView.frame.size];
+		glow2ImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:user.meta.userPosition]);
 		glow2ImageView.alpha = 0.60f;
 		[self.glow2ImageViews addObject:glow2ImageView];
 		[self.view insertSubview:glow2ImageView belowSubview:lifeCounterView];
 		
 		// create icon image views
-		UserIcon *userIcon = localUser.userIcon ? localUser.userIcon : [userIconIDDictionary objectForKey:@(localUser.userIconID)];
+		UserIcon *userIcon = user.icon ? user.icon : [userIconDictionary objectForKey:@(user.userIconID)];
 		if (userIcon) {
 			UIImageView *userIconImageView = [[UIImageView alloc] initWithImage:userIcon.image];
-			userIconImageView.frame = [self frameForUserSlot:localUser.state.userSlot
+			userIconImageView.frame = [self frameForUserPosition:user.meta.userPosition
 									   offsetFromLifeCounter:CGPointMake(130, 80)
 														size:CGSizeMake(75, 75)];
-			userIconImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
+			userIconImageView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:user.meta.userPosition]);
 			[self.userIconImageViews addObject:userIconImageView];
 			[self.view addSubview:userIconImageView];
 		}
 		else {
-			NSLog(@"could not find user icon %d", localUser.userIconID);
+			NSLog(@"could not find user icon %d", user.userIconID);
 		}
 		
 		// create username label
 		UILabel *usernameLabel = [[UILabel alloc] init];
-		usernameLabel.frame = [self frameForUserSlot:localUser.state.userSlot
+		usernameLabel.frame = [self frameForUserPosition:user.meta.userPosition
 							   offsetFromLifeCounter:CGPointMake(-200, 80)
 												size:CGSizeMake(200, 30)];
-		usernameLabel.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
+		usernameLabel.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:user.meta.userPosition]);
 		usernameLabel.backgroundColor = [UIColor clearColor];
 		usernameLabel.textAlignment = NSTextAlignmentRight;
 		usernameLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME size:26];
-		usernameLabel.text = localUser.name;
+		usernameLabel.text = user.name;
 		
 		[self.nameLabels addObject:usernameLabel];
 		[self.view addSubview:usernameLabel];
 		
 		// drop some eaves
-		[localUser addObserver:self forKeyPath:@"state.isDead" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial) context:NULL];
+		[user addObserver:self forKeyPath:@"state.life" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial) context:NULL];
+		[user addObserver:self forKeyPath:@"state.poison" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
+		[user addObserver:self forKeyPath:@"state.isDead" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
 	}
 	
 	// required below because it updates UI assembled above
-	self.activeLocalUser = activeLocalUser;
+	[self updatePassButtonPosition];
 	
 	self.isInitialized = YES;
 	
@@ -217,20 +221,19 @@
 	self.undoButton.enabled = YES;
 	
 	// kill anybody that needs killing
-	BOOL isPromptingPlayersForDraw = ![self killLocalUsersThatShouldBeDead];
+	BOOL isPromptingPlayersForDraw = ![self autoKill];
 	if (isPromptingPlayersForDraw) {
 		return;
 	}
-	
-	// store turn and states for all users
-	[MatchManager createMatchTurnWithMatch:self.match activeLocalUser:self.activeLocalUser allLocalUsers:self.localUsers];
-	
-	BOOL isComplete = [self isMatchCompleted];
+					
+	BOOL isComplete = [self areAllUsersDead];
 	if (isComplete) {
 		[self matchCompleted];
 	}
 	else {
-		[self switchToNextActiveLocalUser];
+		[MatchManager addMatchTurnToMatch:self.match];
+
+		[self updatePassButtonPosition];
 	}
 }
 
@@ -250,7 +253,19 @@
 	self.alertReason = AlertReasonUndo;
 	
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning!"
-														message:@"Are you sure?!\nThis will revert every player to the state at the last turn."
+														message:@"Are you sure?!\nThis will revert every player to the state at the beginning of last turn."
+													   delegate:self
+											  cancelButtonTitle:@"Cancel"
+											  otherButtonTitles:@"Do it!", nil];
+	
+	[alertView show];
+}
+
+- (void)resetTurnButtonPressed {
+	self.alertReason = AlertReasonResetTurn;
+	
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning!"
+														message:@"Are you sure?!\nThis will revert every player to the state at the beginning of the turn."
 													   delegate:self
 											  cancelButtonTitle:@"Cancel"
 											  otherButtonTitles:@"Do it!", nil];
@@ -262,62 +277,45 @@
 #pragma mark - Match Helper
 
 - (void)quitMatch {
-	[MatchManager deleteActiveMatch:self.match];
-	[Settings setNullValueForKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+	[MatchService deleteMatch:self.match];
+	[MatchManager setActiveMatch:nil];
 	
 	[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 }
 
-- (void)restorePreviousUserStates {
-	LocalUser *newActiveLocalUser;
-	[MatchManager restorePreviousUserStatesForMatch:self.match localUsers:self.localUsers activeLocalUser:&newActiveLocalUser];
-	
-	self.activeLocalUser = newActiveLocalUser;
-	
-	// disable undo button if we don't have another previous MatchTurn
-	MatchTurn *previousMatchTurn = [Database lastMatchTurnForMatch:self.match];
-	if (!previousMatchTurn) {
-		self.undoButton.enabled = NO;
-	}
-}
-
 // returns NO if querying players to verify a Match draw
 // returns YES otherwise
-- (BOOL)killLocalUsersThatShouldBeDead {
-	if (self.match.enableAutoDeath) {
-		if (!self.pendingLocalUsersToKill) {
-			self.pendingLocalUsersToKill = [[NSMutableArray alloc] initWithCapacity:1];
+- (BOOL)autoKill {
+	NSUInteger numDeadUsers = 0;
+	NSUInteger numUsersToKill = 0;
+	for (User *user in self.match.users) {
+		if (user.state.isDead) { // skip if already dead
+			numDeadUsers++;
+			continue;
+		}
+		
+		if ([self shouldUserBeDead:user]) {
+			numUsersToKill++;
+		}
+	}
+	
+	if (numUsersToKill > 0) {
+		if (numUsersToKill + numDeadUsers >= [self.match.users count]) { // if every user will end up dead
+			self.alertReason = AlertReasonVerifyMatchDraw;
+			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Draw?!"
+																message:@"Verify that there is no single winner."
+															   delegate:self
+													  cancelButtonTitle:@"Cancel"
+													  otherButtonTitles:@"It's a draw", nil];
+			
+			[alertView show];
+			return NO;
 		}
 		else {
-			[self.pendingLocalUsersToKill removeAllObjects];
-		}
-		
-		NSUInteger numDeadUsers = 0;
-		for (LocalUser *localUser in self.localUsers) {
-			if (localUser.state.isDead) { // skip if already dead
-				numDeadUsers++;
-				continue;
-			}
-			
-			if (localUser.state.life <= 0 || localUser.state.poison >= self.match.poisonToDie) { // death conditions
-				[self.pendingLocalUsersToKill addObject:localUser];
-			}
-		}
-		
-		if ([self.pendingLocalUsersToKill count] > 0) {
-			if ([self.pendingLocalUsersToKill count] + numDeadUsers >= [self.localUsers count]) { // if every user will end up dead
-				self.alertReason = AlertReasonVerifyMatchDraw;
-				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Draw?!"
-																	message:@"Verify that there is no winner to this game we call Magic."
-																   delegate:self
-														  cancelButtonTitle:@"Cancel"
-														  otherButtonTitles:@"It's a draw", nil];
-				
-				[alertView show];
-				return NO;
-			}
-			else {
-				[self killPendingLocalUsersToKill];
+			for (User *user in self.match.users) {
+				if (!user.state.isDead && [self shouldUserBeDead:user]) {
+					user.state.isDead = YES;
+				}
 			}
 		}
 	}
@@ -325,33 +323,14 @@
 	return YES;
 }
 
-- (LocalUser *)nextActiveLocalUser {
-	NSUInteger checkCount = 0;
-	NSUInteger maxCheckCount = [self.localUsers count];
-	LocalUser *nextActiveLocalUser = [self.localUsers objectAfterObject:self.activeLocalUser];
-	while (nextActiveLocalUser.state.isDead && checkCount < maxCheckCount) {
-		nextActiveLocalUser = [self.localUsers objectAfterObject:nextActiveLocalUser];
-		checkCount++;
-	}
-	
-	if (checkCount == maxCheckCount) {
-		nextActiveLocalUser = nil;
-	}
-		
-	return nextActiveLocalUser;
+- (BOOL)shouldUserBeDead:(User *)user {
+	return user.state.life <= 0 || user.state.poison >= self.match.poisonToDie;
 }
 
-- (void)switchToNextActiveLocalUser {
-	LocalUser *nextActiveLocalUser = [self nextActiveLocalUser];
-	NSAssert(nextActiveLocalUser, @"Could not find next active user after searching the entire list");
-	
-	self.activeLocalUser = nextActiveLocalUser;
-}
-
-- (BOOL)isMatchCompleted {
+- (BOOL)areAllUsersDead {
 	NSUInteger numUsersAlive = 0;
-	for (LocalUser *localUser in self.localUsers) {
-		if (!localUser.state.isDead) {
+	for (User *user in self.match.users) {
+		if (!user.state.isDead) {
 			numUsersAlive++;
 		}
 	}
@@ -359,32 +338,32 @@
 	return numUsersAlive <= 1;
 }
 
-- (void)localUserDied:(LocalUser *)localUser {
-	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserSlot:localUser.state.userSlot];
-	UIImageView *userIconImageView = [self userIconImageViewForLocalUser:localUser];
-	UILabel *nameLabel = [self nameLabelForLocalUser:localUser];
+- (void)userDied:(User *)user {
+	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserPosition:user.meta.userPosition];
+	UIImageView *userIconImageView = [self userIconImageViewForUser:user];
+	UILabel *nameLabel = [self nameLabelForUser:user];
 	
 	[UIView animateWithDuration:(self.isInitialized ? 0.40f : 0)
 					 animations:^{
 						 lifeCounterView.transform = CGAffineTransformScale(lifeCounterView.transform, 0.001, 0.001);
-						 userIconImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(130, 200) size:userIconImageView.frame.size];
-						 nameLabel.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(-200, 200) size:nameLabel.frame.size];
+						 userIconImageView.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(130, 200) size:userIconImageView.frame.size];
+						 nameLabel.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(-200, 200) size:nameLabel.frame.size];
 					 }
 					 completion:^(BOOL finished) {
 						 
 					 }];
 }
 	 
-- (void)localUserResurrected:(LocalUser *)localUser {
-	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserSlot:localUser.state.userSlot];
-	UIImageView *userIconImageView = [self userIconImageViewForLocalUser:localUser];
-	UILabel *nameLabel = [self nameLabelForLocalUser:localUser];
+- (void)userResurrected:(User *)user {
+	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserPosition:user.meta.userPosition];
+	UIImageView *userIconImageView = [self userIconImageViewForUser:user];
+	UILabel *nameLabel = [self nameLabelForUser:user];
 	
 	[UIView animateWithDuration:0.40f
 					 animations:^{
-						 lifeCounterView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:localUser.state.userSlot]);
-						 userIconImageView.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(130, 80) size:userIconImageView.frame.size];
-						 nameLabel.frame = [self frameForUserSlot:localUser.state.userSlot offsetFromLifeCounter:CGPointMake(-200, 80) size:nameLabel.frame.size];
+						 lifeCounterView.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:user.meta.userPosition]);
+						 userIconImageView.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(130, 80) size:userIconImageView.frame.size];
+						 nameLabel.frame = [self frameForUserPosition:user.meta.userPosition offsetFromLifeCounter:CGPointMake(-200, 80) size:nameLabel.frame.size];
 					 }
 					 completion:^(BOOL finished) {
 						 
@@ -392,10 +371,10 @@
 }
 
 - (void)matchCompleted {
-	LocalUser *localUserWinner;
-	for (LocalUser *localUser in self.localUsers) {
-		if (!localUser.state.isDead) {
-			localUserWinner = localUser;
+	User *userWinner;
+	for (User *user in self.match.users) {
+		if (!user.state.isDead) {
+			userWinner = user;
 			break;
 		}
 	}
@@ -416,10 +395,19 @@
 	
 	[self disableInterfaceForAnimation:YES];
 	
-	[MatchManager matchCompleted:self.match localUsers:self.localUsers];
+	// save current turn
+	NSDate *now = [NSDate date];
+	self.match.currentTurn.passTime = now;
+	[MatchService updateMatchTurn:self.match.currentTurn];
+	
+	// save match
+	self.match.winnerUserID = userWinner.ID;
+	self.match.isComplete = YES;
+	self.match.endTime = now;
+	[MatchService updateMatch:self.match];
 
-	if (localUserWinner) {
-		LifeCounterView *winnerLifeCounterView = [self lifeCounterViewForUserSlot:localUserWinner.state.userSlot];
+	if (userWinner) {
+		LifeCounterView *winnerLifeCounterView = [self lifeCounterViewForUserPosition:userWinner.meta.userPosition];
 		[UIView animateWithDuration:1.20f
 						 animations:^{
 							 winnerLifeCounterView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
@@ -445,12 +433,33 @@
 
 #pragma mark - Helper
 
-- (void)killPendingLocalUsersToKill {
-	for (LocalUser *localUserToKill in self.pendingLocalUsersToKill) {
-		localUserToKill.state.isDead = YES;
-	}
+- (void)updatePassButtonPosition {
+	BOOL shouldAnimatePassButton = self.isInitialized;
 	
-	[self.pendingLocalUsersToKill removeAllObjects];
+	UserPosition userPosition = self.match.currentTurn.user.meta.userPosition;
+		
+	if (shouldAnimatePassButton) {
+		[UIView animateWithDuration:0.20f
+						 animations:^{
+							 self.passButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+						 }
+						 completion:^(BOOL finished) {
+							 [UIView animateWithDuration:0.20f
+											  animations:^{
+												  self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:userPosition]);
+											  }
+											  completion:^(BOOL finished) {
+												  [UIView animateWithDuration:0.20f
+																   animations:^{
+																	   self.passButton.frame = [self frameForUserPosition:userPosition offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
+																   }];
+											  }];
+						 }];
+	}
+	else {
+		self.passButton.frame = [self frameForUserPosition:self.match.currentTurn.user.meta.userPosition offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
+		self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserPosition:userPosition]);
+	}
 }
 
 - (UIImage *)recolorImage:(UIImage *)image color:(UIColor *)color {
@@ -481,20 +490,20 @@
 	return [UIImage imageWithCGImage:coloredImage];
 }
 
-- (CGFloat)rotationAngleForUserSlot:(UserSlot)userSlot {
-	NSAssert(userSlot > 0 && userSlot <= 4, @"UserSlot supplied is out of range (%d)", userSlot);
+- (CGFloat)rotationAngleForUserPosition:(UserPosition)userPosition {
+	NSAssert(userPosition > 0 && userPosition <= 4, @"UserPosition supplied is out of range (%d)", userPosition);
 
-	switch (userSlot) {
-		case UserSlotSouth:
+	switch (userPosition) {
+		case UserPositionSouth:
 			return 0;
 			break;
-		case UserSlotWest:
+		case UserPositionWest:
 			return M_PI_2;
 			break;
-		case UserSlotNorth:
+		case UserPositionNorth:
 			return M_PI;
 			break;
-		case UserSlotEast:
+		case UserPositionEast:
 			return -M_PI_2;
 			break;
 		default:
@@ -503,33 +512,33 @@
 	}
 }
 
-- (CGRect)frameForUserSlot:(UserSlot)userSlot
+- (CGRect)frameForUserPosition:(UserPosition)userPosition
  offsetFromLifeCounter:(CGPoint)offset
 					size:(CGSize)size {
-	NSAssert(userSlot > 0 && userSlot <= 4, @"UserSlot supplied is out of range (%d)", userSlot);
+	NSAssert(userPosition > 0 && userPosition <= 4, @"UserPosition supplied is out of range (%d)", userPosition);
 
-	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserSlot:userSlot];
+	LifeCounterView *lifeCounterView = [self lifeCounterViewForUserPosition:userPosition];
 	
-	switch (userSlot) {
-		case UserSlotSouth: {
+	switch (userPosition) {
+		case UserPositionSouth: {
 			return CGRectMake(CGRectGetMidX(lifeCounterView.frame) - size.width/2 + offset.x,
 							  CGRectGetMidY(lifeCounterView.frame) - size.height/2 + offset.y,
 							  size.width,
 							  size.height);
 		}	break;
-		case UserSlotWest: {
+		case UserPositionWest: {
 			return CGRectMake(CGRectGetMidX(lifeCounterView.frame) - size.width/2 - offset.y,
 							  CGRectGetMidY(lifeCounterView.frame) - size.height/2 + offset.x,
 							  size.width,
 							  size.height);
 		}	break;
-		case UserSlotNorth: {
+		case UserPositionNorth: {
 			return CGRectMake(CGRectGetMidX(lifeCounterView.frame) - size.width/2 - offset.x,
 							  CGRectGetMidY(lifeCounterView.frame) - size.height/2 - offset.y,
 							  size.width,
 							  size.height);
 		}	break;
-		case UserSlotEast: {
+		case UserPositionEast: {
 			return CGRectMake(CGRectGetMidX(lifeCounterView.frame) - size.width/2 + offset.y,
 							  CGRectGetMidY(lifeCounterView.frame) - size.height/2 - offset.x,
 							  size.width,
@@ -542,31 +551,31 @@
 	}
 }
 
-- (CGRect)defaultFrameForLifeCounterAtUserSlot:(UserSlot)userSlot {
-	NSAssert(userSlot > 0 && userSlot <= 4, @"UserSlot supplied is out of range (%d)", userSlot);
+- (CGRect)defaultFrameForLifeCounterAtUserPosition:(UserPosition)userPosition {
+	NSAssert(userPosition > 0 && userPosition <= 4, @"UserPosition supplied is out of range (%d)", userPosition);
 	
 	CGSize defaultSize = CGSizeMake(200, 200);
 	
-	switch (userSlot) {
-		case UserSlotSouth: {
+	switch (userPosition) {
+		case UserPositionSouth: {
 			return CGRectMake(CGRectGetMidX(self.view.bounds) - defaultSize.width/2,
 							  CGRectGetMaxY(self.view.bounds) - defaultSize.height - 20,
 							  defaultSize.width,
 							  defaultSize.height);
 		}	break;
-		case UserSlotWest: {
+		case UserPositionWest: {
 			return CGRectMake(20,
 							  CGRectGetMidY(self.view.bounds) - defaultSize.height/2,
 							  defaultSize.width,
 							  defaultSize.height);
 		}	break;
-		case UserSlotNorth: {
+		case UserPositionNorth: {
 			return CGRectMake(CGRectGetMidX(self.view.bounds) - defaultSize.width/2,
 							  20,
 							  defaultSize.width,
 							  defaultSize.height);
 		}	break;
-		case UserSlotEast: {
+		case UserPositionEast: {
 			return CGRectMake(CGRectGetMaxX(self.view.bounds) - defaultSize.width - 20,
 							  CGRectGetMidY(self.view.bounds) - defaultSize.height/2,
 							  defaultSize.width,
@@ -579,34 +588,34 @@
 	}
 }
 
-- (LifeCounterView *)lifeCounterViewForUserSlot:(UserSlot)userSlot {
+- (LifeCounterView *)lifeCounterViewForUserPosition:(UserPosition)userPosition {
 	NSAssert([self.lifeCounterViews count] > 0, @"There are no name labels");
 
-	LocalUser *localUser = [self.localUserSlotDictionary objectForKey:@(userSlot)];
-	NSAssert(localUser, @"There is no LocalUser at slot %d", userSlot);
+	User *user = [self.userPositionDictionary objectForKey:@(userPosition)];
+	NSAssert(user, @"There is no User at slot %d", userPosition);
 	
-	NSUInteger localUserIndex = [self.localUsers indexOfObject:localUser];
-	NSAssert(localUser, @"That user is not one of the current users", userSlot);
+	NSUInteger userIndex = [self.match.users indexOfObject:user];
+	NSAssert(user, @"That user is not one of the current users", userPosition);
 	
-	return [self.lifeCounterViews objectAtIndex:localUserIndex];
+	return [self.lifeCounterViews objectAtIndex:userIndex];
 }
 
-- (UIImageView *)userIconImageViewForLocalUser:(LocalUser *)localUser {
+- (UIImageView *)userIconImageViewForUser:(User *)user {
 	NSAssert([self.userIconImageViews count] > 0, @"There are no name labels");
 
-	NSUInteger localUserIndex = [self.localUsers indexOfObject:localUser];
-	NSAssert(localUser, @"That user is not one of the current users");
+	NSUInteger userIndex = [self.match.users indexOfObject:user];
+	NSAssert(user, @"That user is not one of the current users");
 	
-	return [self.userIconImageViews objectAtIndex:localUserIndex];
+	return [self.userIconImageViews objectAtIndex:userIndex];
 }
 
-- (UILabel *)nameLabelForLocalUser:(LocalUser *)localUser {
+- (UILabel *)nameLabelForUser:(User *)user {
 	NSAssert([self.nameLabels count] > 0, @"There are no name labels");
 	
-	NSUInteger localUserIndex = [self.localUsers indexOfObject:localUser];
-	NSAssert(localUser, @"That user is not one of the current users");
+	NSUInteger userIndex = [self.match.users indexOfObject:user];
+	NSAssert(user, @"That user is not one of the current users");
 	
-	return [self.nameLabels objectAtIndex:localUserIndex];
+	return [self.nameLabels objectAtIndex:userIndex];
 }
 
 - (void)disableInterfaceForAnimation:(BOOL)disable {
@@ -621,7 +630,16 @@
 		case AlertReasonUndo:
 			switch (buttonIndex) {
 				case 1:
-					[self restorePreviousUserStates];
+					[MatchManager revertMatchToPreviousTurn:self.match];
+					[self updatePassButtonPosition];
+					self.undoButton.enabled = self.match.currentTurn.turnNumber > 1;
+					break;
+			}
+			break;
+		case AlertReasonResetTurn:
+			switch (buttonIndex) {
+				case 1:
+					[MatchManager revertMatchToBeginningOfCurrentTurn:self.match];
 					break;
 			}
 			break;
@@ -634,19 +652,14 @@
 			break;
 		case AlertReasonVerifyMatchDraw:
 			switch (buttonIndex) {
-				case 0:
-					[self.pendingLocalUsersToKill removeAllObjects];
-					break;
 				case 1:
-					[self killPendingLocalUsersToKill];
+					for (User *user in self.match.users) {
+						if (!user.state.isDead && [self shouldUserBeDead:user]) {
+							user.state.isDead = YES;
+						}
+					}
 					
-					BOOL isComplete = [self isMatchCompleted];
-					if (isComplete) {
-						[self matchCompleted];
-					}
-					else {
-						[self switchToNextActiveLocalUser];
-					}
+					[self matchCompleted];
 					break;
 			}
 			break;
@@ -661,64 +674,42 @@
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([object isKindOfClass:[LocalUser class]] && [keyPath isEqualToString:@"state.isDead"]) {
-		LocalUser *localUser = (LocalUser *)object;
-				
-		BOOL wasDeadBeforeChange = [[change objectForKey:NSKeyValueChangeOldKey] boolValue];
-		BOOL isDeadNow = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+	if ([object isKindOfClass:[User class]]) {
+		User *user = (User *)object;
 		
-		if ((!wasDeadBeforeChange || !self.isInitialized) && isDeadNow) {
-			[Database updateCurrentUserStateForActiveMatch:localUser.state];
-			[self localUserDied:localUser];
+		id old = [change objectForKey:NSKeyValueChangeOldKey];
+		id new = [change objectForKey:NSKeyValueChangeNewKey];
+				
+		if ([keyPath isEqualToString:@"state.isDead"]) {
+			BOOL wasDeadBeforeChange = [old boolValue];
+			BOOL isDeadNow = [new boolValue];
+			
+			if ((!wasDeadBeforeChange || !self.isInitialized) && isDeadNow) {
+				[MatchService updateMatchTurnUserState:user.state];
+				[self userDied:user];
+			}
+			else if (wasDeadBeforeChange && !isDeadNow) {
+				[MatchService updateMatchTurnUserState:user.state];
+				[self userResurrected:user];
+			}
 		}
-		else if (wasDeadBeforeChange && !isDeadNow) {
-			[Database updateCurrentUserStateForActiveMatch:localUser.state];
-			[self localUserResurrected:localUser];
+		else if ([keyPath isEqualToString:@"state.life"]) {
+			NSInteger oldLife = [old integerValue];
+			NSInteger newLife = [new integerValue];
+			
+			if (oldLife != newLife) {
+				[MatchService updateMatchTurnUserState:user.state];
+			}
+		}
+		else if ([keyPath isEqualToString:@"state.poison"]) {
+			NSUInteger oldPoison = [old unsignedIntegerValue];
+			NSUInteger newPoison = [new unsignedIntegerValue];
+			
+			if (oldPoison != newPoison) {
+				[MatchService updateMatchTurnUserState:user.state];
+			}
 		}
 	}
-}
-
-
-#pragma mark - Getter / Setter
-
-- (void)setActiveLocalUser:(LocalUser *)activeLocalUser {
-	BOOL shouldAnimatePassButton = _activeLocalUser != nil;
-	
-	_activeLocalUser = activeLocalUser;
-	
-	if (shouldAnimatePassButton) {
-		[UIView animateWithDuration:0.30f
-						 animations:^{
-							 self.passButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
-						 }
-						 completion:^(BOOL finished) {
-							 [UIView animateWithDuration:0.30f
-											  animations:^{
-												  self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
-											  }
-											  completion:^(BOOL finished) {
-												  [UIView animateWithDuration:0.30f
-																   animations:^{
-																	  self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size]; 
-																   }];
-											  }];
-						 }];
-	}
-	else {
-		self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
-		self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
-	}
-	
-	/*
-	[self.passButton hideByShrinkingForDuration:0.30f
-									 completion:^(BOOL finished) {
-										 // move turn button to this user
-										 self.passButton.frame = [self frameForUserSlot:activeLocalUser.state.userSlot offsetFromLifeCounter:CGPointMake(0, -136) size:self.passButton.frame.size];
-										 self.passButton.transform = CGAffineTransformMakeRotation([self rotationAngleForUserSlot:activeLocalUser.state.userSlot]);
-										 
-										 [self.passButton showByExpandingForDuration:0.30f completion:nil];
-									 }];
-	 */
 }
 
 @end

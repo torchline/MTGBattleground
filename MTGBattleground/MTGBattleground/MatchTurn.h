@@ -7,13 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IdentifiableDatabaseObject.h"
 
 @interface MatchTurn : NSObject
 
 @property (nonatomic) NSString *ID;
 @property (nonatomic) NSString *matchID;
-@property (nonatomic) NSUInteger localUserID;
-@property (nonatomic) NSDate *endDate;
+@property (nonatomic) NSString *userID;
+@property (nonatomic) NSUInteger turnNumber;
+@property (nonatomic) NSDate *passTime;
+
+- (MatchTurn *)initWithID:(NSString *)ID
+				  matchID:(NSString *)matchID
+				   userID:(NSString *)userID
+			   turnNumber:(NSUInteger)turnNumber
+				 passTime:(NSDate *)passTime;
 
 @end

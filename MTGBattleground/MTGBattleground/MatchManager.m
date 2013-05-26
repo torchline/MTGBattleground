@@ -7,174 +7,220 @@
 //
 
 #import "MatchManager.h"
-#import "Match.h"
-#import "Database.h"
-#import "MatchTurn.h"
-#import "LocalUser.h"
-#import "FMDatabaseQueue.h"
-#import "FMDatabase.h"
+
+#import "Match+Runtime.h"
+#import "MatchTurn+Runtime.h"
+#import "User+Runtime.h"
+
+#import "MatchService.h"
 #import "Settings.h"
+#import "NSArray+More.h"
+
 
 @implementation MatchManager
 
-+ (Match *)createMatchWithLocalUsers:(NSArray *)localUsers
-						startingLife:(NSUInteger)startingLife
-					   poisonCounter:(BOOL)poisonCounter
-					 dynamicCounters:(BOOL)dynamicCounters
-						  turnTracking:(BOOL)turnTracking {
-	
-	NSAssert([localUsers count], @"Cannot create a Match without any users");
-	
-	// create Match
-	Match *match = [Match new];
-	match.ID = [Database newGUID];
-	match.startingLife = startingLife;
-	match.enablePoisonCounter = poisonCounter;
-	match.enableDynamicCounters = dynamicCounters;
-	match.enableTurnTracking = turnTracking;
-	match.startDate = [NSDate date];
-	
-	// persist Match
-	[Database createMatch:match];
-	
-	// initialize user states
-	for (LocalUser *localUser in localUsers) {
-		NSAssert(localUser.state, @"Expecting LocalUser to have at least a partial state (to hold UserSlot) before creating Match");
-		NSAssert(localUser.state.userSlot > 0, @"Expecting LocalUser to have a UserSlot set prior to creating Match");
-		
-		localUser.state.localUserID = localUser.ID;
-		localUser.state.life = startingLife;
-		localUser.state.poison = 0;
-		localUser.state.isDead = NO;
++ (void)setActiveMatch:(Match *)match {
+	[Settings setString:match.ID forKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+}
+
++ (Match *)activeMatch {
+	NSString *activeMatchID = [Settings stringForKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+	if (!activeMatchID) {
+		return nil;
 	}
 	
-	NSArray *userStates = [self userStatesFromLocalUsers:localUsers];
+	Match *activeMatch = [MatchService matchWithID:activeMatchID];
+	if (!activeMatch) {
+		[Settings setString:nil forKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
+	}
 	
-	[Database createInitialUserStates:userStates forMatch:match];
-	[Database createCurrentUserStates:userStates forMatch:match];
+	return activeMatch;
+}
+
++ (Match *)createMatchWithUsers:(NSArray *)users
+				   startingLife:(NSInteger)startingLife
+					poisonToDie:(NSUInteger)poisonToDie
+				  poisonCounter:(BOOL)poisonCounter
+				dynamicCounters:(BOOL)dynamicCounters
+				   turnTracking:(BOOL)turnTracking
+					  autoDeath:(BOOL)autoDeath {
+	
+	Match *match = [[Match alloc] initWithID:[Service newGUID]
+								winnerUserID:nil
+								startingLife:startingLife
+								 poisonToDie:poisonToDie
+							   poisonCounter:poisonCounter
+							 dynamicCounters:dynamicCounters
+								turnTracking:turnTracking
+								   autoDeath:autoDeath
+									complete:NO
+								   startTime:nil
+									 endTime:nil];
+	match.users = users;
+	[MatchService insertMatch:match];
+	
+	NSUInteger i = 0;
+	for (User *user in users) {
+		MatchUserMeta *meta = [[MatchUserMeta alloc] initWithMatchID:match.ID
+															  userID:user.ID
+														   turnOrder:(i + 1)
+														userPosition:(i + 1)]; // TODO: meta user position
+		
+		[MatchService insertMatchUserMeta:meta];
+		
+		user.meta = meta;
+		
+		i++;
+	}
+	
+	match.users = users; // runtime
+	
+	// keeps starting states
+	MatchTurn *initialTurn = [[MatchTurn alloc] initWithID:[Service newGUID]
+												   matchID:match.ID
+													userID:nil
+												turnNumber:0
+												  passTime:nil];
+	[MatchService insertMatchTurn:initialTurn];
+	
+	for (User *user in users) {
+		MatchTurnUserState *state = [[MatchTurnUserState alloc] initWithMatchTurnID:initialTurn.ID
+																			 userID:user.ID
+																			   life:startingLife
+																			 poison:0
+																			 isDead:NO];
+		[MatchService insertMatchTurnUserState:state];
+	}
+	
+	User *startingUser = [users objectAtIndex:0];
+	
+	MatchTurn *currentTurn = [[MatchTurn alloc] initWithID:[Service newGUID]
+												   matchID:match.ID
+													userID:startingUser.ID
+												turnNumber:1
+												  passTime:nil];
+	currentTurn.user = startingUser;
+	currentTurn.match = match;
+	[MatchService insertMatchTurn:currentTurn];
+	
+	match.currentTurn = currentTurn; // runtime
+	
+	for (User *user in users) {
+		MatchTurnUserState *state = [[MatchTurnUserState alloc] initWithMatchTurnID:currentTurn.ID
+																			 userID:user.ID
+																			   life:startingLife
+																			 poison:0
+																			 isDead:NO];
+		[MatchService insertMatchTurnUserState:state];
+		
+		user.state = state;
+	}
 	
 	return match;
 }
 
-+ (MatchTurn *)createMatchTurnWithMatch:(Match *)match activeLocalUser:(LocalUser *)activeLocalUser allLocalUsers:(NSArray *)allLocalUsers {
++ (MatchTurn *)addMatchTurnToMatch:(Match *)match {
 	NSAssert(match.enableTurnTracking, @"Should not be creating MatchTurns when Match (%@) has TurnTracking off", match.ID);
+		
+	// find next user
+	NSUInteger checkCount = 0;
+	NSUInteger maxCheckCount = [match.users count];
+	User *nextUser = [match.users objectAfterObject:match.currentTurn.user];
+	while (nextUser.state.isDead && checkCount < maxCheckCount) {
+		nextUser = [match.users objectAfterObject:nextUser];
+		checkCount++;
+	}
 	
-	// create MatchTurn
-	MatchTurn *matchTurn = [MatchTurn new];
-	matchTurn.ID = [Database newGUID];
-	matchTurn.matchID = match.ID;
-	matchTurn.localUserID = activeLocalUser.ID;
-	matchTurn.endDate = [NSDate date];
+	if (checkCount == maxCheckCount) {
+		nextUser = nil;
+	}
+
+	NSAssert(nextUser, @"Could not find next user");
+
+	// save current MatchTurn
+	match.currentTurn.passTime = [NSDate date];
+	[MatchService updateMatchTurn:match.currentTurn];
 	
-	// persist MatchTurn
-	dispatch_async([Database backgroundQueue], ^{
-		[Database createMatchTurn:matchTurn];
-		[Database createUserStates:[self userStatesFromLocalUsers:allLocalUsers] forMatchTurn:matchTurn];
+	// create new MatchTurn
+	MatchTurn *matchTurn = [[MatchTurn alloc] initWithID:[Service newGUID]
+												 matchID:match.ID
+												  userID:nextUser.ID
+											  turnNumber:(match.currentTurn.turnNumber + 1)
+												passTime:nil];
+	matchTurn.user = nextUser;
+	matchTurn.match = match;
+		
+	for (User *user in match.users) {
+		user.state.matchTurnID = matchTurn.ID;
+	}
+	
+	// persist new MatchTurn and create new states (for current)
+	dispatch_async([Service backgroundQueue], ^{
+		[MatchService insertMatchTurn:matchTurn];
+		
+		for (User *user in match.users) {
+			[MatchService insertMatchTurnUserState:user.state];
+		}
 	});
+	
+	match.currentTurn = matchTurn;
 	
 	return matchTurn;
 }
 
-+ (void)deleteActiveMatch:(Match *)match {
-	dispatch_async([Database backgroundQueue], ^{
-		[Database deleteMatch:match];
-	});
++ (void)revertMatchToBeginningOfCurrentTurn:(Match *)match {
+	NSAssert(match.currentTurn, @"Match has no current turn");
+	NSAssert(match.currentTurn.turnNumber > 0, @"The current turn number should never be 0");
+	
+	MatchTurn *matchTurnToRestore = [MatchService latestMatchTurnForMatch:match offset:1]; // last turn that is not current
+	NSAssert(matchTurnToRestore, @"Could not find MatchTurn to restore");
+	
+	NSDictionary *userStatesToRestoreDictionary = [MatchService matchTurnUserStateDictionaryForMatchTurn:matchTurnToRestore];
+	
+	for (User *user in match.users) {
+		MatchTurnUserState *userStateToRestore = [userStatesToRestoreDictionary objectForKey:user.ID];
+		NSAssert(userStateToRestore, @"UserState for %@ should not be nil", user.ID);
+		
+		userStateToRestore.matchTurnID = match.currentTurn.ID;
+		user.state = userStateToRestore;
+		
+		[MatchService updateMatchTurnUserState:user.state];
+	}	
 }
 
-+ (void)restorePreviousUserStatesForMatch:(Match *)match localUsers:(NSArray *)localUsers activeLocalUser:(LocalUser *__autoreleasing*)activeLocalUser {
-	MatchTurn *matchTurnToDelete = [Database lastMatchTurnForMatch:match];
-	NSAssert(matchTurnToDelete, @"No previous MatchTurn exists");
++ (BOOL)revertMatchToPreviousTurn:(Match *)match {
+	NSAssert(match.currentTurn, @"Match has no current turn to delete");
+	NSAssert(match.currentTurn.turnNumber > 1, @"The current turn number should be greater than 1");
 	
-	MatchTurn *matchTurnToRestoreFrom = [Database secondToLastMatchTurnForMatch:match];
+	MatchTurn *matchTurnToRestore = [MatchService latestMatchTurnForMatch:match offset:2];
+	NSAssert(matchTurnToRestore, @"Could not find MatchTurn to restore");
 	
-	if (matchTurnToRestoreFrom) { // at least two turns have been stored
-		NSDictionary *userStatesToRestoreIDDictionary = [Database idDictionaryForDatabaseObjects:[Database userStatesForMatchTurn:matchTurnToRestoreFrom]];
+	MatchTurn *newCurrentMatchTurn = [MatchService latestMatchTurnForMatch:match offset:1];
+	NSAssert(newCurrentMatchTurn, @"Could not find new current MatchTurn");
+	newCurrentMatchTurn.match = match;
+	newCurrentMatchTurn.passTime = nil;
+	
+	NSDictionary *userStatesToRestoreDictionary = [MatchService matchTurnUserStateDictionaryForMatchTurn:matchTurnToRestore];
+	
+	for (User *user in match.users) {
+		MatchTurnUserState *userStateToRestore = [userStatesToRestoreDictionary objectForKey:user.ID];
+		NSAssert(userStateToRestore, @"UserState for %@ should not be nil", user.ID);
 		
-		for (LocalUser *localUser in localUsers) {
-			// UserStates are identified by LocalUserID (right now). May change later for better decoupling.
-			UserState *userStateToRestore = [userStatesToRestoreIDDictionary objectForKey:@(localUser.ID)];
-			NSAssert(userStateToRestore, @"UserState should not be nil");
-			
-			localUser.state = userStateToRestore;
-		}
+		userStateToRestore.matchTurnID = newCurrentMatchTurn.ID;
+		user.state = userStateToRestore;
 		
-		if (activeLocalUser) {
-			for (LocalUser *localUser in localUsers) {
-				if (localUser.ID == matchTurnToDelete.localUserID) {
-					*activeLocalUser = localUser;
-					break;
-				}
-			}
-			
-			NSAssert(*activeLocalUser, @"Could not find active LocalUser");
+		if ([user.ID isEqualToString:newCurrentMatchTurn.userID]) {
+			newCurrentMatchTurn.user = user;
 		}
 	}
-	else { // state to restore is intiial Match state
-		NSArray *initialUserStates = [Database initialUserStatesForMatch:match];
-		UserState *initialActiveUserState = [initialUserStates objectAtIndex:0];
 		
-		for (LocalUser *localUser in localUsers) {
-			// UserStates are identified by LocalUserID (right now). May change later for better decoupling.
-			UserState *initialUserState = [[UserState alloc] init];
-			initialUserState.localUserID = localUser.ID;
-			initialUserState.userSlot = localUser.state.userSlot;
-			initialUserState.life = match.startingLife;
-			initialUserState.poison = 0;
-			initialUserState.isDead = NO;
-						
-			localUser.state = initialUserState;
-			
-			if (activeLocalUser && localUser.ID == initialActiveUserState.localUserID) {
-				*activeLocalUser = localUser;
-			}
-		}
-		
-		NSAssert(!activeLocalUser || *activeLocalUser, @"Could not find initial active LocalUser");
-	}
+	NSAssert(newCurrentMatchTurn.user, @"Could not find User for MatchTurn");
 	
-	[Database deleteMatchTurn:matchTurnToDelete];
-}
-
-+ (void)matchCompleted:(Match *)match localUsers:(NSArray *)localUsers {
-	// create final UserStates
-	[Database createFinalUserStates:[self userStatesFromLocalUsers:localUsers] forMatch:match];
-	// delete current UserStates
-	[Database deleteCurrentUserStatesForMatch:match];
+	[MatchService deleteMatchTurn:match.currentTurn];
 	
-	// find winner (if any)
-	LocalUser *winnerLocalUser;	
-	for (LocalUser *localUser in localUsers) {
-		if (!localUser.state.isDead) {
-			winnerLocalUser = localUser;
-			break;
-		}
-	}
+	match.currentTurn = newCurrentMatchTurn;
 	
-	// update Match end data
-	[[Database fmDatabaseQueue] inDatabase:^(FMDatabase *db) {
-		BOOL success = [db executeUpdate:@"UPDATE Match SET WinnerLocalUserID = ?, IsComplete = 1, EndDate = ? WHERE ID = ?" withArgumentsInArray:@[
-						winnerLocalUser ? @(winnerLocalUser.ID) : [NSNull null],
-						@((unsigned long)[[NSDate date] timeIntervalSince1970]),
-						match.ID
-						]];
-		
-		NSAssert(success, @"failed updating Match end data: %@", [db lastErrorMessage]);
-	}];
-	
-	// deactivate the Match
-	[Settings setNullValueForKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
-}
-
-#pragma mark - Helper
-
-+ (NSMutableArray *)userStatesFromLocalUsers:(NSArray *)localUsers {
-	NSMutableArray *userStates = [[NSMutableArray alloc] initWithCapacity:[localUsers count]];
-	
-	for (LocalUser *localUser in localUsers) {
-		[userStates addObject:localUser.state];
-	}
-	
-	return userStates;
+	return YES;
 }
 
 

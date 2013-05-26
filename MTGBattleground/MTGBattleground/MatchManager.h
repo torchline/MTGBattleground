@@ -7,22 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MatchAccess.h"
 
 @class Match;
 @class MatchTurn;
-@class LocalUser;
+@class User;
 
 @interface MatchManager : NSObject
 
-+ (Match *)createMatchWithLocalUsers:(NSArray *)localUsers
-						startingLife:(NSUInteger)startingLife
-					   poisonCounter:(BOOL)poisonCounter
-					 dynamicCounters:(BOOL)dynamicCounters
-						  turnTracking:(BOOL)turnTracking;
++ (void)setActiveMatch:(Match *)match;
++ (Match *)activeMatch;
 
-+ (MatchTurn *)createMatchTurnWithMatch:(Match *)match activeLocalUser:(LocalUser *)activeLocalUser allLocalUsers:(NSArray *)allLocalUsers;
-+ (void)deleteActiveMatch:(Match *)match;
-+ (void)restorePreviousUserStatesForMatch:(Match *)match localUsers:(NSArray *)localUsers activeLocalUser:(LocalUser *__autoreleasing*)activeLocalUser;
-+ (void)matchCompleted:(Match *)match localUsers:(NSArray *)localUsers;
++ (Match *)createMatchWithUsers:(NSArray *)users
+				   startingLife:(NSInteger)startingLife
+					poisonToDie:(NSUInteger)poisonToDie
+				  poisonCounter:(BOOL)poisonCounter
+				dynamicCounters:(BOOL)dynamicCounters
+				   turnTracking:(BOOL)turnTracking
+					  autoDeath:(BOOL)autoDeath;
+
++ (MatchTurn *)addMatchTurnToMatch:(Match *)match;
++ (void)revertMatchToBeginningOfCurrentTurn:(Match *)match;
++ (BOOL)revertMatchToPreviousTurn:(Match *)match;
 
 @end

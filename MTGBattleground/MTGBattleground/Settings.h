@@ -19,6 +19,5 @@
 
 + (NSString *)stringForKey:(NSString *)key;
 + (void)setString:(NSString *)string forKey:(NSString *)key;
-+ (void)setNullValueForKey:(NSString *)key;
 
 @end

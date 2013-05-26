@@ -10,22 +10,35 @@
 
 @implementation Match
 
-- (id)init {
+#pragma mark - Init
+
+- (Match *)initWithID:(NSString *)ID
+		 winnerUserID:(NSString *)winnerUserID
+		 startingLife:(NSInteger)startingLife
+		  poisonToDie:(NSUInteger)poisonToDie
+		poisonCounter:(BOOL)poisonCounter
+	  dynamicCounters:(BOOL)dynamicCounters
+		 turnTracking:(BOOL)turnTracking
+			autoDeath:(BOOL)autoDeath
+			 complete:(BOOL)complete
+			startTime:(NSDate *)startTime
+			  endTime:(NSDate *)endTime {
+	
 	self = [super init];
 	if (self) {
-		_startingLife = 20;
-		_poisonToDie = 10;
-		_enablePoisonCounter = YES;
-		_enableDynamicCounters = YES;
-		_enableTurnTracking = YES;
-		_enableAutoDeath = YES;
-		_isComplete = NO;
+		_ID = ID;
+		_winnerUserID = winnerUserID;
+		_startingLife = startingLife;
+		_poisonToDie = poisonToDie;
+		_enablePoisonCounter = poisonCounter;
+		_enableDynamicCounters = dynamicCounters;
+		_enableTurnTracking = turnTracking;
+		_enableAutoDeath = autoDeath;
+		_isComplete = complete;
+		_startTime = startTime;
+		_endTime = endTime;
 	}
 	return self;
-}
-
-- (id)identifiableID {
-	return self.ID;
 }
 
 @end

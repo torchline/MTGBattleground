@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IdentifiableDatabaseObject.h"
 
-@interface UserIcon : NSObject <IdentifiableDatabaseObject>
+@interface UserIcon : NSObject
 
 @property (nonatomic) NSUInteger ID;
 @property (nonatomic) NSString *imagePath;
+
 @property (nonatomic, readonly) UIImage *image;
+
+- (UserIcon *)initWithID:(NSUInteger)ID
+			   imagePath:(NSString *)imagePath;
 
 @end

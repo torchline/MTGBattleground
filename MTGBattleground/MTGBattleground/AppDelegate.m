@@ -7,30 +7,22 @@
 //
 
 #import "AppDelegate.h"
-#import "RootViewController.h"
-#import "ViewManager.h"
 #import "ViewManagerAccess.h"
-#import "Database.h"
-#import "sqlite3.h"
-#import "FMDatabaseQueue.h"
-#import "FMDatabase.h"
-#import "FMResultSet.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	//self.rootViewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	//self.window.rootViewController = self.rootViewController;
-	
-	
-	if ([Database activeMatch]) {
+	/*
+	if ([[[MatchQueue matchQueue] matches] count]) {
 		[[ViewManager sharedInstance] switchToView:[MatchViewController class]];
 	}
 	else {
 		[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 	}
+	 */
+	[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 	
 	[self.window makeKeyAndVisible];
 	

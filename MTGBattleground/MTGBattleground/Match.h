@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IdentifiableDatabaseObject.h"
 
-@interface Match : NSObject <IdentifiableDatabaseObject>
+@interface Match : NSObject
 
 @property (nonatomic) NSString *ID;
-@property (nonatomic) NSUInteger winnerLocalUserID;
+@property (nonatomic) NSString *winnerUserID;
 @property (nonatomic) NSInteger startingLife;
 @property (nonatomic) NSUInteger poisonToDie;
 @property (nonatomic) BOOL enablePoisonCounter;
@@ -20,7 +19,19 @@
 @property (nonatomic) BOOL enableTurnTracking;
 @property (nonatomic) BOOL enableAutoDeath;
 @property (nonatomic) BOOL isComplete;
-@property (nonatomic) NSDate *startDate;
-@property (nonatomic) NSDate *endDate;
+@property (nonatomic) NSDate *startTime;
+@property (nonatomic) NSDate *endTime;
+
+- (Match *)initWithID:(NSString *)ID
+		 winnerUserID:(NSString *)winnerUserID
+		 startingLife:(NSInteger)startingLife
+		  poisonToDie:(NSUInteger)poisonToDie
+		poisonCounter:(BOOL)poisonCounter
+	  dynamicCounters:(BOOL)dynamicCounters
+		 turnTracking:(BOOL)turnTracking
+			autoDeath:(BOOL)autoDeath
+			 complete:(BOOL)complete
+			startTime:(NSDate *)startTime
+			  endTime:(NSDate *)endTime;
 
 @end

@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableArray (Queueing)
+@interface NSArray (More)
 
-- (id)popRandomObject;
 - (id)objectAfterObject:(id)object;
 
 @end

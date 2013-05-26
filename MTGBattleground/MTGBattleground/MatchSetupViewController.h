@@ -8,11 +8,11 @@
 
 #import "ManagableViewController.h"
 
-@class LocalUserSelectionView;
+@class UserSelectionView;
 
 @interface MatchSetupViewController : ManagableViewController
 
-@property (nonatomic) IBOutletCollection(LocalUserSelectionView) NSArray *localUserSelectionViews;
+@property (nonatomic) IBOutletCollection(UserSelectionView) NSArray *userSelectionViews;
 @property (nonatomic) IBOutlet UIButton *startButton;
 @property (nonatomic) IBOutlet UITextField *startingLifeTextField;
 @property (nonatomic) IBOutlet UISwitch *poisonCounterSwitch;

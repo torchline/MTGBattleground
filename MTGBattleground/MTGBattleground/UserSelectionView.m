@@ -1,30 +1,29 @@
 //
-//  LocalUserSelectionView.m
+//  UserSelectionView.m
 //  MTGBattleground
 //
 //  Created by Brad Walker on 5/17/13.
 //  Copyright (c) 2013 Torchline Technology. All rights reserved.
 //
 
-#import "LocalUserSelectionView.h"
+#import "UserSelectionView.h"
 #import "UserIcon.h"
-#import "LocalUser.h"
-#import "Database.h"
+#import "User+Runtime.h"
 #import "UIView+BasicAnimation.h"
 
-@interface LocalUserSelectionView ()
+@interface UserSelectionView ()
 
 @property (nonatomic) BOOL isOpen;
 
 @end
 
 
-@implementation LocalUserSelectionView
+@implementation UserSelectionView
 
 #pragma mark - System
 
 - (void)dealloc {
-	[self.localUser removeObserver:self forKeyPath:@"userIcon"];
+	[self.user removeObserver:self forKeyPath:@"icon"];
 }
 
 
@@ -54,10 +53,10 @@
     return self;
 }
 
-- (LocalUserSelectionView *)initWithLocalUser:(LocalUser *)localUser {
+- (UserSelectionView *)initWithUser:(User *)user {
 	self = [super init];
 	if (self) {
-		_localUser = localUser;
+		_user = user;
 		[self setup];
 	}
 	return self;
@@ -104,26 +103,26 @@
 	[self addSubview:self.unsetButton];
 	
 	// sets up UI
-	self.localUser = self.localUser;
+	self.user = self.user;
 }
 
 
 #pragma mark - User Interaction
 
 - (void)nameButtonPressed {
-	if ([self.delegate respondsToSelector:@selector(localUserSelectionViewDidRequestNewName:)]) {
-		[self.delegate localUserSelectionViewDidRequestNewName:self];
+	if ([self.delegate respondsToSelector:@selector(userSelectionViewDidRequestNewName:)]) {
+		[self.delegate userSelectionViewDidRequestNewName:self];
 	}
 }
 
 - (void)iconButtonPressed {
-	if ([self.delegate respondsToSelector:@selector(localUserSelectionViewDidRequestNewIcon:)]) {
-		[self.delegate localUserSelectionViewDidRequestNewIcon:self];
+	if ([self.delegate respondsToSelector:@selector(userSelectionViewDidRequestNewIcon:)]) {
+		[self.delegate userSelectionViewDidRequestNewIcon:self];
 	}
 }
 
 - (void)unsetButtonPressed {
-	self.localUser = nil;
+	self.user = nil;
 }
 
 
@@ -184,25 +183,25 @@
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {	
-	[Database updateLocalUser:self.localUser];
-	
-	[self.iconButton setImage:self.localUser.userIcon.image forState:UIControlStateNormal];
+	if ([object isKindOfClass:[User class]] && [keyPath isEqualToString:@"icon"]) {
+		[self.iconButton setImage:self.user.icon.image forState:UIControlStateNormal];
+	}
 }
 
 
 
 #pragma mark - Getter / Setter
 
-- (void)setLocalUser:(LocalUser *)localUser {
-	[_localUser removeObserver:self forKeyPath:@"userIcon"];
-	[localUser addObserver:self forKeyPath:@"userIcon" options:0 context:NULL];
+- (void)setUser:(User *)user {
+	[_user removeObserver:self forKeyPath:@"icon"];
+	[user addObserver:self forKeyPath:@"icon" options:0 context:NULL];
 	
-	_localUser = nil;
+	_user = nil;
 	
-	if (localUser) {
-		[self.nameButton setTitle:localUser.name forState:UIControlStateNormal];
+	if (user) {
+		[self.nameButton setTitle:user.name forState:UIControlStateNormal];
 		
-		[self.iconButton setImage:localUser.userIcon.image forState:UIControlStateNormal];
+		[self.iconButton setImage:user.icon.image forState:UIControlStateNormal];
 		
 		[self animateOpen];
 	}
@@ -211,7 +210,7 @@
 		[self animateClosed];
 	}
 		
-	_localUser = localUser; // deferred so user record doesn't get updated user icon
+	_user = user; // deferred so user record doesn't get updated user icon
 }
 
 - (void)setUserIcon:(UserIcon *)userIcon {

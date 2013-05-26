@@ -8,8 +8,7 @@
 
 #import "LifeCounterView.h"
 #import "UIView+BasicAnimation.h"
-#import "LocalUser.h"
-#import "Database.h"
+#import "User+Runtime.h"
 
 @interface LifeCounterView()
 
@@ -31,7 +30,7 @@
 #pragma mark - System
 
 - (void)dealloc {
-	[self.localUser removeObserver:self forKeyPath:@"state.life"];
+	[self.user removeObserver:self forKeyPath:@"state.life"];
 }
 
 
@@ -132,11 +131,11 @@
 #pragma mark - User Interaction
 
 - (void)plusButtonPressed {
-	self.localUser.state.life++;
+	self.user.state.life++;
 }
 
 - (void)minusButtonPressed {
-	self.localUser.state.life--;
+	self.user.state.life--;
 }
 
 
@@ -152,11 +151,11 @@
 		return;
 	}
 		
-	self.lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", self.localUser.state.life];
+	self.lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", self.user.state.life];
 	
 	NSUInteger i = 0;
 	for (UIImageView *segmentImageView in self.segmentImageViews) {
-		segmentImageView.hidden = i >= self.localUser.state.life || self.localUser.state.life <= 0;
+		segmentImageView.hidden = i >= self.user.state.life || self.user.state.life <= 0;
 		i++;
 	}
 }
@@ -168,21 +167,19 @@
 						change:(NSDictionary *)change
 					   context:(void *)context {
 		
-	if ([object isEqual:self.localUser] && [keyPath isEqual:@"state.life"]) {
+	if ([object isEqual:self.user] && [keyPath isEqual:@"state.life"]) {
 		[self updateLifeVisuals];
-		
-		[Database updateCurrentUserStateForActiveMatch:self.localUser.state];
 	}
 }
 
 
 #pragma mark - Getter / Setter
 
-- (void)setLocalUser:(LocalUser *)localUser {
-	[_localUser removeObserver:self forKeyPath:@"state.life"];
-	[localUser addObserver:self forKeyPath:@"state.life" options:0 context:NULL];
+- (void)setUser:(User *)user {
+	[_user removeObserver:self forKeyPath:@"state.life"];
+	[user addObserver:self forKeyPath:@"state.life" options:0 context:NULL];
 	
-	_localUser = localUser;
+	_user = user;
 		
 	[self updateLifeVisuals];
 }

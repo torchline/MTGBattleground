@@ -7,12 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2447D8D174EE48C0096D9C4 /* MatchService.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D8C174EE48C0096D9C4 /* MatchService.m */; };
+		A2447D8E174EE48C0096D9C4 /* MatchService.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D8C174EE48C0096D9C4 /* MatchService.m */; };
+		A2447D91174EE68F0096D9C4 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D90174EE68F0096D9C4 /* Service.m */; };
+		A2447D92174EE68F0096D9C4 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D90174EE68F0096D9C4 /* Service.m */; };
+		A2447D95174EE77D0096D9C4 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D94174EE77C0096D9C4 /* UserService.m */; };
+		A2447D96174EE77D0096D9C4 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = A2447D94174EE77C0096D9C4 /* UserService.m */; };
 		A261BA98174BDE3900FB11A0 /* MatchStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */; };
 		A261BA99174BDE3900FB11A0 /* MatchStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */; };
 		A26A2489174C9667002C1A47 /* MatchHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */; };
 		A26A248A174C9667002C1A47 /* MatchHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */; };
 		A26A248B174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */; };
 		A26A248C174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */; };
+		A26A2495174CC6D0002C1A47 /* MatchUserMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2494174CC6D0002C1A47 /* MatchUserMeta.m */; };
+		A26A2496174CC6D0002C1A47 /* MatchUserMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2494174CC6D0002C1A47 /* MatchUserMeta.m */; };
+		A26A249A174CD275002C1A47 /* User+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2499174CD275002C1A47 /* User+Runtime.m */; };
+		A26A249B174CD275002C1A47 /* User+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A2499174CD275002C1A47 /* User+Runtime.m */; };
+		A26A24A2174DAB36002C1A47 /* Match+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A24A1174DAB36002C1A47 /* Match+Runtime.m */; };
+		A26A24A3174DAB36002C1A47 /* Match+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A24A1174DAB36002C1A47 /* Match+Runtime.m */; };
+		A26A24A6174DE850002C1A47 /* MatchTurn+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A24A5174DE850002C1A47 /* MatchTurn+Runtime.m */; };
+		A26A24A7174DE850002C1A47 /* MatchTurn+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = A26A24A5174DE850002C1A47 /* MatchTurn+Runtime.m */; };
 		A2AAF82717494D5800CFFFDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82617494D5800CFFFDA /* UIKit.framework */; };
 		A2AAF82917494D5800CFFFDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82817494D5800CFFFDA /* Foundation.framework */; };
 		A2AAF82B17494D5800CFFFDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF82A17494D5800CFFFDA /* CoreGraphics.framework */; };
@@ -98,8 +112,6 @@
 		A2AAF8D117494EFC00CFFFDA /* PassButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8CB17494EFC00CFFFDA /* PassButton.png */; };
 		A2AAF91517494F5700CFFFDA /* AccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */; };
 		A2AAF91617494F5700CFFFDA /* AccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */; };
-		A2AAF91717494F5700CFFFDA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D617494F5700CFFFDA /* Database.m */; };
-		A2AAF91817494F5700CFFFDA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D617494F5700CFFFDA /* Database.m */; };
 		A2AAF91917494F5700CFFFDA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D817494F5700CFFFDA /* FMDatabase.m */; };
 		A2AAF91A17494F5700CFFFDA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8D817494F5700CFFFDA /* FMDatabase.m */; };
 		A2AAF91B17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8DA17494F5700CFFFDA /* FMDatabaseAdditions.m */; };
@@ -112,12 +124,12 @@
 		A2AAF92217494F5700CFFFDA /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E017494F5700CFFFDA /* FMResultSet.m */; };
 		A2AAF92317494F5700CFFFDA /* LifeCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */; };
 		A2AAF92417494F5700CFFFDA /* LifeCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */; };
-		A2AAF92517494F5700CFFFDA /* LocalUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* LocalUser.m */; };
-		A2AAF92617494F5700CFFFDA /* LocalUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* LocalUser.m */; };
-		A2AAF92717494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
-		A2AAF92817494F5700CFFFDA /* LocalUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */; };
-		A2AAF92B17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
-		A2AAF92C17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */; };
+		A2AAF92517494F5700CFFFDA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* User.m */; };
+		A2AAF92617494F5700CFFFDA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E517494F5700CFFFDA /* User.m */; };
+		A2AAF92717494F5700CFFFDA /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* UserListViewController.m */; };
+		A2AAF92817494F5700CFFFDA /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8E717494F5700CFFFDA /* UserListViewController.m */; };
+		A2AAF92B17494F5700CFFFDA /* UserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* UserSelectionView.m */; };
+		A2AAF92C17494F5700CFFFDA /* UserSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EA17494F5700CFFFDA /* UserSelectionView.m */; };
 		A2AAF92D17494F5700CFFFDA /* ManagableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */; };
 		A2AAF92E17494F5700CFFFDA /* ManagableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */; };
 		A2AAF92F17494F5700CFFFDA /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8EE17494F5700CFFFDA /* Match.m */; };
@@ -134,8 +146,8 @@
 		A2AAF93A17494F5700CFFFDA /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8F717494F5700CFFFDA /* MatchViewController.m */; };
 		A2AAF93B17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */; };
 		A2AAF93C17494F5700CFFFDA /* MTGBattleground.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */; };
-		A2AAF93D17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */; };
-		A2AAF93E17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */; };
+		A2AAF93D17494F5700CFFFDA /* NSArray+More.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSArray+More.m */; };
+		A2AAF93E17494F5700CFFFDA /* NSArray+More.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FA17494F5700CFFFDA /* NSArray+More.m */; };
 		A2AAF93F17494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */; };
 		A2AAF94017494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */; };
 		A2AAF94117494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF8FE17494F5700CFFFDA /* NSMutableDictionary+Random.m */; };
@@ -176,10 +188,10 @@
 		A2AAF97D1749522D00CFFFDA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */; };
 		A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
 		A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */; };
-		A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
-		A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */; };
-		A2AAF9871749749D00CFFFDA /* UserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* UserState.m */; };
-		A2AAF9881749749D00CFFFDA /* UserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* UserState.m */; };
+		A2AAF983174958E900CFFFDA /* UserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* UserListView~ipad.xib */; };
+		A2AAF984174958E900CFFFDA /* UserListView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF982174958E900CFFFDA /* UserListView~ipad.xib */; };
+		A2AAF9871749749D00CFFFDA /* MatchTurnUserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* MatchTurnUserState.m */; };
+		A2AAF9881749749D00CFFFDA /* MatchTurnUserState.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AAF9861749749D00CFFFDA /* MatchTurnUserState.m */; };
 		A2AAF98A17497B6100CFFFDA /* Icon_144.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF98917497B6100CFFFDA /* Icon_144.png */; };
 		A2AAF98C17497B6400CFFFDA /* Icon_72.png in Resources */ = {isa = PBXBuildFile; fileRef = A2AAF98B17497B6300CFFFDA /* Icon_72.png */; };
 /* End PBXBuildFile section */
@@ -195,11 +207,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A2447D8B174EE48B0096D9C4 /* MatchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchService.h; sourceTree = "<group>"; };
+		A2447D8C174EE48C0096D9C4 /* MatchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchService.m; sourceTree = "<group>"; };
+		A2447D8F174EE68F0096D9C4 /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		A2447D90174EE68F0096D9C4 /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
+		A2447D93174EE77C0096D9C4 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		A2447D94174EE77C0096D9C4 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		A261BA96174BDE3900FB11A0 /* MatchStatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchStatsManager.h; sourceTree = "<group>"; };
 		A261BA97174BDE3900FB11A0 /* MatchStatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchStatsManager.m; sourceTree = "<group>"; };
 		A26A2486174C9667002C1A47 /* MatchHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchHistoryViewController.h; sourceTree = "<group>"; };
 		A26A2487174C9667002C1A47 /* MatchHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchHistoryViewController.m; sourceTree = "<group>"; };
 		A26A2488174C9667002C1A47 /* MatchHistoryViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MatchHistoryViewController~ipad.xib"; sourceTree = "<group>"; };
+		A26A2493174CC6D0002C1A47 /* MatchUserMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchUserMeta.h; sourceTree = "<group>"; };
+		A26A2494174CC6D0002C1A47 /* MatchUserMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchUserMeta.m; sourceTree = "<group>"; };
+		A26A2498174CD275002C1A47 /* User+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Runtime.h"; sourceTree = "<group>"; };
+		A26A2499174CD275002C1A47 /* User+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Runtime.m"; sourceTree = "<group>"; };
+		A26A24A0174DAB36002C1A47 /* Match+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Match+Runtime.h"; sourceTree = "<group>"; };
+		A26A24A1174DAB36002C1A47 /* Match+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Match+Runtime.m"; sourceTree = "<group>"; };
+		A26A24A4174DE850002C1A47 /* MatchTurn+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MatchTurn+Runtime.h"; sourceTree = "<group>"; };
+		A26A24A5174DE850002C1A47 /* MatchTurn+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MatchTurn+Runtime.m"; sourceTree = "<group>"; };
 		A2AAF82317494D5800CFFFDA /* MTGBattleground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTGBattleground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2AAF82617494D5800CFFFDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A2AAF82817494D5800CFFFDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -257,9 +283,7 @@
 		A2AAF8CB17494EFC00CFFFDA /* PassButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PassButton.png; sourceTree = "<group>"; };
 		A2AAF8D217494F5700CFFFDA /* AccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessoryViewController.h; sourceTree = "<group>"; };
 		A2AAF8D317494F5700CFFFDA /* AccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessoryViewController.m; sourceTree = "<group>"; };
-		A2AAF8D417494F5700CFFFDA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		A2AAF8D517494F5700CFFFDA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
-		A2AAF8D617494F5700CFFFDA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		A2AAF8D417494F5700CFFFDA /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		A2AAF8D717494F5700CFFFDA /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		A2AAF8D817494F5700CFFFDA /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		A2AAF8D917494F5700CFFFDA /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -270,15 +294,14 @@
 		A2AAF8DE17494F5700CFFFDA /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		A2AAF8DF17494F5700CFFFDA /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		A2AAF8E017494F5700CFFFDA /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		A2AAF8E117494F5700CFFFDA /* IdentifiableDatabaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentifiableDatabaseObject.h; sourceTree = "<group>"; };
 		A2AAF8E217494F5700CFFFDA /* LifeCounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeCounterView.h; sourceTree = "<group>"; };
 		A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeCounterView.m; sourceTree = "<group>"; };
-		A2AAF8E417494F5700CFFFDA /* LocalUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUser.h; sourceTree = "<group>"; };
-		A2AAF8E517494F5700CFFFDA /* LocalUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUser.m; sourceTree = "<group>"; };
-		A2AAF8E617494F5700CFFFDA /* LocalUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserListViewController.h; sourceTree = "<group>"; };
-		A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserListViewController.m; sourceTree = "<group>"; };
-		A2AAF8E917494F5700CFFFDA /* LocalUserSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserSelectionView.h; sourceTree = "<group>"; };
-		A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserSelectionView.m; sourceTree = "<group>"; };
+		A2AAF8E417494F5700CFFFDA /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		A2AAF8E517494F5700CFFFDA /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		A2AAF8E617494F5700CFFFDA /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
+		A2AAF8E717494F5700CFFFDA /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
+		A2AAF8E917494F5700CFFFDA /* UserSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSelectionView.h; sourceTree = "<group>"; };
+		A2AAF8EA17494F5700CFFFDA /* UserSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSelectionView.m; sourceTree = "<group>"; };
 		A2AAF8EB17494F5700CFFFDA /* ManagableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagableViewController.h; sourceTree = "<group>"; };
 		A2AAF8EC17494F5700CFFFDA /* ManagableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagableViewController.m; sourceTree = "<group>"; };
 		A2AAF8ED17494F5700CFFFDA /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
@@ -293,8 +316,8 @@
 		A2AAF8F617494F5700CFFFDA /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
 		A2AAF8F717494F5700CFFFDA /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
 		A2AAF8F817494F5700CFFFDA /* MTGBattleground.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MTGBattleground.sqlite; sourceTree = "<group>"; };
-		A2AAF8F917494F5700CFFFDA /* NSMutableArray+Queueing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queueing.h"; sourceTree = "<group>"; };
-		A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queueing.m"; sourceTree = "<group>"; };
+		A2AAF8F917494F5700CFFFDA /* NSArray+More.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+More.h"; sourceTree = "<group>"; };
+		A2AAF8FA17494F5700CFFFDA /* NSArray+More.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+More.m"; sourceTree = "<group>"; };
 		A2AAF8FB17494F5700CFFFDA /* NSMutableArray+Shifting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shifting.h"; sourceTree = "<group>"; };
 		A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shifting.m"; sourceTree = "<group>"; };
 		A2AAF8FD17494F5700CFFFDA /* NSMutableDictionary+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Random.h"; sourceTree = "<group>"; };
@@ -332,9 +355,9 @@
 		A2AAF97C1749522D00CFFFDA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A2AAF97E1749531100CFFFDA /* LifeCounterSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LifeCounterSegment.png; sourceTree = "<group>"; };
 		A2AAF9811749533B00CFFFDA /* Arts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Arts; path = ../../Arts; sourceTree = "<group>"; };
-		A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LocalUserListView~ipad.xib"; sourceTree = "<group>"; };
-		A2AAF9851749749D00CFFFDA /* UserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserState.h; sourceTree = "<group>"; };
-		A2AAF9861749749D00CFFFDA /* UserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserState.m; sourceTree = "<group>"; };
+		A2AAF982174958E900CFFFDA /* UserListView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "UserListView~ipad.xib"; sourceTree = "<group>"; };
+		A2AAF9851749749D00CFFFDA /* MatchTurnUserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchTurnUserState.h; sourceTree = "<group>"; };
+		A2AAF9861749749D00CFFFDA /* MatchTurnUserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchTurnUserState.m; sourceTree = "<group>"; };
 		A2AAF98917497B6100CFFFDA /* Icon_144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_144.png; path = ../Icon_144.png; sourceTree = "<group>"; };
 		A2AAF98B17497B6300CFFFDA /* Icon_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_72.png; path = ../Icon_72.png; sourceTree = "<group>"; };
 		A2AAF98D17498F3000CFFFDA /* MatchAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchAccess.h; sourceTree = "<group>"; };
@@ -366,6 +389,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A26A2497174CD14B002C1A47 /* DAO+Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				A26A2498174CD275002C1A47 /* User+Runtime.h */,
+				A26A2499174CD275002C1A47 /* User+Runtime.m */,
+				A26A24A0174DAB36002C1A47 /* Match+Runtime.h */,
+				A26A24A1174DAB36002C1A47 /* Match+Runtime.m */,
+				A26A24A4174DE850002C1A47 /* MatchTurn+Runtime.h */,
+				A26A24A5174DE850002C1A47 /* MatchTurn+Runtime.m */,
+			);
+			name = "DAO+Runtime";
+			sourceTree = "<group>";
+		};
 		A2AAF81A17494D5800CFFFDA = {
 			isa = PBXGroup;
 			children = (
@@ -401,7 +437,7 @@
 		A2AAF82C17494D5800CFFFDA /* MTGBattleground */ = {
 			isa = PBXGroup;
 			children = (
-				A2AAF8D417494F5700CFFFDA /* Constants.h */,
+				A2AAF8D417494F5700CFFFDA /* Config.h */,
 				A2AAF83517494D5900CFFFDA /* AppDelegate.h */,
 				A2AAF83617494D5900CFFFDA /* AppDelegate.m */,
 				A2AAF96517494F7C00CFFFDA /* View Controller */,
@@ -529,11 +565,15 @@
 		A2AAF96717494FB700CFFFDA /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				A2447D8F174EE68F0096D9C4 /* Service.h */,
+				A2447D90174EE68F0096D9C4 /* Service.m */,
+				A2447D8B174EE48B0096D9C4 /* MatchService.h */,
+				A2447D8C174EE48C0096D9C4 /* MatchService.m */,
+				A2447D93174EE77C0096D9C4 /* UserService.h */,
+				A2447D94174EE77C0096D9C4 /* UserService.m */,
 				A2AAF90517494F5700CFFFDA /* Settings.h */,
 				A2AAF90617494F5700CFFFDA /* Settings.m */,
-				A2AAF8D517494F5700CFFFDA /* Database.h */,
-				A2AAF8D617494F5700CFFFDA /* Database.m */,
-				A2AAF96A17494FD400CFFFDA /* Object */,
+				A2AAF96A17494FD400CFFFDA /* DAO */,
 			);
 			name = Database;
 			sourceTree = "<group>";
@@ -564,23 +604,25 @@
 			name = "Third Party";
 			sourceTree = "<group>";
 		};
-		A2AAF96A17494FD400CFFFDA /* Object */ = {
+		A2AAF96A17494FD400CFFFDA /* DAO */ = {
 			isa = PBXGroup;
 			children = (
+				A26A2497174CD14B002C1A47 /* DAO+Runtime */,
 				A2AAF98D17498F3000CFFFDA /* MatchAccess.h */,
-				A2AAF8E117494F5700CFFFDA /* IdentifiableDatabaseObject.h */,
 				A2AAF8ED17494F5700CFFFDA /* Match.h */,
 				A2AAF8EE17494F5700CFFFDA /* Match.m */,
+				A26A2493174CC6D0002C1A47 /* MatchUserMeta.h */,
+				A26A2494174CC6D0002C1A47 /* MatchUserMeta.m */,
 				A2AAF8F417494F5700CFFFDA /* MatchTurn.h */,
 				A2AAF8F517494F5700CFFFDA /* MatchTurn.m */,
-				A2AAF8E417494F5700CFFFDA /* LocalUser.h */,
-				A2AAF8E517494F5700CFFFDA /* LocalUser.m */,
-				A2AAF9851749749D00CFFFDA /* UserState.h */,
-				A2AAF9861749749D00CFFFDA /* UserState.m */,
+				A2AAF9851749749D00CFFFDA /* MatchTurnUserState.h */,
+				A2AAF9861749749D00CFFFDA /* MatchTurnUserState.m */,
+				A2AAF8E417494F5700CFFFDA /* User.h */,
+				A2AAF8E517494F5700CFFFDA /* User.m */,
 				A2AAF90B17494F5700CFFFDA /* UserIcon.h */,
 				A2AAF90C17494F5700CFFFDA /* UserIcon.m */,
 			);
-			name = Object;
+			name = DAO;
 			sourceTree = "<group>";
 		};
 		A2AAF96B17494FDB00CFFFDA /* View */ = {
@@ -588,8 +630,8 @@
 			children = (
 				A2AAF8E217494F5700CFFFDA /* LifeCounterView.h */,
 				A2AAF8E317494F5700CFFFDA /* LifeCounterView.m */,
-				A2AAF8E917494F5700CFFFDA /* LocalUserSelectionView.h */,
-				A2AAF8EA17494F5700CFFFDA /* LocalUserSelectionView.m */,
+				A2AAF8E917494F5700CFFFDA /* UserSelectionView.h */,
+				A2AAF8EA17494F5700CFFFDA /* UserSelectionView.m */,
 				A2AAF91017494F5700CFFFDA /* UserIconView.h */,
 				A2AAF91117494F5700CFFFDA /* UserIconView.m */,
 			);
@@ -612,8 +654,8 @@
 		A2AAF96D1749503B00CFFFDA /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
-				A2AAF8E617494F5700CFFFDA /* LocalUserListViewController.h */,
-				A2AAF8E717494F5700CFFFDA /* LocalUserListViewController.m */,
+				A2AAF8E617494F5700CFFFDA /* UserListViewController.h */,
+				A2AAF8E717494F5700CFFFDA /* UserListViewController.m */,
 				A2AAF90E17494F5700CFFFDA /* UserIconListViewController.h */,
 				A2AAF90F17494F5700CFFFDA /* UserIconListViewController.m */,
 			);
@@ -623,8 +665,8 @@
 		A2AAF96E1749507500CFFFDA /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				A2AAF8F917494F5700CFFFDA /* NSMutableArray+Queueing.h */,
-				A2AAF8FA17494F5700CFFFDA /* NSMutableArray+Queueing.m */,
+				A2AAF8F917494F5700CFFFDA /* NSArray+More.h */,
+				A2AAF8FA17494F5700CFFFDA /* NSArray+More.m */,
 				A2AAF8FB17494F5700CFFFDA /* NSMutableArray+Shifting.h */,
 				A2AAF8FC17494F5700CFFFDA /* NSMutableArray+Shifting.m */,
 				A2AAF8FD17494F5700CFFFDA /* NSMutableDictionary+Random.h */,
@@ -701,7 +743,7 @@
 		A2AAF9731749514500CFFFDA /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
-				A2AAF982174958E900CFFFDA /* LocalUserListView~ipad.xib */,
+				A2AAF982174958E900CFFFDA /* UserListView~ipad.xib */,
 				A2AAF90D17494F5700CFFFDA /* UserIconListView~ipad.xib */,
 			);
 			name = Accessory;
@@ -823,7 +865,7 @@
 				A2AAF9751749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
 				A2AAF9781749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
 				A2AAF97F1749531100CFFFDA /* LifeCounterSegment.png in Resources */,
-				A2AAF983174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
+				A2AAF983174958E900CFFFDA /* UserListView~ipad.xib in Resources */,
 				A2AAF98A17497B6100CFFFDA /* Icon_144.png in Resources */,
 				A2AAF98C17497B6400CFFFDA /* Icon_72.png in Resources */,
 				A26A248B174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */,
@@ -879,7 +921,7 @@
 				A2AAF9761749516100CFFFDA /* MatchViewController~ipad.xib in Resources */,
 				A2AAF9791749516E00CFFFDA /* MatchViewController~iphone.xib in Resources */,
 				A2AAF9801749531100CFFFDA /* LifeCounterSegment.png in Resources */,
-				A2AAF984174958E900CFFFDA /* LocalUserListView~ipad.xib in Resources */,
+				A2AAF984174958E900CFFFDA /* UserListView~ipad.xib in Resources */,
 				A26A248C174C9667002C1A47 /* MatchHistoryViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -910,23 +952,22 @@
 				A2AAF83317494D5800CFFFDA /* main.m in Sources */,
 				A2AAF83717494D5900CFFFDA /* AppDelegate.m in Sources */,
 				A2AAF91517494F5700CFFFDA /* AccessoryViewController.m in Sources */,
-				A2AAF91717494F5700CFFFDA /* Database.m in Sources */,
 				A2AAF91917494F5700CFFFDA /* FMDatabase.m in Sources */,
 				A2AAF91B17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */,
 				A2AAF91D17494F5700CFFFDA /* FMDatabasePool.m in Sources */,
 				A2AAF91F17494F5700CFFFDA /* FMDatabaseQueue.m in Sources */,
 				A2AAF92117494F5700CFFFDA /* FMResultSet.m in Sources */,
 				A2AAF92317494F5700CFFFDA /* LifeCounterView.m in Sources */,
-				A2AAF92517494F5700CFFFDA /* LocalUser.m in Sources */,
-				A2AAF92717494F5700CFFFDA /* LocalUserListViewController.m in Sources */,
-				A2AAF92B17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */,
+				A2AAF92517494F5700CFFFDA /* User.m in Sources */,
+				A2AAF92717494F5700CFFFDA /* UserListViewController.m in Sources */,
+				A2AAF92B17494F5700CFFFDA /* UserSelectionView.m in Sources */,
 				A2AAF92D17494F5700CFFFDA /* ManagableViewController.m in Sources */,
 				A2AAF92F17494F5700CFFFDA /* Match.m in Sources */,
 				A2AAF93117494F5700CFFFDA /* MatchManager.m in Sources */,
 				A2AAF93317494F5700CFFFDA /* MatchSetupViewController.m in Sources */,
 				A2AAF93717494F5700CFFFDA /* MatchTurn.m in Sources */,
 				A2AAF93917494F5700CFFFDA /* MatchViewController.m in Sources */,
-				A2AAF93D17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */,
+				A2AAF93D17494F5700CFFFDA /* NSArray+More.m in Sources */,
 				A2AAF93F17494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */,
 				A2AAF94117494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */,
 				A2AAF94717494F5700CFFFDA /* ResourceManager.m in Sources */,
@@ -940,9 +981,16 @@
 				A2AAF95917494F5700CFFFDA /* ViewManager.m in Sources */,
 				A2AAF96017494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96217494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
-				A2AAF9871749749D00CFFFDA /* UserState.m in Sources */,
+				A2AAF9871749749D00CFFFDA /* MatchTurnUserState.m in Sources */,
 				A261BA98174BDE3900FB11A0 /* MatchStatsManager.m in Sources */,
 				A26A2489174C9667002C1A47 /* MatchHistoryViewController.m in Sources */,
+				A26A2495174CC6D0002C1A47 /* MatchUserMeta.m in Sources */,
+				A26A249A174CD275002C1A47 /* User+Runtime.m in Sources */,
+				A26A24A2174DAB36002C1A47 /* Match+Runtime.m in Sources */,
+				A26A24A6174DE850002C1A47 /* MatchTurn+Runtime.m in Sources */,
+				A2447D8D174EE48C0096D9C4 /* MatchService.m in Sources */,
+				A2447D91174EE68F0096D9C4 /* Service.m in Sources */,
+				A2447D95174EE77D0096D9C4 /* UserService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,23 +1000,22 @@
 			files = (
 				A2AAF85B17494D5900CFFFDA /* MTGBattlegroundTests.m in Sources */,
 				A2AAF91617494F5700CFFFDA /* AccessoryViewController.m in Sources */,
-				A2AAF91817494F5700CFFFDA /* Database.m in Sources */,
 				A2AAF91A17494F5700CFFFDA /* FMDatabase.m in Sources */,
 				A2AAF91C17494F5700CFFFDA /* FMDatabaseAdditions.m in Sources */,
 				A2AAF91E17494F5700CFFFDA /* FMDatabasePool.m in Sources */,
 				A2AAF92017494F5700CFFFDA /* FMDatabaseQueue.m in Sources */,
 				A2AAF92217494F5700CFFFDA /* FMResultSet.m in Sources */,
 				A2AAF92417494F5700CFFFDA /* LifeCounterView.m in Sources */,
-				A2AAF92617494F5700CFFFDA /* LocalUser.m in Sources */,
-				A2AAF92817494F5700CFFFDA /* LocalUserListViewController.m in Sources */,
-				A2AAF92C17494F5700CFFFDA /* LocalUserSelectionView.m in Sources */,
+				A2AAF92617494F5700CFFFDA /* User.m in Sources */,
+				A2AAF92817494F5700CFFFDA /* UserListViewController.m in Sources */,
+				A2AAF92C17494F5700CFFFDA /* UserSelectionView.m in Sources */,
 				A2AAF92E17494F5700CFFFDA /* ManagableViewController.m in Sources */,
 				A2AAF93017494F5700CFFFDA /* Match.m in Sources */,
 				A2AAF93217494F5700CFFFDA /* MatchManager.m in Sources */,
 				A2AAF93417494F5700CFFFDA /* MatchSetupViewController.m in Sources */,
 				A2AAF93817494F5700CFFFDA /* MatchTurn.m in Sources */,
 				A2AAF93A17494F5700CFFFDA /* MatchViewController.m in Sources */,
-				A2AAF93E17494F5700CFFFDA /* NSMutableArray+Queueing.m in Sources */,
+				A2AAF93E17494F5700CFFFDA /* NSArray+More.m in Sources */,
 				A2AAF94017494F5700CFFFDA /* NSMutableArray+Shifting.m in Sources */,
 				A2AAF94217494F5700CFFFDA /* NSMutableDictionary+Random.m in Sources */,
 				A2AAF94817494F5700CFFFDA /* ResourceManager.m in Sources */,
@@ -982,9 +1029,16 @@
 				A2AAF95A17494F5700CFFFDA /* ViewManager.m in Sources */,
 				A2AAF96117494F7000CFFFDA /* KJGridLayout.m in Sources */,
 				A2AAF96317494F7000CFFFDA /* KJGridLayoutView.m in Sources */,
-				A2AAF9881749749D00CFFFDA /* UserState.m in Sources */,
+				A2AAF9881749749D00CFFFDA /* MatchTurnUserState.m in Sources */,
 				A261BA99174BDE3900FB11A0 /* MatchStatsManager.m in Sources */,
 				A26A248A174C9667002C1A47 /* MatchHistoryViewController.m in Sources */,
+				A26A2496174CC6D0002C1A47 /* MatchUserMeta.m in Sources */,
+				A26A249B174CD275002C1A47 /* User+Runtime.m in Sources */,
+				A26A24A3174DAB36002C1A47 /* Match+Runtime.m in Sources */,
+				A26A24A7174DE850002C1A47 /* MatchTurn+Runtime.m in Sources */,
+				A2447D8E174EE48C0096D9C4 /* MatchService.m in Sources */,
+				A2447D92174EE68F0096D9C4 /* Service.m in Sources */,
+				A2447D96174EE77D0096D9C4 /* UserService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

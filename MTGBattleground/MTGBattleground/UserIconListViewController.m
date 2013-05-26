@@ -7,10 +7,13 @@
 //
 
 #import "UserIconListViewController.h"
-#import "KJGridLayout.h"
-#import "Database.h"
-#import "UserIcon.h"
+
+#import "UserService.h"
 #import "UserIconView.h"
+#import "KJGridLayout.h"
+
+#import "UserIcon.h"
+
 
 @interface UserIconListViewController () <UserIconViewDelegate>
 
@@ -26,7 +29,7 @@
     [super viewDidLoad];
 	
 	self.gridLayoutManager = [KJGridLayout new];
-	self.userIcons = [Database userIcons];
+	self.userIcons = [UserService userIcons];
 	
 	NSUInteger i = 0;
 	for (UserIcon *userIcon in self.userIcons) {

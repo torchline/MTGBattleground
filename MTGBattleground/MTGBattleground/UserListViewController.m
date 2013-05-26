@@ -1,23 +1,23 @@
 //
-//  LocalUsernameListViewController.m
+//  UserListViewController.h
 //  MTGBattleground
 //
 //  Created by Brad Walker on 5/14/13.
 //  Copyright (c) 2013 Torchline Technology. All rights reserved.
 //
 
-#import "LocalUserListViewController.h"
-#import "Database.h"
-#import "LocalUser.h"
+#import "UserListViewController.h"
+#import "User.h"
+#import "UserService.h"
 
-@interface LocalUserListViewController ()
+@interface UserListViewController ()
 
-@property (nonatomic) NSMutableArray *localUserNames;
+@property (nonatomic) NSMutableArray *users;
 
 @end
 
 
-@implementation LocalUserListViewController
+@implementation UserListViewController
 
 #pragma mark - System
 
@@ -31,7 +31,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.localUserNames = [Database localUsers];
+        self.users = [UserService users];
     }
     return self;
 }
@@ -50,7 +50,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.localUserNames count];
+    return [self.users count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -60,14 +60,14 @@
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
 	
-    cell.textLabel.text = [(LocalUser *)[self.localUserNames objectAtIndex:indexPath.row] name];
+    cell.textLabel.text = [(User *)[self.users objectAtIndex:indexPath.row] name];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([self.delegate respondsToSelector:@selector(localUserListViewControllerDidPickUser:)]) {
-		[self.delegate localUserListViewControllerDidPickUser:[self.localUserNames objectAtIndex:indexPath.row]];
+	if ([self.delegate respondsToSelector:@selector(userListViewControllerDidPickUser:)]) {
+		[self.delegate userListViewControllerDidPickUser:[self.users objectAtIndex:indexPath.row]];
 	}
 }
 

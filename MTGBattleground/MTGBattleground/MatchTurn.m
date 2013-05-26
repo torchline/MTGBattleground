@@ -10,8 +10,23 @@
 
 @implementation MatchTurn
 
-- (id)identifiableID {
-	return self.ID;
+#pragma mark - Init
+
+- (MatchTurn *)initWithID:(NSString *)ID
+				  matchID:(NSString *)matchID
+				   userID:(NSString *)userID
+			   turnNumber:(NSUInteger)turnNumber
+				 passTime:(NSDate *)passTime {
+	
+	self = [super init];
+	if (self) {
+		_ID = ID;
+		_matchID = matchID;
+		_userID = userID;
+		_turnNumber = turnNumber;
+		_passTime = passTime;
+	}
+	return self;
 }
 
 @end

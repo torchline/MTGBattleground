@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class LocalUser;
+@class User;
 
 @interface LifeCounterView : UIView
 
-@property (nonatomic) LocalUser *localUser;
+@property (nonatomic) User *user;
 @property (nonatomic) BOOL enabled;
 
 @end

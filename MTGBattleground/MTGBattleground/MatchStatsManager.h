@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class Match;
-@class LocalUser;
+@class User;
 
 @interface MatchStatsManager : NSObject
 
-+ (double)averageLifeChangePerTurnForLocalUser:(LocalUser *)localUser;
-+ (double)averageLifeChangePerTurnForLocalUser:(LocalUser *)localUser match:(Match *)match;
++ (double)averageLifeChangePerTurnForUser:(User *)user;
++ (double)averageLifeChangePerTurnForUser:(User *)user match:(Match *)match;
 
 @end

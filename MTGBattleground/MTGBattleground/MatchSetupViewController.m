@@ -7,27 +7,31 @@
 //
 
 #import "MatchSetupViewController.h"
-#import "Database.h"
-#import "LocalUserListViewController.h"
-#import "LocalUser.h"
-#import "LocalUserSelectionView.h"
-#import "UserIconListViewController.h"
-#import "UserIcon.h"
-#import "NSMutableArray+Queueing.h"
-#import "NSMutableDictionary+Random.h"
+
 #import "ViewManagerAccess.h"
 #import "Settings.h"
+#import "UserService.h"
 #import "MatchManager.h"
-#import "Match.h"
+#import "NSMutableDictionary+Random.h"
 
-@interface MatchSetupViewController () <UIPopoverControllerDelegate, LocalUserListViewControllerDelegate, LocalUserSelectionViewDelegate, UserIconListViewDelegate, UITextFieldDelegate>
+#import "UserListViewController.h"
+#import "UserIconListViewController.h"
+
+#import "UserSelectionView.h"
+
+#import "Match.h"
+#import "User+Runtime.h"
+#import "UserIcon.h"
+
+
+@interface MatchSetupViewController () <UIPopoverControllerDelegate, UserListViewControllerDelegate, UserSelectionViewDelegate, UserIconListViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic) UIPopoverController *myPopoverController;
-@property (nonatomic) LocalUserListViewController *localUserListViewController;
+@property (nonatomic) UserListViewController *userListViewController;
 @property (nonatomic) UserIconListViewController *userIconListViewController;
-@property (nonatomic, weak) LocalUserSelectionView *activeLocalUserSelectionView;
+@property (nonatomic, weak) UserSelectionView *activeUserSelectionView;
 
-@property (nonatomic) NSMutableDictionary *userIconIDDictionary;
+@property (nonatomic) NSMutableDictionary *userIconDictionary;
 
 @end
 
@@ -59,14 +63,14 @@
 	return self;
 }
 
-- (void)viewDidLoad {
+- (BOOL)viewDidLoadFromViewController:(ManagableViewController *)aViewController {
     [super viewDidLoad];
 		
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 	
 	self.startButton.enabled = NO;
 	
-	self.userIconIDDictionary = [Database idDictionaryForDatabaseObjects:[Database userIcons]];
+	self.userIconDictionary = [UserService userIconDictionary];
 	
 	// load settings from db
 	NSString *startingLifeString = [Settings stringForKey:SETTINGS_MATCH_STARTING_LIFE];
@@ -80,6 +84,8 @@
 
 	BOOL enableTurnTracking = [[Settings stringForKey:SETTINGS_MATCH_ENABLE_TURN_TRACKING] boolValue];
 	[self.turnTrackingSwitch setOn:enableTurnTracking];
+	
+	return YES;
 }
 
 
@@ -103,58 +109,57 @@
 }
 
 - (IBAction)startButtonPressed {	
-	// get assigned LocalUsers and assign their active state values for the upcoming match
-	NSMutableArray *localUsers = [[NSMutableArray alloc] initWithCapacity:4];
+	// get assigned Users and assign their active state values for the upcoming match
+	NSMutableArray *users = [[NSMutableArray alloc] initWithCapacity:4];
 	NSUInteger i = 0;
-	for (LocalUserSelectionView *selectionView in self.localUserSelectionViews) {
-		if (selectionView.localUser) {
-			selectionView.localUser.state = [[UserState alloc] init];
-			selectionView.localUser.state.userSlot = i + 1;
+	for (UserSelectionView *selectionView in self.userSelectionViews) {
+		if (selectionView.user) {
 			
-			[localUsers addObject:selectionView.localUser];
+			[users addObject:selectionView.user];
 			
-			selectionView.localUser.lastDateUsed = [NSDate date];
-			[Database updateLocalUser:selectionView.localUser];
+			selectionView.user.lastTimeUsed = [NSDate date];
+			[UserService updateUser:selectionView.user];
 		}
 		
 		i++;
 	}
 	
-	// create Match
-	Match *match = [MatchManager createMatchWithLocalUsers:localUsers
-											  startingLife:[self.startingLifeTextField.text integerValue]
-											 poisonCounter:self.poisonCounterSwitch.isOn
-										   dynamicCounters:self.dynamicCounterSwitch.isOn
-												turnTracking:self.turnTrackingSwitch.isOn];
+	Match *match = [MatchManager createMatchWithUsers:users
+										 startingLife:[self.startingLifeTextField.text integerValue]
+										  poisonToDie:10
+										poisonCounter:self.poisonCounterSwitch.isOn
+									  dynamicCounters:self.dynamicCounterSwitch.isOn
+										 turnTracking:self.turnTrackingSwitch.isOn
+											autoDeath:YES];
+		
+	[MatchManager setActiveMatch:match];
 	
-	[Settings setString:match.ID forKey:SETTINGS_CURRENT_ACTIVE_MATCH_ID];
-	
-	[[ViewManager sharedInstance] switchToView:[MatchViewController class]];
+	[[ViewManager sharedInstance] switchToView:[MatchViewController class] options:@{VIEW_OPTION_MATCH : match}];
 }
 
 
 #pragma mark - Delegate
 
-- (void)localUserSelectionViewDidRequestNewName:(LocalUserSelectionView *)localUserSelectionView {
-	self.activeLocalUserSelectionView = localUserSelectionView;
+- (void)userSelectionViewDidRequestNewName:(UserSelectionView *)userSelectionView {
+	self.activeUserSelectionView = userSelectionView;
 	
-	if (!self.localUserListViewController) {
-		self.localUserListViewController = [[LocalUserListViewController alloc] initWithNibName:nil bundle:nil];
-		self.localUserListViewController.delegate = self;
+	if (!self.userListViewController) {
+		self.userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:nil];
+		self.userListViewController.delegate = self;
 	}
 	
-	self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.localUserListViewController];
+	self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.userListViewController];
 	self.myPopoverController.delegate = self;
-	self.myPopoverController.popoverContentSize = self.localUserListViewController.view.frame.size;
+	self.myPopoverController.popoverContentSize = self.userListViewController.view.frame.size;
 	
-	[self.myPopoverController presentPopoverFromRect:[self.view convertRect:localUserSelectionView.nameButton.frame fromView:localUserSelectionView.nameButton.superview]
+	[self.myPopoverController presentPopoverFromRect:[self.view convertRect:userSelectionView.nameButton.frame fromView:userSelectionView.nameButton.superview]
 											  inView:self.view
 							permittedArrowDirections:UIPopoverArrowDirectionLeft
 											animated:YES];
 }
 
-- (void)localUserSelectionViewDidRequestNewIcon:(LocalUserSelectionView *)localUserSelectionView {
-	self.activeLocalUserSelectionView = localUserSelectionView;
+- (void)userSelectionViewDidRequestNewIcon:(UserSelectionView *)userSelectionView {
+	self.activeUserSelectionView = userSelectionView;
 	
 	if (!self.userIconListViewController) {
 		self.userIconListViewController = [[UserIconListViewController alloc] initWithNibName:nil bundle:nil];
@@ -165,7 +170,7 @@
 	self.myPopoverController.delegate = self;
 	self.myPopoverController.popoverContentSize = self.userIconListViewController.view.frame.size;
 
-	[self.myPopoverController presentPopoverFromRect:[self.view convertRect:localUserSelectionView.iconButton.frame fromView:localUserSelectionView.iconButton.superview]
+	[self.myPopoverController presentPopoverFromRect:[self.view convertRect:userSelectionView.iconButton.frame fromView:userSelectionView.iconButton.superview]
 											  inView:self.view
 							permittedArrowDirections:UIPopoverArrowDirectionLeft
 											animated:YES];
@@ -181,26 +186,26 @@
 }
 
 
-- (void)localUserListViewControllerDidPickUser:(LocalUser *)localUser {
-	if (localUser.userIconID > 0) {
-		localUser.userIcon = [self.userIconIDDictionary objectForKey:[localUser identifiableID]];
+- (void)userListViewControllerDidPickUser:(User *)user {
+	if (user.userIconID > 0) {
+		user.icon = [self.userIconDictionary objectForKey:@(user.userIconID)];
 	}
 	else {
-		UserIcon *randomUserIcon = [self.userIconIDDictionary randomObject];
+		UserIcon *randomUserIcon = [self.userIconDictionary randomObject];
 		
-		localUser.userIconID = randomUserIcon.ID;
-		localUser.userIcon = randomUserIcon;
+		user.userIconID = randomUserIcon.ID;
+		user.icon = randomUserIcon;
 		
-		[Database updateLocalUser:localUser];
+		[UserService updateUser:user];
 	}
 	
-	self.activeLocalUserSelectionView.localUser = localUser;
+	self.activeUserSelectionView.user = user;
 	
 	[self.myPopoverController dismissPopoverAnimated:YES];
 	
 	NSUInteger numSelectedUsers = 0;
-	for (LocalUserSelectionView *selectionView in self.localUserSelectionViews) {
-		if (selectionView.localUser) {
+	for (UserSelectionView *selectionView in self.userSelectionViews) {
+		if (selectionView.user) {
 			numSelectedUsers++;
 		}
 	}
@@ -209,7 +214,7 @@
 }
 
 - (void)userIconListViewControllerDidPickUserIcon:(UserIcon *)userIcon {
-	self.activeLocalUserSelectionView.localUser.userIcon = userIcon;
+	self.activeUserSelectionView.user.icon = userIcon;
 
 	[self.myPopoverController dismissPopoverAnimated:YES];
 }

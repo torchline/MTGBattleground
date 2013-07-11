@@ -13,8 +13,26 @@
 #import "User+Runtime.h"
 
 #import "MatchService.h"
+#import "UserService.h"
 #import "Settings.h"
 #import "NSArray+More.h"
+
+
+static inline NSUInteger* randomIndexes(NSUInteger count) {
+	NSUInteger* indexes = malloc(sizeof(NSUInteger) * count);
+	for (NSUInteger i = 0; i < count; i++) {
+		indexes[i] = i;
+	}
+	
+	for (NSUInteger i = 0; i < count; i++) {
+		NSUInteger value = indexes[i];
+		NSUInteger randIndex = arc4random() % count;
+		indexes[i] = indexes[randIndex];
+		indexes[randIndex] = value;
+	}
+	
+	return indexes;
+}
 
 
 @implementation MatchManager
@@ -37,13 +55,63 @@
 	return activeMatch;
 }
 
++ (void)prepareMatchForPlaying:(Match *)match {
+	if (!match.users) {
+		NSArray *metas = [MatchService matchUserMetasForMatch:match];
+		NSArray *users = [UserService usersForMatchUserMetas:metas]; // sets meta property and orders appropriately
+		match.users = users;
+	}
+	NSAssert(match.users, @"Could not load Users for Match: %@", match);
+	
+	NSMutableDictionary *userIDDictionary = [[NSMutableDictionary alloc] initWithCapacity:[match.users count]];
+	for (User *user in match.users) {
+		[userIDDictionary setObject:user forKey:user.ID];
+	}
+	
+	if (!match.currentTurn) {
+		MatchTurn *currentMatchTurn = [MatchService latestMatchTurnForMatch:match offset:0];
+		currentMatchTurn.user = [userIDDictionary objectForKey:currentMatchTurn.userID];
+		
+		match.currentTurn = currentMatchTurn;
+	}
+	NSAssert(match.currentTurn, @"Could not load Current Turn for Match: %@", match);
+	
+	// if first User has no State, assume none do and reset them all from DB
+	if (![(User *)match.users[0] state]) {
+		NSArray *userStates = [MatchService matchTurnUserStatesForMatchTurn:match.currentTurn];
+		for (MatchTurnUserState *userState in userStates) {
+			User *user = [userIDDictionary objectForKey:userState.userID];
+			user.state = userState;
+		}
+	}
+	
+	// if first User has no Icon, assume none do and reset them all from DB
+	if (![(User *)match.users[0] icon]) {
+		NSArray *userIcons = [UserService userIconsForUsers:match.users];
+		NSAssert([userIcons count] == [match.users count], @"UserIcons: %@ count does not match Users: %@ count", userIcons, match.users);
+		
+		NSUInteger i = 0;
+		for (User *user in match.users) {
+			user.icon = [userIcons objectAtIndex:i];
+			i++;
+		}
+	}
+}
+
 + (Match *)createMatchWithUsers:(NSArray *)users
+				  userPositions:(NSArray *)userPositions
 				   startingLife:(NSInteger)startingLife
 					poisonToDie:(NSUInteger)poisonToDie
 				  poisonCounter:(BOOL)poisonCounter
 				dynamicCounters:(BOOL)dynamicCounters
 				   turnTracking:(BOOL)turnTracking
-					  autoDeath:(BOOL)autoDeath {
+					  autoDeath:(BOOL)autoDeath
+				damageTargeting:(BOOL)damageTargeting {
+	
+	NSAssert([users count] >= 2, @"Cannot create Match with less than 2 Users: %@", users);
+	NSAssert([users count] == [userPositions count], @"Users: %@ count and User Positions: %@ count must match", users, userPositions);
+	
+	NSMutableArray *mutableUsers = [users mutableCopy];
 	
 	Match *match = [[Match alloc] initWithID:[Service newGUID]
 								winnerUserID:nil
@@ -53,27 +121,11 @@
 							 dynamicCounters:dynamicCounters
 								turnTracking:turnTracking
 								   autoDeath:autoDeath
+							 damageTargeting:damageTargeting
 									complete:NO
 								   startTime:nil
 									 endTime:nil];
-	match.users = users;
 	[MatchService insertMatch:match];
-	
-	NSUInteger i = 0;
-	for (User *user in users) {
-		MatchUserMeta *meta = [[MatchUserMeta alloc] initWithMatchID:match.ID
-															  userID:user.ID
-														   turnOrder:(i + 1)
-														userPosition:(i + 1)]; // TODO: meta user position
-		
-		[MatchService insertMatchUserMeta:meta];
-		
-		user.meta = meta;
-		
-		i++;
-	}
-	
-	match.users = users; // runtime
 	
 	// keeps starting states
 	MatchTurn *initialTurn = [[MatchTurn alloc] initWithID:[Service newGUID]
@@ -83,7 +135,41 @@
 												  passTime:nil];
 	[MatchService insertMatchTurn:initialTurn];
 	
-	for (User *user in users) {
+	NSUInteger* randIndexes = randomIndexes([mutableUsers count]);
+	
+	NSUInteger i = 0;
+	User *startingUser;
+	for (User *user in mutableUsers) {
+		UserPosition userPosition = [userPositions[i] unsignedIntegerValue];
+		NSUInteger turnOrder = randIndexes[i] + 1;
+		
+		MatchUserMeta *meta = [[MatchUserMeta alloc] initWithMatchID:match.ID
+															  userID:user.ID
+														   turnOrder:turnOrder
+														userPosition:userPosition];
+		
+		user.meta = meta;
+		
+		if (turnOrder == 1) {
+			startingUser = user;
+		}
+		
+		i++;
+	}
+	NSAssert(startingUser, @"Starting User not found");
+	
+	free(randIndexes);
+
+	// sort Users by Turn Order
+	[mutableUsers sortUsingComparator:^NSComparisonResult(User *user1, User *user2) {
+		return [@(user1.meta.turnOrder) compare:@(user2.meta.turnOrder)];
+	}];
+	
+	match.users = mutableUsers; // runtime
+	
+	for (User *user in mutableUsers) {
+		[MatchService insertMatchUserMeta:user.meta];
+		
 		MatchTurnUserState *state = [[MatchTurnUserState alloc] initWithMatchTurnID:initialTurn.ID
 																			 userID:user.ID
 																			   life:startingLife
@@ -91,9 +177,7 @@
 																			 isDead:NO];
 		[MatchService insertMatchTurnUserState:state];
 	}
-	
-	User *startingUser = [users objectAtIndex:0];
-	
+				
 	MatchTurn *currentTurn = [[MatchTurn alloc] initWithID:[Service newGUID]
 												   matchID:match.ID
 													userID:startingUser.ID
@@ -105,7 +189,7 @@
 	
 	match.currentTurn = currentTurn; // runtime
 	
-	for (User *user in users) {
+	for (User *user in mutableUsers) {
 		MatchTurnUserState *state = [[MatchTurnUserState alloc] initWithMatchTurnID:currentTurn.ID
 																			 userID:user.ID
 																			   life:startingLife
@@ -119,7 +203,7 @@
 	return match;
 }
 
-+ (MatchTurn *)addMatchTurnToMatch:(Match *)match {
++ (MatchTurn *)completeCurrentTurnForMatch:(Match *)match {
 	NSAssert(match.enableTurnTracking, @"Should not be creating MatchTurns when Match (%@) has TurnTracking off", match.ID);
 		
 	// find next user

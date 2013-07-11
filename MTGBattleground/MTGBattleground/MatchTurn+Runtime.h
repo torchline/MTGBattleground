@@ -13,7 +13,12 @@
 
 @interface MatchTurn (Runtime)
 
+// in-game
 @property (nonatomic, weak) Match *match;
 @property (nonatomic) User *user;
+
+// history and stats
+@property (nonatomic) NSDictionary *userStateDictionary;
+
 
 @end

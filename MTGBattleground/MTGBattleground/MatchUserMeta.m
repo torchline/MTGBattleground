@@ -17,7 +17,7 @@
 						 turnOrder:(NSUInteger)turnOrder
 					  userPosition:(UserPosition)userPosition {
 	
-	self = [super init];
+	self = [self init];
 	if (self) {
 		_matchID = matchID;
 		_userID = userID;
@@ -25,6 +25,10 @@
 		_userPosition = userPosition;		
 	}
 	return self;
+}
+
+- (NSString *)description {
+	return [[NSString alloc] initWithFormat:@"<%@: 0x%x matchID:%@ userID:%@ turnOrder:%d userPosition:%d>", NSStringFromClass([self class]), self.hash, _matchID, _userID, _turnOrder, _userPosition];
 }
 
 @end

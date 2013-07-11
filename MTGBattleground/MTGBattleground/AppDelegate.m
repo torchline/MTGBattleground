@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MatchManager.h"
 #import "ViewManagerAccess.h"
 
 @implementation AppDelegate
@@ -14,15 +15,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	/*
-	if ([[[MatchQueue matchQueue] matches] count]) {
-		[[ViewManager sharedInstance] switchToView:[MatchViewController class]];
+	Match *activeMatch = [MatchManager activeMatch];
+	if (activeMatch) {
+		[[ViewManager sharedInstance] switchToView:[MatchViewController class] options:@{VIEW_OPTION_MATCH : activeMatch}];
 	}
 	else {
 		[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 	}
-	 */
-	[[ViewManager sharedInstance] switchToView:[MatchSetupViewController class]];
 	
 	[self.window makeKeyAndVisible];
 	

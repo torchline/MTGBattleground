@@ -33,4 +33,18 @@
 	return users;
 }
 
+
+
+
+- (void)setTurns:(NSArray *)turns {
+	objc_setAssociatedObject(self, @selector(turns), turns, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSArray *)turns {
+	NSArray *turns = (NSArray *)objc_getAssociatedObject(self, @selector(turns));
+	
+	return turns;
+}
+
+
 @end

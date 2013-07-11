@@ -20,6 +20,7 @@
 	  dynamicCounters:(BOOL)dynamicCounters
 		 turnTracking:(BOOL)turnTracking
 			autoDeath:(BOOL)autoDeath
+	  damageTargeting:(BOOL)damageTargeting
 			 complete:(BOOL)complete
 			startTime:(NSDate *)startTime
 			  endTime:(NSDate *)endTime {
@@ -34,6 +35,7 @@
 		_enableDynamicCounters = dynamicCounters;
 		_enableTurnTracking = turnTracking;
 		_enableAutoDeath = autoDeath;
+		_enableDamageTargeting = damageTargeting;
 		_isComplete = complete;
 		_startTime = startTime;
 		_endTime = endTime;

@@ -13,11 +13,11 @@
 
 @interface UserIconView : UIView
 
-- (UserIconView *)initWithUserIcon:(UserIcon *)userIcon;
-
 @property (nonatomic) UIButton *button;
 @property (nonatomic) UserIcon *userIcon;
 @property (nonatomic, weak) IBOutlet id <UserIconViewDelegate> delegate;
+
+- (UserIconView *)initWithUserIcon:(UserIcon *)userIcon;
 
 @end
 
@@ -26,6 +26,7 @@
 
 @protocol UserIconViewDelegate <NSObject>
 
+@required
 - (void)userIconViewPressed:(UserIconView *)userIconView;
 
 @end

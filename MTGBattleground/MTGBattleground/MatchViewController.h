@@ -17,19 +17,28 @@ typedef enum : NSUInteger {
 
 
 @class LifeCounterView;
+@class Match;
 
 
-@interface MatchViewController : ManagableViewController
+@interface MatchViewController : ManagableViewController <UIGestureRecognizerDelegate> {
+	BOOL _isInitialized;
+	AlertReason _alertReason;
+	
+	UILongPressGestureRecognizer *_longPressGestureRecognizer;
+	Match *_match;
+	NSMutableDictionary *_userPositionDictionary;
 
-@property (nonatomic) UIButton *quitButton;
-@property (nonatomic) UIButton *passButton;
-@property (nonatomic) UIButton *undoButton;
-@property (nonatomic) UIButton *resetTurnButton;
-
-@property (nonatomic) NSMutableArray *nameLabels;
-@property (nonatomic) NSMutableArray *lifeCounterViews;
-@property (nonatomic) NSMutableArray *userIconImageViews;
-@property (nonatomic) NSMutableArray *glow1ImageViews;
-@property (nonatomic) NSMutableArray *glow2ImageViews;
+	UIButton *_quitButton;
+	UIButton *_passButton;
+	UIButton *_undoButton;
+	UIButton *_resetTurnButton;
+	
+	NSMutableArray *_nameLabels;
+	NSMutableArray *_lifeCounterViews;
+	NSMutableArray *_userIconImageViews;
+	NSMutableArray *_glow1ImageViews;
+	NSMutableArray *_glow2ImageViews;
+	NSMutableSet *_dynamicCounterViews;
+}
 
 @end

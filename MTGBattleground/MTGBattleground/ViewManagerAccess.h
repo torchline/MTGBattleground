@@ -3,6 +3,7 @@
 // Configure per-app
 // -------------------------
 
+#import "MatchHistoryViewController.h"
 #import "MatchSetupViewController.h"
 #import "MatchViewController.h"
 

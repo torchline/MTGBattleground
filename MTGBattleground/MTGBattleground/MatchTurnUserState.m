@@ -30,7 +30,7 @@
 }
 
 - (NSString *)description {
-	return [[NSString alloc] initWithFormat:@"<%@ 0x%x user=%@ life=%d poison=%d dead=%d>", NSStringFromClass([self class]), self.hash, self.userID, self.life, self.poison, self.isDead];
+	return [[NSString alloc] initWithFormat:@"<%@: 0x%x userID=%@ life=%d poison=%d dead=%d>", NSStringFromClass([self class]), self.hash, _userID, _life, _poison, _isDead];
 }
 
 @end

@@ -214,7 +214,8 @@ static ViewManager *sharedHelper = nil;
                 
         nextViewController = nil;
         
-        BOOL isDoneLoading = [currentViewController viewDidLoadFromViewController:nil];
+		//[currentViewController setView:currentViewController.view];
+        BOOL isDoneLoading = [currentViewController willLoadFromViewController:nil];
         
         if (isDoneLoading) {
             [self managableViewControllerDidFinishLoading:currentViewController];
@@ -263,7 +264,8 @@ static ViewManager *sharedHelper = nil;
         
         nextViewController = nil;
         
-        BOOL isDoneLoading = [currentViewController viewDidLoadFromViewController:nil];
+		//[currentViewController setView:currentViewController.view];
+        BOOL isDoneLoading = [currentViewController willLoadFromViewController:nil];
         
         if (isDoneLoading) {
             [self managableViewControllerDidFinishLoading:currentViewController];
@@ -334,7 +336,8 @@ static ViewManager *sharedHelper = nil;
 	}
 	
 	if (isFreshlyCreated) {
-		[currentAccessoryViewController viewDidLoadFromViewController:currentViewController];
+		//[currentAccessoryViewController setView:currentAccessoryViewController.view];
+		[currentAccessoryViewController willLoadFromViewController:currentViewController];
 	}
 	
 	currentAccessoryViewController.view.frame = CGRectMake(accessoryViewStartPoint.x,
@@ -652,7 +655,8 @@ static ViewManager *sharedHelper = nil;
         
         nextViewController = nil;
         
-        BOOL isDoneLoading = [currentViewController viewDidLoadFromViewController:lastViewController];
+		//[currentViewController setView:currentViewController.view];
+        BOOL isDoneLoading = [currentViewController willLoadFromViewController:lastViewController];
         
         if (isDoneLoading) {
             [self managableViewControllerDidFinishLoading:currentViewController];

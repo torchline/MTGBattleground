@@ -13,73 +13,45 @@
 
 #pragma mark - Init
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setup];
-    }
-    return self;
-}
-
-
-- (id)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self setup];
+        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[_button addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:_button];
     }
     return self;
 }
 
 - (UserIconView *)initWithUserIcon:(UserIcon *)userIcon {
-	self = [super init];
+	self = [self init];
     if (self) {
-		_userIcon = userIcon;
-		
-        [self setup];
+		self.userIcon = userIcon;
     }
     return self;	
 }
 
-- (void)setup {
-	self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.button.frame = self.bounds;
-	[self.button addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:self.button];
-	
-	// sets up UI
-	self.userIcon = self.userIcon;
+
+#pragma mark - System
+
+- (void)layoutSubviews {
+	_button.frame = self.bounds;
 }
 
 
 #pragma mark - User Interaction
 
 - (void)buttonPressed {
-	if ([self.delegate respondsToSelector:@selector(userIconViewPressed:)]) {
-		[self.delegate userIconViewPressed:self];
-	}
+	[_delegate userIconViewPressed:self];
 }
 
 
 #pragma mark - Getter / Setter
 
-- (void)setFrame:(CGRect)frame {
-	[super setFrame:frame];
-	
-	self.button.frame = self.bounds;
-}
-
 - (void)setUserIcon:(UserIcon *)userIcon {
 	_userIcon = userIcon;
 	
-	[self.button setImage:userIcon.image forState:UIControlStateNormal];
+	[_button setImage:userIcon.image forState:UIControlStateNormal];
 }
 
 @end

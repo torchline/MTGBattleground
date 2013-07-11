@@ -15,10 +15,17 @@
 
 // User
 + (NSMutableArray *)users;
++ (NSMutableDictionary *)userDictionary;
++ (NSMutableArray *)usersWithIDs:(NSArray *)userIDs;
++ (NSMutableArray *)usersForMatchUserMetas:(NSArray *)matchUserMetas;
 + (void)updateUser:(User *)user;
++ (void)createUser:(User *)user;
++ (BOOL)doesUsernameExist:(NSString *)username;
 
 // UserIcon
 + (NSMutableArray *)userIcons;
++ (NSMutableDictionary *)userIconMapWithIDs:(NSArray *)userIconIDs;
++ (NSMutableArray *)userIconsForUsers:(NSArray *)users;
 + (NSMutableDictionary *)userIconDictionary;
 
 @end

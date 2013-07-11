@@ -15,14 +15,6 @@
 
 @implementation ManagableViewController
 
-
-#pragma mark - System
-
-- (void)dealloc {
-	self.transitionAnimationDelegate = nil;
-}
-
-
 #pragma mark - Init
 
 - (id)init {
@@ -50,8 +42,8 @@
 }
 
 - (void)setup {
-	self.presentationStyle = ManagableViewPresentationStyleNone;
-	self.dismissionStyle = ManagableViewDismissionStyleNone;	
+	_presentationStyle = ManagableViewPresentationStyleNone;
+	_dismissionStyle = ManagableViewDismissionStyleNone;
 }
 
 
@@ -60,7 +52,7 @@
 - (void)willPresent {}
 - (void)willDismiss {}
 
-- (BOOL)viewDidLoadFromViewController:(ManagableViewController *)aViewController {
+- (BOOL)willLoadFromViewController:(ManagableViewController *)aViewController {
     return YES;
 }
 

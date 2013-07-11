@@ -10,8 +10,8 @@
 
 @interface MatchTurnUserState : NSObject
 
-@property (nonatomic) NSString *userID;
 @property (nonatomic) NSString *matchTurnID;
+@property (nonatomic) NSString *userID;
 @property (nonatomic) NSInteger life;
 @property (nonatomic) NSUInteger poison;
 @property (nonatomic) BOOL isDead;

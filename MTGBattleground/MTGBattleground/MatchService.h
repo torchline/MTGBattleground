@@ -8,14 +8,19 @@
 
 #import "Service.h"
 
+
 @class Match;
 @class MatchUserMeta;
 @class MatchTurn;
 @class MatchTurnUserState;
+@class MatchTurnUserDamage;
+
 
 @interface MatchService : Service
 
 // Match
++ (NSUInteger)numberOfMatches;
++ (NSMutableArray *)matchesWithLimit:(NSUInteger)limit offset:(NSUInteger)offset;
 + (Match *)matchWithID:(NSString *)matchID;
 + (void)insertMatch:(Match *)match;
 + (void)updateMatch:(Match *)match;
@@ -38,5 +43,9 @@
 + (NSMutableDictionary *)matchTurnUserStateDictionaryForMatchTurn:(MatchTurn *)matchTurn;
 + (void)insertMatchTurnUserState:(MatchTurnUserState *)userState;
 + (void)updateMatchTurnUserState:(MatchTurnUserState *)userState;
+
+// MatchTurnUserDamage
++ (NSMutableArray *)matchTurnUserDamagesForMatchTurn:(MatchTurn *)matchTurn;
++ (void)insertMatchTurnUserDamage:(MatchTurnUserDamage *)userDamage;
 
 @end

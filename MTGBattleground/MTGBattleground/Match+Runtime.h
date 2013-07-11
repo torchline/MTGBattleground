@@ -13,7 +13,11 @@
 
 @interface Match (Runtime)
 
+// in-match
 @property (nonatomic) MatchTurn *currentTurn;
 @property (nonatomic) NSArray *users;
+
+// history and stats
+@property (nonatomic) NSArray *turns;
 
 @end

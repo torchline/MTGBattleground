@@ -50,7 +50,12 @@ static dispatch_queue_t _backgroundQueue = nil;
 	CFUUIDRef theUUID = CFUUIDCreate(NULL);
 	CFStringRef string = CFUUIDCreateString(NULL, theUUID);
 	CFRelease(theUUID);
-	return [(__bridge NSString *)string stringByReplacingOccurrencesOfString:@"-" withString:@""];
+		
+	NSString *guid = (__bridge NSString *)string;
+	NSString *cleanGUID = [guid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+	CFRelease(string);
+	
+	return cleanGUID;
 }
 
 + (NSArray *)arrayByRemovingObject:(id)object fromArray:(NSArray *)array {

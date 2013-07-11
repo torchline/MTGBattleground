@@ -11,31 +11,17 @@
 #import "User+Runtime.h"
 #import "UIView+BasicAnimation.h"
 
-@interface UserSelectionView ()
-
-@property (nonatomic) BOOL isOpen;
-
-@end
-
 
 @implementation UserSelectionView
 
 #pragma mark - System
 
 - (void)dealloc {
-	[self.user removeObserver:self forKeyPath:@"icon"];
+	[_user removeObserver:self forKeyPath:@"icon"];
 }
 
 
 #pragma mark - Init
-
-- (id)init {
-	self = [super init];
-	if (self) {
-		[self setup];
-	}
-	return self;
-}
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -45,80 +31,97 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-		[self setup];
-    }
-    return self;
-}
-
-- (UserSelectionView *)initWithUser:(User *)user {
-	self = [super init];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
 	if (self) {
-		_user = user;
 		[self setup];
 	}
 	return self;
 }
 
-- (void)setup {
-	// create name button
-	self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	//self.nameButton.backgroundColor = [UIColor blueColor];
-	self.nameButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-	self.nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-	self.nameButton.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-	[self.nameButton addTarget:self action:@selector(nameButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	self.nameButton.titleLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:40];
-	self.nameButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-	[self.nameButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-	[self.nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-	self.nameButton.frame = CGRectMake(50, 0, 200, 150);
-	if ([self.nameButton respondsToSelector:@selector(setMinimumScaleFactor:)]) {
-		self.nameButton.titleLabel.minimumScaleFactor = 0.7f;
+- (id)initWithUser:(User *)user {
+	self = [self init];
+	if (self) {
+		self.user = user;
 	}
-	else if ([self.nameButton respondsToSelector:@selector(setMinimumFontSize:)]) {
-		self.nameButton.titleLabel.minimumFontSize = 0.7f * 28;
-	}
-	[self addSubview:self.nameButton];
-	
-	// create icon button
-	self.iconButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	//self.iconButton.backgroundColor = [UIColor yellowColor];
-	[self.iconButton addTarget:self action:@selector(iconButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	self.iconButton.frame = CGRectMake(0, 0, 150, 150);
-	self.iconButton.hidden = YES; // not visible until user is set
-	[self addSubview:self.iconButton];
+	return self;
+}
 
-	// create unset button
-	self.unsetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.unsetButton.titleLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:50];
-	[self.unsetButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-	[self.unsetButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-	[self.unsetButton setTitle:@"x" forState:UIControlStateNormal];
-	[self.unsetButton addTarget:self action:@selector(unsetButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	self.unsetButton.frame = CGRectMake(150 + 200, 0, 70, 140);
-	self.unsetButton.hidden = YES; // not visible until user is set
-	[self addSubview:self.unsetButton];
+- (void)setup {
+	// Username Button
+	_nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_nameButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+	_nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+	_nameButton.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+	[_nameButton addTarget:self action:@selector(nameButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	_nameButton.titleLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:40];
+	_nameButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+	[_nameButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+	[_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+	[_nameButton setTitle:@"None" forState:UIControlStateNormal];
+	if ([_nameButton respondsToSelector:@selector(setMinimumScaleFactor:)]) {
+		_nameButton.titleLabel.minimumScaleFactor = 0.7f;
+	}
+	else if ([_nameButton respondsToSelector:@selector(setMinimumFontSize:)]) {
+		_nameButton.titleLabel.minimumFontSize = 0.7f * 28;
+	}
+	[self addSubview:_nameButton];
 	
-	// sets up UI
-	self.user = self.user;
+	// User Icon
+	_iconButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	//_iconButton.backgroundColor = [UIColor yellowColor];
+	[_iconButton addTarget:self action:@selector(iconButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	_iconButton.hidden = YES; // not visible until user is set
+	[self addSubview:_iconButton];
+	
+	// Unset Button
+	_unsetButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_unsetButton.titleLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:50];
+	[_unsetButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+	[_unsetButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+	[_unsetButton setTitle:@"x" forState:UIControlStateNormal];
+	[_unsetButton addTarget:self action:@selector(unsetButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	_unsetButton.hidden = YES; // not visible until user is set
+	[self addSubview:_unsetButton];
+}
+
+
+#pragma mark - System
+
+- (void)layoutSubviews {
+	if (_isOpen) {
+		_nameButton.frame = CGRectMake(150,
+									   0,
+									   150,
+									   150);
+	}
+	else {
+		_nameButton.frame = CGRectMake(50,
+									   0,
+									   200,
+									   150);
+	}
+	
+	_iconButton.frame = CGRectMake(0,
+								   0,
+								   150,
+								   150);
+	
+	_unsetButton.frame = CGRectMake(150 + 200,
+									0,
+									70,
+									140);
 }
 
 
 #pragma mark - User Interaction
 
 - (void)nameButtonPressed {
-	if ([self.delegate respondsToSelector:@selector(userSelectionViewDidRequestNewName:)]) {
-		[self.delegate userSelectionViewDidRequestNewName:self];
-	}
+	[_delegate userSelectionViewDidRequestNewName:self];
 }
 
 - (void)iconButtonPressed {
-	if ([self.delegate respondsToSelector:@selector(userSelectionViewDidRequestNewIcon:)]) {
-		[self.delegate userSelectionViewDidRequestNewIcon:self];
-	}
+	[_delegate userSelectionViewDidRequestNewIcon:self];
 }
 
 - (void)unsetButtonPressed {
@@ -129,53 +132,53 @@
 #pragma mark - Animation
 
 - (void)animateOpen {
-	if (self.isOpen) {
+	if (_isOpen) {
 		return;
 	}
 	
-	self.isOpen = YES;
+	_isOpen = YES;
 	
-	//[self.iconButton showByExpandingForDuration:0.30f completion:nil];
-	self.iconButton.transform = CGAffineTransformMakeScale(0.001, 0.001);
-	self.iconButton.hidden = NO;
+	//[_iconButton showByExpandingForDuration:0.30f completion:nil];
+	_iconButton.transform = CGAffineTransformMakeScale(0.001, 0.001);
+	_iconButton.hidden = NO;
 	
-	self.unsetButton.alpha =  0;
-	self.unsetButton.hidden = NO;
+	_unsetButton.alpha =  0;
+	_unsetButton.hidden = NO;
 
 	[UIView animateWithDuration:0.20f
 					 animations:^{
-						 self.nameButton.frame = CGRectMake(150,
-															0,
-															150,
-															150);
+						 _nameButton.frame = CGRectMake(150,
+														0,
+														150,
+														150);
 						 
-						 self.iconButton.transform = CGAffineTransformIdentity;
+						 _iconButton.transform = CGAffineTransformIdentity;
 						 
-						 self.unsetButton.alpha = 1;
+						 _unsetButton.alpha = 1;
 					 }];
 }
 
 - (void)animateClosed {
-	if (!self.isOpen) {
+	if (!_isOpen) {
 		return;
 	}
 	
-	self.isOpen = NO;
+	_isOpen = NO;	
 	
-	self.unsetButton.hidden = YES;
+	_unsetButton.hidden = YES;
 	
 	[UIView animateWithDuration:0.20f
 					 animations:^{
-						 self.nameButton.frame = CGRectMake(50,
-															0,
-															150,
-															150);
+						 _nameButton.frame = CGRectMake(50,
+														0,
+														150,
+														150);
 						 
-						 self.iconButton.transform = CGAffineTransformMakeScale(0.001, 0.001);						 
+						 _iconButton.transform = CGAffineTransformMakeScale(0.001, 0.001);						 
 					 }
 					 completion:^(BOOL finished) {
-						 self.iconButton.hidden = YES;
-						 self.iconButton.transform = CGAffineTransformIdentity;
+						 _iconButton.hidden = YES;
+						 _iconButton.transform = CGAffineTransformIdentity;
 					 }];
 }
 
@@ -184,10 +187,9 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {	
 	if ([object isKindOfClass:[User class]] && [keyPath isEqualToString:@"icon"]) {
-		[self.iconButton setImage:self.user.icon.image forState:UIControlStateNormal];
+		[_iconButton setImage:_user.icon.image forState:UIControlStateNormal];
 	}
 }
-
 
 
 #pragma mark - Getter / Setter
@@ -195,26 +197,20 @@
 - (void)setUser:(User *)user {
 	[_user removeObserver:self forKeyPath:@"icon"];
 	[user addObserver:self forKeyPath:@"icon" options:0 context:NULL];
-	
-	_user = nil;
-	
-	if (user) {
-		[self.nameButton setTitle:user.name forState:UIControlStateNormal];
 		
-		[self.iconButton setImage:user.icon.image forState:UIControlStateNormal];
+	if (user) {
+		[_nameButton setTitle:user.name forState:UIControlStateNormal];
+		
+		[_iconButton setImage:user.icon.image forState:UIControlStateNormal];
 		
 		[self animateOpen];
 	}
 	else {
-		[self.nameButton setTitle:@"None" forState:UIControlStateNormal];
+		[_nameButton setTitle:@"None" forState:UIControlStateNormal];
 		[self animateClosed];
 	}
 		
-	_user = user; // deferred so user record doesn't get updated user icon
-}
-
-- (void)setUserIcon:(UserIcon *)userIcon {
-	
+	_user = user;
 }
 
 @end

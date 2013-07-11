@@ -29,4 +29,14 @@
 	return (User *)objc_getAssociatedObject(self, @selector(user));	
 }
 
+
+
+- (void)setUserStateDictionary:(NSDictionary *)userStateDictionary {
+	objc_setAssociatedObject(self, @selector(userStateDictionary), userStateDictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSDictionary *)userStateDictionary {
+	return (NSDictionary *)objc_getAssociatedObject(self, @selector(userStateDictionary));
+}
+
 @end

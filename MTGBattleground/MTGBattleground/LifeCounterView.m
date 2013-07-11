@@ -10,152 +10,127 @@
 #import "UIView+BasicAnimation.h"
 #import "User+Runtime.h"
 
-@interface LifeCounterView()
-
-@property (nonatomic) BOOL isSetup;
-@property (nonatomic) NSUInteger numSegmentsPerCircle;
-@property (nonatomic) UIImage *segmentImage;
-
-// UI
-@property (nonatomic) NSMutableArray *segmentImageViews;
-@property (nonatomic) UILabel *lifeLabel;
-@property (nonatomic) UIButton *upButton;
-@property (nonatomic) UIButton *downButton;
-
-@end
-
 
 @implementation LifeCounterView
 
 #pragma mark - System
 
 - (void)dealloc {
-	[self.user removeObserver:self forKeyPath:@"state.life"];
+	[_user removeObserver:self forKeyPath:@"state.life"];
 }
 
 
 
 #pragma mark - Init
 
-- (id)init {
-    self = [super init];
-    if (self) {
-		[self setup];
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setup];
+        _enabled = YES;
+		
+		_isSetup = NO;
+		_numSegmentsPerCircle = 20;
+		_segmentImage = [UIImage imageNamed:@"LifeCounterSegment.png"];
+		self.autoresizingMask = 0;
+		self.bounds = CGRectMake(0,
+								 0,
+								 200,
+								 200);
+		
+		// create life label
+		_lifeLabel = [[UILabel alloc] init];
+		_lifeLabel.backgroundColor = [UIColor clearColor];
+		_lifeLabel.textAlignment = NSTextAlignmentCenter;
+		_lifeLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:50];
+		_lifeLabel.textColor = [UIColor darkTextColor];
+		[self addSubview:_lifeLabel];
+		
+		// create segments
+		_segmentImageViews = [[NSMutableArray alloc] initWithCapacity:_numSegmentsPerCircle];
+		CGFloat degreeRotationPerSegment = (2 * M_PI) / _numSegmentsPerCircle;
+		
+		for (int i = 0; i < _numSegmentsPerCircle; i++) {
+			UIImageView *segmentImageView = [self newSegmentImageView];
+			segmentImageView.frame = CGRectMake(0,
+												0,
+												200,
+												200);
+			segmentImageView.transform = CGAffineTransformMakeRotation(degreeRotationPerSegment * i);
+			
+			[self addSubview:segmentImageView];
+			[_segmentImageViews insertObject:segmentImageView atIndex:0];
+		}
+		
+		// create buttons
+		UIImage *upButtonImage = [UIImage imageNamed:@"LifeCounterUpButton.png"];
+		_upButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[_upButton setImage:upButtonImage forState:UIControlStateNormal];
+		_upButton.frame = CGRectMake(29,
+									 23,
+									 upButtonImage.size.width,
+									 upButtonImage.size.height);
+		[_upButton addTarget:self action:@selector(plusButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:_upButton];
+		
+		UIImage *downButtonImage = [UIImage imageNamed:@"LifeCounterDownButton.png"];
+		_downButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[_downButton setImage:downButtonImage forState:UIControlStateNormal];
+		_downButton.frame = CGRectMake(29,
+									   200 - 23 - downButtonImage.size.height,
+									   downButtonImage.size.width,
+									   downButtonImage.size.height);
+		[_downButton addTarget:self action:@selector(minusButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:_downButton];
+		
+		_lifeLabel.frame = CGRectMake(25,
+									  CGRectGetMaxY(_upButton.frame),
+									  200 - 25 * 2,
+									  CGRectGetMinY(_downButton.frame) - CGRectGetMaxY(_upButton.frame));
+		
+		_isSetup = YES;
+		[self updateLifeVisuals];
     }
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-	if (self) {
-		[self setup];
-	}
-	return self;
-}
 
-- (void)setup {
-	_enabled = YES;
-	
-	self.isSetup = NO;
-	self.numSegmentsPerCircle = 20;
-	self.segmentImage = [UIImage imageNamed:@"LifeCounterSegment.png"];
-	self.autoresizingMask = 0;
-	self.bounds = CGRectMake(0,
-							 0,
-							 200,
-							 200);
-	
-	// create life label
-	self.lifeLabel = [[UILabel alloc] init];
-	self.lifeLabel.backgroundColor = [UIColor clearColor];
-	self.lifeLabel.textAlignment = NSTextAlignmentCenter;
-	self.lifeLabel.font = [UIFont fontWithName:GLOBAL_FONT_NAME_BOLD size:50];
-	self.lifeLabel.textColor = [UIColor darkTextColor];
-	[self addSubview:self.lifeLabel];
-	
-	// create segments
-	self.segmentImageViews = [[NSMutableArray alloc] initWithCapacity:self.numSegmentsPerCircle];
-	CGFloat degreeRotationPerSegment = (2 * M_PI) / self.numSegmentsPerCircle;
-	
-	for (int i = 0; i < self.numSegmentsPerCircle; i++) {
-		UIImageView *segmentImageView = [self newSegmentImageView];
-		segmentImageView.frame = CGRectMake(0,
-											0,
-											200,
-											200);
-		segmentImageView.transform = CGAffineTransformMakeRotation(degreeRotationPerSegment * i);
-		
-		[self addSubview:segmentImageView];
-		[self.segmentImageViews insertObject:segmentImageView atIndex:0];
-	}
-	
-	// create buttons
-	UIImage *upButtonImage = [UIImage imageNamed:@"LifeCounterUpButton.png"];
-	self.upButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[self.upButton setImage:upButtonImage forState:UIControlStateNormal];
-	self.upButton.frame = CGRectMake(29,
-									 23,
-									 upButtonImage.size.width,
-									 upButtonImage.size.height);
-	[self.upButton addTarget:self action:@selector(plusButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:self.upButton];
-	
-	UIImage *downButtonImage = [UIImage imageNamed:@"LifeCounterDownButton.png"];
-	self.downButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[self.downButton setImage:downButtonImage forState:UIControlStateNormal];
-	self.downButton.frame = CGRectMake(29,
-									   200 - 23 - downButtonImage.size.height,
-									   downButtonImage.size.width,
-									   downButtonImage.size.height);
-	[self.downButton addTarget:self action:@selector(minusButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:self.downButton];
-	
-	self.lifeLabel.frame = CGRectMake(25,
-									  CGRectGetMaxY(self.upButton.frame),
-									  200 - 25 * 2,
-									  CGRectGetMinY(self.downButton.frame) - CGRectGetMaxY(self.upButton.frame));
-	
-	self.isSetup = YES;
-	[self updateLifeVisuals];
+#pragma mark - Public
+
+- (void)commitLifeChange {
+	// TODO: recolor life bars to blue
+	// TODO: remove red life bars
+	_lifeAtLastCommit = _user.state.life;
 }
 
 
 #pragma mark - User Interaction
 
 - (void)plusButtonPressed {
-	self.user.state.life++;
+	_user.state.life++;
 }
 
 - (void)minusButtonPressed {
-	self.user.state.life--;
+	_user.state.life--;
 }
 
 
 #pragma mark - Helper
 
 - (UIImageView *)newSegmentImageView {
-	UIImageView *segmentImageView = [[UIImageView alloc] initWithImage:self.segmentImage];
+	UIImageView *segmentImageView = [[UIImageView alloc] initWithImage:_segmentImage];
 	return segmentImageView;
 }
 
 - (void)updateLifeVisuals {	
-	if (!self.isSetup) {
+	if (!_isSetup) {
 		return;
 	}
 		
-	self.lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", self.user.state.life];
+	_lifeLabel.text = [[NSString alloc] initWithFormat:@"%d", _user.state.life];
 	
 	NSUInteger i = 0;
-	for (UIImageView *segmentImageView in self.segmentImageViews) {
-		segmentImageView.hidden = i >= self.user.state.life || self.user.state.life <= 0;
+	for (UIImageView *segmentImageView in _segmentImageViews) {
+		segmentImageView.hidden = i >= _user.state.life || _user.state.life <= 0;
 		i++;
 	}
 }
@@ -167,7 +142,7 @@
 						change:(NSDictionary *)change
 					   context:(void *)context {
 		
-	if ([object isEqual:self.user] && [keyPath isEqual:@"state.life"]) {
+	if ([object isEqual:_user] && [keyPath isEqual:@"state.life"]) {
 		[self updateLifeVisuals];
 	}
 }
@@ -180,6 +155,7 @@
 	[user addObserver:self forKeyPath:@"state.life" options:0 context:NULL];
 	
 	_user = user;
+	_lifeAtLastCommit = user.state.life;
 		
 	[self updateLifeVisuals];
 }

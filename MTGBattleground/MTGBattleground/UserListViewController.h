@@ -8,16 +8,50 @@
 
 #import <UIKit/UIKit.h>
 
-@class User;
+
+typedef enum : NSUInteger {
+	UserListViewControllerStateDisplay = 1,
+	UserListViewControllerStateAdd
+} UserListViewControllerState;
 
 
 @protocol UserListViewControllerDelegate;
 
+@class User;
+@class ObjectListView;
 
-@interface UserListViewController : UIViewController
 
-@property (nonatomic) IBOutlet UITableView *tableView;
+@interface UserListViewController : UIViewController {
+	CGSize _frameSize;
+	
+	UIView __weak *_currentStateView;
+	
+	
+	// Display View
+	NSMutableArray *_users;
+	NSArray *_displayedUsers;
+	
+	UIView *_displayStateView;
+	ObjectListView *_displayStateUserListView;
+	UIButton *_displayStateAddButton;
+	UIButton *_displayStateEditButton;
+	
+	
+	// Add View
+	UIColor *_badTextColor;
+	UIColor *_goodTextColor;
+	UITapGestureRecognizer *_addStateViewTapGestureRecognizer;
+	
+	UIView *_addStateView;
+	UIButton *_addStateBackButton;
+	UIButton *_addStateCompleteButton;
+	UITextField *_addStateUsernameTextField;
+}
+
 @property (nonatomic, weak) IBOutlet id <UserListViewControllerDelegate> delegate;
+@property (nonatomic) UserListViewControllerState state;
+
+- (void)setState:(UserListViewControllerState)state animated:(BOOL)animated completion:(void (^)(void))completion;
 
 @end
 
@@ -26,6 +60,9 @@
 @protocol UserListViewControllerDelegate <NSObject>
 
 @required
-- (void)userListViewControllerDidPickUser:(User *)user;
+- (void)userListViewController:(UserListViewController *)controller didPickUser:(User *)user;
+
+@optional
+- (NSArray *)userListViewControllerDisallowedUsers:(UserListViewController *)controller;
 
 @end

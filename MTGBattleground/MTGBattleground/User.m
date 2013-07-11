@@ -10,6 +10,7 @@
 
 @implementation User
 
+
 #pragma mark - Init
 
 - (User *)initWithID:(NSString *)ID
@@ -29,8 +30,45 @@
 	return self;
 }
 
+
+#pragma mark - Public
+
+- (NSComparisonResult)compareUsage:(User *)user {	
+	NSComparisonResult lastTimeUsedResult;
+	if (_lastTimeUsed) {
+		if (user.lastTimeUsed) {
+			lastTimeUsedResult = [user.lastTimeUsed compare:_lastTimeUsed];
+		}
+		else {
+			lastTimeUsedResult = NSOrderedAscending;
+		}
+	}
+	else {
+		if (user.lastTimeUsed) {
+			lastTimeUsedResult = NSOrderedDescending;
+		}
+		else {
+			lastTimeUsedResult = NSOrderedSame;
+		}
+	}
+	
+	NSComparisonResult result;
+	if (lastTimeUsedResult == NSOrderedSame) {
+		NSComparisonResult numTimesUsedResult = [@(_numTimesUsed) compare:@(user.numTimesUsed)];
+		result = numTimesUsedResult;
+	}
+	else {
+		result = lastTimeUsedResult;
+	}
+	
+	return result;
+}
+
+
+#pragma mark - Getter / Setter
+
 - (NSString *)description {
-	return [[NSString alloc] initWithFormat:@"<%@ 0x%x id=%@ name=%@>", NSStringFromClass([self class]), self.hash, self.ID, self.name];
+	return [[NSString alloc] initWithFormat:@"<%@: 0x%x id=%@ name=%@>", NSStringFromClass([self class]), self.hash, _ID, _name];
 }
 
 @end

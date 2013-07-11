@@ -22,4 +22,6 @@
 		numTimesUsed:(NSUInteger)numTimesUsed
 		lastTimeUsed:(NSDate *)lastTimeUsed;
 
+- (NSComparisonResult)compareUsage:(User *)user;
+
 @end

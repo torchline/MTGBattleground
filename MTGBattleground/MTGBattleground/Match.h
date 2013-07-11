@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL enableDynamicCounters;
 @property (nonatomic) BOOL enableTurnTracking;
 @property (nonatomic) BOOL enableAutoDeath;
+@property (nonatomic) BOOL enableDamageTargeting;
 @property (nonatomic) BOOL isComplete;
 @property (nonatomic) NSDate *startTime;
 @property (nonatomic) NSDate *endTime;
@@ -30,6 +31,7 @@
 	  dynamicCounters:(BOOL)dynamicCounters
 		 turnTracking:(BOOL)turnTracking
 			autoDeath:(BOOL)autoDeath
+	  damageTargeting:(BOOL)damageTargeting
 			 complete:(BOOL)complete
 			startTime:(NSDate *)startTime
 			  endTime:(NSDate *)endTime;

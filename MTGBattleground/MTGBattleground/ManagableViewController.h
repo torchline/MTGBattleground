@@ -41,12 +41,19 @@ typedef enum {
 @protocol ManagableViewControllerTransitionAnimationDelegate;
 
 
-@interface ManagableViewController : UIViewController
+@interface ManagableViewController : UIViewController {
+	ManagableViewPresentationStyle _presentationStyle;
+	ManagableViewDismissionStyle _dismissionStyle;
+	
+	NSDictionary *_viewOptions;
+	
+	NSObject<ManagableViewControllerTransitionAnimationDelegate> __weak *_transitionAnimationDelegate;
+}
 
 @property (nonatomic) ManagableViewPresentationStyle presentationStyle;
 @property (nonatomic) ManagableViewDismissionStyle dismissionStyle;
-@property (nonatomic, strong) NSDictionary *viewOptions;
-@property (nonatomic, unsafe_unretained) NSObject <ManagableViewControllerTransitionAnimationDelegate> *transitionAnimationDelegate;
+@property (nonatomic) NSDictionary *viewOptions;
+@property (nonatomic, weak) NSObject <ManagableViewControllerTransitionAnimationDelegate> *transitionAnimationDelegate;
 
 
 - (void)setup;
@@ -54,7 +61,7 @@ typedef enum {
 - (void)willPresent;
 - (void)willDismiss;
 
-- (BOOL)viewDidLoadFromViewController:(ManagableViewController *)aViewController;
+- (BOOL)willLoadFromViewController:(ManagableViewController *)aViewController;
 - (BOOL)viewWillUnloadToViewController:(ManagableViewController *)aViewController;
 
 @end
